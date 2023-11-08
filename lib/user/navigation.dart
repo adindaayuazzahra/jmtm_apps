@@ -1,5 +1,6 @@
 import 'package:appjmtm/styles.dart';
 import 'package:appjmtm/user/Home.dart';
+import 'package:appjmtm/user/absensi.dart';
 import 'package:appjmtm/user/profil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -30,6 +31,7 @@ class _NavigationState extends State<Navigation> {
       _token = token; // Simpan token ke _token
       _pages = [
         Home(token: _token),
+        Absensi(token: _token),
         Profil(token: _token),
         // ProfileScreen(),
       ];
@@ -48,7 +50,7 @@ class _NavigationState extends State<Navigation> {
         bottomNavigationBar: Container(
           alignment: Alignment.center,
           margin: const EdgeInsets.only(bottom: 10, right: 15, left: 15),
-          height: 60,
+          height: 65,
           decoration: BoxDecoration(
             color: putih,
             borderRadius: BorderRadius.circular(30),
@@ -64,10 +66,15 @@ class _NavigationState extends State<Navigation> {
           child: BottomNavigationBar(
             backgroundColor: Colors.transparent,
             type: BottomNavigationBarType.fixed,
-            // selectedItemColor: biru,
-            // unselectedItemColor: unguMuda,
+            selectedItemColor: secondaryColor,
+            selectedLabelStyle: const TextStyle(
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1,
+              color: primaryColor,
+            ),
+            // unselectedItemColor: secondaryColor,
             elevation: 0,
-            showSelectedLabels: false,
+            showSelectedLabels: true,
             iconSize: 26,
             showUnselectedLabels: false,
             currentIndex: _currentIndex,
@@ -78,9 +85,17 @@ class _NavigationState extends State<Navigation> {
             },
             items: const [
               BottomNavigationBarItem(
-                  icon: Icon(Icons.grid_view_rounded), label: "beranda"),
+                icon: Icon(Icons.grid_view_rounded),
+                label: "Beranda",
+              ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.person), label: "Profil"),
+                icon: Icon(Icons.list_alt_rounded),
+                label: "Absensi",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: "Profil",
+              ),
               // BottomNavigationBarItem(
               //     icon: Icon(Icons.receipt_long_rounded), label: "Riwayat"),
               // BottomNavigationBarItem(

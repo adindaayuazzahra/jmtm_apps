@@ -32,6 +32,17 @@ class Routes {
       ),
     );
     router.define(
+      '/absensi/:token',
+      handler: Handler(
+        handlerFunc: (context, parameters) {
+          final token = parameters['token']!.first;
+          return Profil(
+            token: token,
+          );
+        },
+      ),
+    );
+    router.define(
       '/login',
       handler: Handler(handlerFunc: (context, parameters) => Login()),
     );

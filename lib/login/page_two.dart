@@ -54,8 +54,8 @@ class _Page_twoState extends State<Page_two> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            surfaceTintColor: const Color.fromARGB(255, 255, 255, 255),
-            backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+            surfaceTintColor: putih,
+            backgroundColor: putih,
             content: Container(
               alignment: Alignment.center,
               height: 160,
@@ -86,7 +86,7 @@ class _Page_twoState extends State<Page_two> {
                   height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: unguMuda,
+                    color: secondaryColor,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -195,7 +195,7 @@ class _Page_twoState extends State<Page_two> {
                           fixedSize: MaterialStateProperty.all<Size>(
                               Size(size.width, 50.0)),
                           backgroundColor:
-                              MaterialStateProperty.all<Color>(unguMuda)),
+                              MaterialStateProperty.all<Color>(secondaryColor)),
                       onPressed: () {
                         login();
                         FocusScope.of(context).unfocus();

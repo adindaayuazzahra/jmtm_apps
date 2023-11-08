@@ -19,39 +19,46 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor:
-          _currentPage == 0 ? unguTua : Colors.black.withOpacity(0.2),
+          _currentPage == 0 ? primaryColor : Colors.black.withOpacity(0.2),
     ));
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
+    return WillPopScope(
+      onWillPop: () async {
+        SystemNavigator.pop(); // Ini akan menutup aplikasi sepenuhnya.
+        return false; // false agar tombol kembali tidak melakukan apa pun
       },
-      child: Scaffold(
-        backgroundColor: _currentPage == 0 ? unguTua : putih,
-        body: PageView(
-          controller: _controller,
-          onPageChanged: (int page) {
-            setState(() {
-              _currentPage = page;
-            });
-            SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-              statusBarIconBrightness:
-                  _currentPage == 0 ? Brightness.light : Brightness.dark,
-              systemNavigationBarColor:
-                  _currentPage == 0 ? unguTua : Colors.black.withOpacity(0.2),
-            ));
+      child: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Scaffold(
+          backgroundColor: _currentPage == 0 ? primaryColor : putih,
+          body: PageView(
+            controller: _controller,
+            onPageChanged: (int page) {
+              setState(() {
+                _currentPage = page;
+              });
+              SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+                statusBarIconBrightness:
+                    _currentPage == 0 ? Brightness.light : Brightness.dark,
+                systemNavigationBarColor: _currentPage == 0
+                    ? primaryColor
+                    : Colors.black.withOpacity(0.2),
+              ));
 
-            // Menyembunyikan keyboard saat halaman digeser kembali ke halaman sebelumnya
-            if (_currentPage == 0) {
-              FocusManager.instance.primaryFocus?.unfocus();
-            }
-          },
-          children: const <Widget>[
-            Page_one(),
-            Page_two(),
-          ],
+              // Menyembunyikan keyboard saat halaman digeser kembali ke halaman sebelumnya
+              if (_currentPage == 0) {
+                FocusManager.instance.primaryFocus?.unfocus();
+              }
+            },
+            children: const <Widget>[
+              Page_one(),
+              Page_two(),
+            ],
+          ),
+          // bottomNavigationBar: _buildBottomBar(),
+          bottomNavigationBar: _buildBottomBar(),
         ),
-        // bottomNavigationBar: _buildBottomBar(),
-        bottomNavigationBar: _buildBottomBar(),
       ),
     );
   }

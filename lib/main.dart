@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'JMTM SERVICES',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: unguTua),
+        colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
         useMaterial3: true,
       ),
       home: Splash(),
