@@ -1,10 +1,12 @@
 // ignore_for_file: use_build_context_synchronously, prefer_const_constructors
 
+import 'package:appjmtm/provider/berita_provider.dart';
 import 'package:appjmtm/routes.dart';
 import 'package:appjmtm/styles.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -16,7 +18,13 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Routes.configureRoutes();
   // checkLoginStatus(context);
-  runApp(const MyApp());
+  // runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => NewsProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

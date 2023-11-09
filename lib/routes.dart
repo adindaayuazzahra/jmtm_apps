@@ -1,5 +1,6 @@
 import 'package:appjmtm/login/login.dart';
 import 'package:appjmtm/user/Home.dart';
+import 'package:appjmtm/user/detail_berita.dart';
 import 'package:appjmtm/user/navigation.dart';
 import 'package:appjmtm/user/profil.dart';
 import 'package:fluro/fluro.dart';
@@ -31,6 +32,19 @@ class Routes {
         },
       ),
     );
+    router.define(
+      '/berita/:id',
+      handler: Handler(
+        handlerFunc: (context, parameters) {
+          final id = parameters['id']!.first;
+          print('ID dari rute: $id');
+          return DetailBeritaPage(
+            id: id,
+          );
+        },
+      ),
+    );
+
     router.define(
       '/absensi/:token',
       handler: Handler(
