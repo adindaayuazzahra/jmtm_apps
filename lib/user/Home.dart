@@ -3,8 +3,11 @@
 // import 'package:appjmtm/routes.dart';
 // import 'package:fluro/fluro.dart';
 import 'package:appjmtm/componen/home_component.dart';
+import 'package:appjmtm/componen/subtitlewithmore.dart';
 import 'package:appjmtm/provider/berita_provider.dart';
+import 'package:appjmtm/routes.dart';
 import 'package:appjmtm/styles.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -53,16 +56,18 @@ class _HomeState extends State<Home> {
   //   final newsProvider = Provider.of<NewsProvider>(context, listen: true);
   //   newsProvider.fetchNews();
   // }
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final newsProvider = Provider.of<NewsProvider>(context, listen: true);
-    newsProvider.fetchNews();
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   final newsProvider = Provider.of<NewsProvider>(context, listen: true);
+  //   newsProvider.fetchNews();
 
-    // Lakukan sesuatu ketika dependensi berubah (jika diperlukan)
-  }
+  //   // Lakukan sesuatu ketika dependensi berubah (jika diperlukan)
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final newsProvider = Provider.of<NewsProvider>(context, listen: false);
+    newsProvider.fetchNews();
     // // Dekode token untuk mendapatkan data.
     Map<String, dynamic> decodedToken = JwtDecoder.decode(widget.token);
     String nama = decodedToken['nama'];
@@ -103,19 +108,37 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            headerHome(nama: nama, npp: npp, jabatan: jabatan),
-            SizedBox(
-              height: 20,
-            ),
-            Berita(),
-            SizedBox(
-              height: 20,
-            )
-          ],
+      body: RefreshIndicator(
+        onRefresh: () async {
+          final newsProvider =
+              Provider.of<NewsProvider>(context, listen: false);
+          await newsProvider.fetchNews(); // Lakukan pembaruan data
+          setState(() {}); // Perbarui tampilan
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              headerHome(nama: nama, npp: npp, jabatan: jabatan),
+              SizedBox(
+                height: 20,
+              ),
+              SubtitleWithMore(
+                text: "Berita Teratas",
+                press: () {
+                  Routes.router.navigateTo(context, '/berita',
+                      transition: TransitionType.fadeIn);
+                },
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Berita(),
+              SizedBox(
+                height: 200000,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:appjmtm/login/login.dart';
 import 'package:appjmtm/user/Home.dart';
-import 'package:appjmtm/user/detail_berita.dart';
+import 'package:appjmtm/user/berita/berita.dart';
+import 'package:appjmtm/user/berita/detail_berita.dart';
 import 'package:appjmtm/user/navigation.dart';
 import 'package:appjmtm/user/profil.dart';
 import 'package:fluro/fluro.dart';
@@ -18,6 +19,14 @@ class Routes {
           return Home(
             token: token,
           );
+        },
+      ),
+    );
+    router.define(
+      '/berita',
+      handler: Handler(
+        handlerFunc: (context, parameters) {
+          return BeritaPage();
         },
       ),
     );

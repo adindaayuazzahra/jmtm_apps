@@ -1,6 +1,6 @@
 import 'package:appjmtm/styles.dart';
 import 'package:appjmtm/user/Home.dart';
-import 'package:appjmtm/user/absensi.dart';
+import 'package:appjmtm/user/absensi/absensi.dart';
 import 'package:appjmtm/user/profil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

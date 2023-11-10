@@ -61,11 +61,9 @@ class NewsProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         final article = parse(response.body);
         final detailBerita = <DetailBerita>[];
-        var articleTitle = article.querySelector('h2')?.text;
-        var articleDate = article.querySelector('.text-muted')?.text;
-        var articleDescElement = article.querySelector('.deskripsi');
-        var articleDesc = articleDescElement?.text;
-
+        final articleTitle = article.querySelector('h2')?.text;
+        final articleDate = article.querySelector('.text-muted')?.text;
+        final articleDesc = article.querySelector('div.deskripsi')?.text;
         final articleImage =
             article.querySelector('img.mt-3')?.attributes['src'] ?? '';
         if (articleTitle != null && articleDate != null) {

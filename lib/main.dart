@@ -17,11 +17,12 @@ void main() {
   ));
   WidgetsFlutterBinding.ensureInitialized();
   Routes.configureRoutes();
-  // checkLoginStatus(context);
-  // runApp(const MyApp());
+
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => NewsProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<NewsProvider>(create: (_) => NewsProvider()),
+      ],
       child: MyApp(),
     ),
   );
@@ -32,7 +33,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // checkLoginStatus(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'JMTM SERVICES',
@@ -60,21 +60,18 @@ class _SplashState extends State<Splash> {
   }
 
   void _startAnimation() async {
-    await Future.delayed(Duration(seconds: 2)); // Tunggu selama 2 detik
+    await Future.delayed(Duration(seconds: 2));
     checkLoginStatus(context);
   }
 
   Future<void> checkLoginStatus(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token'); // Gantilah dengan key yang sesuai
+    final token = prefs.getString('token');
 
     if (token != null) {
       Routes.router.navigateTo(context, '/navigation',
           transition: TransitionType.fadeIn);
-      // Routes.router.navigateTo(context, '/home/$token',
-      //     transition: TransitionType.fadeIn);
     } else {
-      // Pengguna belum login, navigasi ke halaman login
       Routes.router
           .navigateTo(context, '/login', transition: TransitionType.fadeIn);
     }
