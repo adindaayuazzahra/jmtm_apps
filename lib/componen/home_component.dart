@@ -4,11 +4,53 @@ import 'package:appjmtm/provider/BeritaProvider.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
 import 'package:appjmtm/routes.dart';
 import 'package:appjmtm/styles.dart';
+import 'package:appjmtm/user/webview/webview.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+
+class MenuHeader extends StatelessWidget {
+  const MenuHeader({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        IconButton(
+          padding: EdgeInsets.zero,
+          icon: const Icon(Icons.archive_outlined),
+          color: secondaryColor,
+          iconSize: 40,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Webview(
+                  url:
+                      'https://e-sip.jmtm.co.id', // Ganti dengan URL yang diinginkan
+                  title: 'E-Sip', // Ganti dengan URL yang diinginkan
+                ),
+              ),
+            );
+          },
+        ),
+        Text(
+          "E-Sip",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 12,
+              color: Colors.black,
+              height: 1,
+              fontWeight: FontWeight.bold),
+        ),
+      ],
+    );
+  }
+}
 
 class Berita extends StatelessWidget {
   const Berita({
@@ -107,17 +149,12 @@ class Berita extends StatelessWidget {
 }
 
 class HeaderHome extends StatelessWidget {
-  const HeaderHome({
-    super.key,
-    required this.size,
-    required this.authProvider,
-  });
-
-  final Size size;
-  final AuthProvider authProvider;
+  const HeaderHome({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    Size size = MediaQuery.of(context).size;
     return SizedBox(
       height: 120,
       child: Stack(

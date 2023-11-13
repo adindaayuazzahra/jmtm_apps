@@ -17,7 +17,6 @@ class Routes {
       '/home',
       handler: Handler(
         handlerFunc: (context, parameters) {
-          // final token = parameters['token']!.first;
           return Home();
         },
       ),
@@ -39,6 +38,18 @@ class Routes {
         },
       ),
     );
+
+    // router.define(
+    //   '/webview/:url/:title',
+    //   handler: Handler(
+    //     handlerFunc: (context, params) {
+    //       final url = params['url']![0];
+    //       print('URl dari rute: $url');
+    //       final title = params['title']![0];
+    //       return Webview(url: url, title: title);
+    //     },
+    //   ),
+    // );
     router.define(
       '/berita/:id',
       handler: Handler(

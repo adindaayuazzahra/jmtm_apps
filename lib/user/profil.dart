@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Profil extends StatelessWidget {
+  const Profil({super.key});
   // final String token;
   // Profil({super.key, required this.token});
 
@@ -42,8 +43,6 @@ class Profil extends StatelessWidget {
               alignment: Alignment.centerRight,
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: ElevatedButton(
-                child: Text("Logout".toUpperCase(),
-                    style: TextStyle(fontSize: 14)),
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
@@ -60,6 +59,8 @@ class Profil extends StatelessWidget {
                   Routes.router.navigateTo(context, '/login',
                       transition: TransitionType.inFromRight, replace: true);
                 },
+                child: Text("Logout".toUpperCase(),
+                    style: TextStyle(fontSize: 14)),
               ),
             ),
             // Tampilkan data lainnya jika  .
