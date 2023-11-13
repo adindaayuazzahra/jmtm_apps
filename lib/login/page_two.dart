@@ -1,13 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:convert';
+import 'package:appjmtm/provider/UserProvider.dart';
 import 'package:appjmtm/routes.dart';
 import 'package:appjmtm/styles.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class Page_two extends StatefulWidget {
   const Page_two({super.key});
@@ -21,97 +20,97 @@ class _Page_twoState extends State<Page_two> {
   final TextEditingController passwordController = TextEditingController();
 
   // Future<void> login(BuildContext context) async {
-  Future<void> login() async {
-    final response = await http.post(
-      Uri.parse('https://apitest.proyekskripsi.site/api/login'),
-      body: {
-        'npp': nppController.text,
-        'password': passwordController.text,
-      },
-    );
+  // Future<void> login() async {
+  //   final response = await http.post(
+  //     Uri.parse('https://apitest.proyekskripsi.site/api/login'),
+  //     body: {
+  //       'npp': nppController.text,
+  //       'password': passwordController.text,
+  //     },
+  //   );
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      final token = data['token'];
+  //   if (response.statusCode == 200) {
+  //     final data = jsonDecode(response.body);
+  //     final token = data['token'];
 
-      // Simpan token ke SharedPreferences
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('token', token);
+  //     // Simpan token ke SharedPreferences
+  //     final prefs = await SharedPreferences.getInstance();
+  //     await prefs.setString('token', token);
 
-      // Navigasi ke halaman utama
-      // Navigator.of(context).pushReplacement(MaterialPageRoute(
-      //   builder: (context) => Home(token: token),
-      // ));
+  //     // Navigasi ke halaman utama
+  //     // Navigator.of(context).pushReplacement(MaterialPageRoute(
+  //     //   builder: (context) => Home(token: token),
+  //     // ));
 
-      Routes.router.navigateTo(context, '/navigation',
-          transition: TransitionType.inFromRight);
-    } else {
-      // Size size = MediaQuery.of(context).size;
-      final responseJson = jsonDecode(response.body);
-      final errorMessage = responseJson['error'];
-      // Tampilkan dialog kesalahan jika terjadi kesalahan
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            surfaceTintColor: putih,
-            backgroundColor: putih,
-            content: Container(
-              alignment: Alignment.center,
-              height: 160,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Lottie.asset('assets/lottie/silang.json'),
-                  const SizedBox(height: 20),
-                  Text(
-                    'Login Gagal \n$errorMessage'.toUpperCase(),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        height: 1.2,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontSize: 14),
-                  ),
-                ],
-              ),
-            ),
-            actions: [
-              TextButton(
-                child: Container(
-                  padding: EdgeInsets.zero,
-                  margin: EdgeInsets.zero,
-                  alignment: Alignment.center,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: secondaryColor,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Tutup'.toUpperCase(),
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: putih,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
-  }
+  //     Routes.router.navigateTo(context, '/navigation',
+  //         transition: TransitionType.inFromRight);
+  //   } else {
+  //     // Size size = MediaQuery.of(context).size;
+  //     final responseJson = jsonDecode(response.body);
+  //     final errorMessage = responseJson['error'];
+  //     // Tampilkan dialog kesalahan jika terjadi kesalahan
+  //     showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return AlertDialog(
+  //           surfaceTintColor: putih,
+  //           backgroundColor: putih,
+  //           content: Container(
+  //             alignment: Alignment.center,
+  //             height: 160,
+  //             child: Column(
+  //               mainAxisAlignment: MainAxisAlignment.center,
+  //               crossAxisAlignment: CrossAxisAlignment.center,
+  //               children: <Widget>[
+  //                 Lottie.asset('assets/lottie/silang.json'),
+  //                 const SizedBox(height: 20),
+  //                 Text(
+  //                   'Login Gagal \n$errorMessage'.toUpperCase(),
+  //                   textAlign: TextAlign.center,
+  //                   style: const TextStyle(
+  //                       height: 1.2,
+  //                       fontWeight: FontWeight.bold,
+  //                       color: Colors.black,
+  //                       fontSize: 14),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //           actions: [
+  //             TextButton(
+  //               child: Container(
+  //                 padding: EdgeInsets.zero,
+  //                 margin: EdgeInsets.zero,
+  //                 alignment: Alignment.center,
+  //                 height: 40,
+  //                 decoration: BoxDecoration(
+  //                   borderRadius: BorderRadius.circular(20),
+  //                   color: secondaryColor,
+  //                 ),
+  //                 child: Row(
+  //                   mainAxisAlignment: MainAxisAlignment.center,
+  //                   children: [
+  //                     Text(
+  //                       'Tutup'.toUpperCase(),
+  //                       style: const TextStyle(
+  //                         fontSize: 14,
+  //                         fontWeight: FontWeight.bold,
+  //                         color: putih,
+  //                       ),
+  //                     )
+  //                   ],
+  //                 ),
+  //               ),
+  //               onPressed: () {
+  //                 Navigator.of(context).pop();
+  //               },
+  //             ),
+  //           ],
+  //         );
+  //       },
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -196,9 +195,89 @@ class _Page_twoState extends State<Page_two> {
                               Size(size.width, 50.0)),
                           backgroundColor:
                               MaterialStateProperty.all<Color>(secondaryColor)),
-                      onPressed: () {
-                        login();
-                        FocusScope.of(context).unfocus();
+                      // onPressed: () {
+                      //   login();
+                      //   FocusScope.of(context).unfocus();
+                      // },
+                      onPressed: () async {
+                        try {
+                          final authProvider =
+                              Provider.of<AuthProvider>(context, listen: false);
+                          await authProvider.login(
+                              nppController, passwordController);
+
+                          Routes.router.navigateTo(context, '/navigation',
+                              transition: TransitionType.inFromRight,
+                              replace: true);
+                        } catch (e) {
+                          // Tangkap pengecualian dan tampilkan dialog kesalahan
+                          // final responseJson = jsonDecode(response.body);
+                          // final errorMessage = responseJson['error'];
+                          // Tampilkan dialog kesalahan jika terjadi kesalahan
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                surfaceTintColor: putih,
+                                backgroundColor: putih,
+                                content: Container(
+                                  alignment: Alignment.center,
+                                  height: 160,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Lottie.asset('assets/lottie/silang.json'),
+                                      const SizedBox(height: 20),
+                                      Text(
+                                        'Login Gagal \nPassword atau Username Salah!'
+                                            .toUpperCase(),
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                            height: 1.2,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                actions: [
+                                  TextButton(
+                                    child: Container(
+                                      padding: EdgeInsets.zero,
+                                      margin: EdgeInsets.zero,
+                                      alignment: Alignment.center,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: secondaryColor,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Tutup'.toUpperCase(),
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                              color: putih,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
                       },
                       child: Text(
                         "Login".toUpperCase(),

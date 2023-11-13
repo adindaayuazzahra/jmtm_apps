@@ -4,7 +4,6 @@ import 'package:appjmtm/user/absensi/absensi.dart';
 import 'package:appjmtm/user/profil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Navigation extends StatefulWidget {
   @override
@@ -12,7 +11,7 @@ class Navigation extends StatefulWidget {
 }
 
 class _NavigationState extends State<Navigation> {
-  String _token = "";
+  // String _token = "";
   int _currentIndex = 0;
   List<Widget> _pages = [];
 
@@ -20,23 +19,20 @@ class _NavigationState extends State<Navigation> {
   void initState() {
     super.initState();
     // Ambil token dari SharedPreferences atau sumber data lainnya
-    getToken(); // Buat fungsi getToken untuk mendapatkan token
-  }
-
-  void getToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    String token = prefs.getString('token') ?? "";
-
     setState(() {
-      _token = token; // Simpan token ke _token
-      _pages = [
-        Home(token: _token),
-        Absensi(token: _token),
-        Profil(token: _token),
-        // ProfileScreen(),
-      ];
-    });
+      // _token = token; // Simpan token ke _token
+      _pages = [Home(), Absensi(), Profil()];
+    }); // Buat fungsi getToken untuk mendapatkan token
   }
+
+  // void getToken() async {
+  //   // final prefs = await SharedPreferences.getInstance();
+  //   // String token = prefs.getString('token') ?? "";
+  //   setState(() {
+  //     // _token = token; // Simpan token ke _token
+  //     _pages = [Home(), Absensi(), Profil()];
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

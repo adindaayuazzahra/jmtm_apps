@@ -1,9 +1,11 @@
 import 'package:appjmtm/login/login.dart';
 import 'package:appjmtm/user/Home.dart';
+import 'package:appjmtm/user/absensi/absensi.dart';
 import 'package:appjmtm/user/berita/berita.dart';
 import 'package:appjmtm/user/berita/detail_berita.dart';
 import 'package:appjmtm/user/navigation.dart';
 import 'package:appjmtm/user/profil.dart';
+import 'package:appjmtm/user/test.dart';
 import 'package:fluro/fluro.dart';
 
 class Routes {
@@ -12,13 +14,11 @@ class Routes {
   static void configureRoutes() {
     // Definisikan rute-rute aplikasi di sini
     router.define(
-      '/home/:token',
+      '/home',
       handler: Handler(
         handlerFunc: (context, parameters) {
-          final token = parameters['token']!.first;
-          return Home(
-            token: token,
-          );
+          // final token = parameters['token']!.first;
+          return Home();
         },
       ),
     );
@@ -31,13 +31,11 @@ class Routes {
       ),
     );
     router.define(
-      '/profil/:token',
+      '/profil',
       handler: Handler(
         handlerFunc: (context, parameters) {
-          final token = parameters['token']!.first;
-          return Profil(
-            token: token,
-          );
+          // final token = parameters['token']!.first;
+          return Profil();
         },
       ),
     );
@@ -58,16 +56,17 @@ class Routes {
       '/absensi/:token',
       handler: Handler(
         handlerFunc: (context, parameters) {
-          final token = parameters['token']!.first;
-          return Profil(
-            token: token,
-          );
+          return Absensi();
         },
       ),
     );
     router.define(
       '/login',
       handler: Handler(handlerFunc: (context, parameters) => Login()),
+    );
+    router.define(
+      '/test',
+      handler: Handler(handlerFunc: (context, parameters) => Test()),
     );
     router.define(
       '/navigation',

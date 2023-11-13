@@ -1,13 +1,15 @@
 // import 'package:appjmtm/model/DetailBerita.dart';
-import 'package:appjmtm/model/berita.dart';
+import 'package:appjmtm/model/Berita.dart';
 import 'package:flutter/foundation.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 
 class NewsProvider extends ChangeNotifier {
   List<Berita> _newsList = [];
+  bool _isLoading = true; // Default value is true to show shimmer initially
 
   List<Berita> get newsList => _newsList;
+  bool get isLoading => _isLoading;
 
   List<DetailBerita> _detailberita = [];
 
@@ -15,6 +17,8 @@ class NewsProvider extends ChangeNotifier {
 
   // Fungsi untuk mengambil data berita dari sumber eksternal
   Future<void> fetchNews() async {
+    _isLoading = true;
+    notifyListeners();
     try {
       final response = await http.get(Uri.parse('https://jmtm.co.id/berita'));
 
@@ -41,8 +45,9 @@ class NewsProvider extends ChangeNotifier {
             ));
           }
         }
-
-        _newsList = newsList; // Isi _newsList dengan data berita
+        _newsList = newsList;
+        _isLoading = false;
+        // Isi _newsList dengan data berita
         notifyListeners(); // Beri tahu bahwa data telah berubah
       } else {
         throw Exception('Gagal mengambil berita');
@@ -51,6 +56,8 @@ class NewsProvider extends ChangeNotifier {
       throw Exception('Gagal mengambil berita');
     }
   }
+
+  bool get isNotEmpty => _newsList.isNotEmpty;
 
   Future<void> getBeritaById(String id) async {
     print('Mengambil detail berita dengan ID: $id');

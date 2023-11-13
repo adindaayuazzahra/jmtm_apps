@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:appjmtm/provider/berita_provider.dart';
+import 'package:appjmtm/provider/BeritaProvider.dart';
 import 'package:appjmtm/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,19 +26,8 @@ class _DetailBeritaPageState extends State<DetailBeritaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   // backgroundColor: secondaryColor,
-      //   centerTitle: true,
-      //   title: Text(
-      //     'Berita',
-      //     style: GoogleFonts.heebo(
-      //       fontWeight: FontWeight.bold,
-      //       letterSpacing: 1,
-      //     ),
-      //   ),
-      // ),
       appBar: AppBar(
-        backgroundColor: secondaryColor,
+        backgroundColor: primaryColor,
         elevation: 6,
         shadowColor: secondaryColor,
         iconTheme: IconThemeData(color: putih),
