@@ -7,26 +7,20 @@ import 'package:appjmtm/styles.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     // statusBarIconBrightness: Brightness.dark,
     // systemNavigationBarColor: Colors.transparent,
   ));
   WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('id');
+  await AuthProvider().autoLogin();
   Routes.configureRoutes();
-
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider<NewsProvider>(create: (_) => NewsProvider()),
-        ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
-      ],
-      child: MyApp(),
-    ),
-  );
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -34,14 +28,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'JMTM SERVICES',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<NewsProvider>(create: (_) => NewsProvider()),
+        ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'JMTM SERVICES',
+        theme: ThemeData(
+          splashColor: Colors.transparent,
+          colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
+          useMaterial3: true,
+        ),
+        home: Splash(),
       ),
-      home: Splash(),
     );
   }
 }
@@ -68,6 +69,8 @@ class _SplashState extends State<Splash> {
   Future<void> checkLoginStatus(BuildContext context) async {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     await authProvider.autoLogin();
+
+    // print(authProvider.isAuthenticated);
 
     if (authProvider.isAuthenticated) {
       Routes.router.navigateTo(context, '/navigation',

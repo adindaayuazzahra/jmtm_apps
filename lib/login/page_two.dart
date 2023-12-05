@@ -206,9 +206,11 @@ class _Page_twoState extends State<Page_two> {
                           await authProvider.login(
                               nppController, passwordController);
 
-                          Routes.router.navigateTo(context, '/navigation',
-                              transition: TransitionType.inFromRight,
-                              replace: true);
+                          Routes.router.navigateTo(
+                            context,
+                            '/navigation',
+                            transition: TransitionType.inFromRight,
+                          );
                         } catch (e) {
                           // Tangkap pengecualian dan tampilkan dialog kesalahan
                           // final responseJson = jsonDecode(response.body);
@@ -231,7 +233,7 @@ class _Page_twoState extends State<Page_two> {
                                       Lottie.asset('assets/lottie/silang.json'),
                                       const SizedBox(height: 20),
                                       Text(
-                                        'Login Gagal \nPassword atau Username Salah!'
+                                        'Login Gagal \nPassword atau Username Salah! '
                                             .toUpperCase(),
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(

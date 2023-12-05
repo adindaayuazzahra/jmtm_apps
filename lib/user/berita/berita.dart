@@ -4,6 +4,7 @@ import 'package:appjmtm/routes.dart';
 import 'package:appjmtm/styles.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,7 @@ class BeritaPage extends StatefulWidget {
 }
 
 class _BeritaPageState extends State<BeritaPage> {
+  // @override
   // void initState() {
   //   super.initState();
   //   final newsProvider = Provider.of<NewsProvider>(context, listen: true);
@@ -38,38 +40,42 @@ class _BeritaPageState extends State<BeritaPage> {
         shadowColor: secondaryColor,
         iconTheme: const IconThemeData(color: putih),
         centerTitle: true,
+        leading: IconButton(
+          icon: FaIcon(FontAwesomeIcons.angleLeft, size: 20),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         title: Text(
-          'Berita JMTM ',
+          'JMTM News',
           style: GoogleFonts.heebo(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w700,
             letterSpacing: 1.7,
             color: putih,
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 20),
-        child: Consumer<NewsProvider>(
-          builder: (context, newsProvider, child) {
-            final newsList = newsProvider.newsList;
-            if (newsProvider.isLoading) {
-              return ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: newsList.length,
-                itemBuilder: (context, index) {
-                  return ShimmerBerita();
-                },
-              );
-            } else if (newsProvider.isNotEmpty) {
-              return RefreshIndicator(
-                onRefresh: () async {
-                  final newsProvider =
-                      Provider.of<NewsProvider>(context, listen: false);
-                  await newsProvider.fetchNews(); // Lakukan pembaruan data
-                  setState(() {}); // Perbarui tampilan
-                },
-                child: ListView.builder(
+      body: RefreshIndicator(
+        onRefresh: () async {
+          final newsProvider =
+              Provider.of<NewsProvider>(context, listen: false);
+          await newsProvider.fetchNews(); // Lakukan pembaruan data
+          setState(() {}); // Perbarui tampilan
+        },
+        child: Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: Consumer<NewsProvider>(
+            builder: (context, newsProvider, child) {
+              final newsList = newsProvider.newsList;
+              if (newsProvider.isLoading) {
+                return ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: newsList.length,
+                  itemBuilder: (context, index) {
+                    return ShimmerBerita();
+                  },
+                );
+              } else if (newsProvider.isNotEmpty) {
+                return ListView.builder(
                   shrinkWrap: true,
                   itemCount: newsList.length,
                   itemBuilder: (context, index) {
@@ -115,6 +121,7 @@ class _BeritaPageState extends State<BeritaPage> {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 14,
+                              height: 1.1,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -130,14 +137,14 @@ class _BeritaPageState extends State<BeritaPage> {
                       ),
                     );
                   },
-                ),
-              );
-            } else {
-              return Container(
-                child: const Text('UHUYY'),
-              );
-            }
-          },
+                );
+              } else {
+                return Container(
+                  child: const Text('UHUYY'),
+                );
+              }
+            },
+          ),
         ),
       ),
     );

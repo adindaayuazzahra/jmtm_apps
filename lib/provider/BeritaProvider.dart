@@ -17,9 +17,8 @@ class NewsProvider extends ChangeNotifier {
 
   // Fungsi untuk mengambil data berita dari sumber eksternal
   Future<void> fetchNews() async {
-    _isLoading = true;
-    notifyListeners();
     try {
+      _isLoading = true;
       final response = await http.get(Uri.parse('https://jmtm.co.id/berita'));
 
       if (response.statusCode == 200) {
@@ -47,6 +46,7 @@ class NewsProvider extends ChangeNotifier {
         }
         _newsList = newsList;
         _isLoading = false;
+
         // Isi _newsList dengan data berita
         notifyListeners(); // Beri tahu bahwa data telah berubah
       } else {
@@ -60,7 +60,6 @@ class NewsProvider extends ChangeNotifier {
   bool get isNotEmpty => _newsList.isNotEmpty;
 
   Future<void> getBeritaById(String id) async {
-    print('Mengambil detail berita dengan ID: $id');
     try {
       final response =
           await http.get(Uri.parse('https://jmtm.co.id/berita/detail/$id'));
