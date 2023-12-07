@@ -47,11 +47,13 @@ dependencies:
   shimmer: ^3.0.0
   webview_flutter: ^4.4.2
   location: ^5.0.3
-  syncfusion_flutter_maps: ^23.1.44
+  syncfusion_flutter_maps: ^22.2.12
   geocoding: ^2.0.0
   intl: ^0.18.1
   font_awesome_flutter: ^10.6.0
   titled_navigation_bar: ^5.0.0-nullsafety.0
+  image_picker: ^1.0.4
+
 
 dev_dependencies:
   flutter_test:

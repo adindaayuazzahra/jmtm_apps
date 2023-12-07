@@ -76,7 +76,7 @@ class _LoginState extends State<Login> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: _currentPage == index
-                  ? Colors.deepPurple
+                  ? orange
                   : const Color.fromARGB(255, 218, 218, 218),
             ),
           );

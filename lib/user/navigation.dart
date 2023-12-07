@@ -40,7 +40,8 @@ class _NavigationState extends State<Navigation> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    // Size size = MediaQuery.of(context).size;
+
     return WillPopScope(
       onWillPop: () async {
         SystemNavigator.pop(); // Ini akan menutup aplikasi sepenuhnya.
@@ -61,7 +62,7 @@ class _NavigationState extends State<Navigation> {
           enableShadow: true,
           // inactiveStripColor: secondaryColor.withOpacity(0.5),
           indicatorHeight: 5,
-          // height: 0,
+          // height: 50,
           // inactiveStripColor: orange,
           items: [
             TitledNavigationBarItem(
@@ -76,7 +77,7 @@ class _NavigationState extends State<Navigation> {
                 ),
               ),
               icon: FaIcon(
-                FontAwesomeIcons.tent,
+                FontAwesomeIcons.road,
                 color: kuning,
               ),
             ),
@@ -108,7 +109,7 @@ class _NavigationState extends State<Navigation> {
                 ),
               ),
               icon: FaIcon(
-                FontAwesomeIcons.userAstronaut,
+                FontAwesomeIcons.helmetSafety,
                 color: kuning,
               ),
             ),
