@@ -1,8 +1,12 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously, unnecessary_string_interpolations
 
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import 'package:appjmtm/provider/UserProvider.dart';
 import 'package:appjmtm/styles.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:google_fonts/google_fonts.dart';
@@ -10,6 +14,8 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
+import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -21,84 +27,7 @@ class Absensi extends StatefulWidget {
 class _AbsensiState extends State<Absensi> {
   late StreamController<DateTime> _streamController;
   late DateTime _currentTime;
-  XFile? _image;
-
-  Future<void> _getImage() async {
-    final pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.camera,
-      preferredCameraDevice: CameraDevice.front,
-    );
-
-    if (pickedFile != null) {
-      setState(() {
-        _image = XFile(pickedFile.path);
-      });
-    }
-  }
-
-  Future<void> _sendAttendance() async {
-    if (_image == null) {
-      // Handle the case where no image is selected
-      return;
-    }
-
-    // Get the location
-    final locationData = await _currenctLocation();
-    if (locationData == null) {
-      // Handle the case where location data is not available
-      return;
-    }
-
-    // Get the address
-    final address =
-        await _getAddress(locationData.latitude!, locationData.longitude!);
-    if (address == null) {
-      // Handle the case where address is not available
-      return;
-    }
-
-    //get tanggal dan jam
-    final DateTime tanggalHariIni = DateTime.now();
-    final DateTime jam = DateTime.now();
-
-    final String formattedDate =
-        DateFormat('d-M-yyyy', 'id').format(tanggalHariIni);
-    final String formattedTime = DateFormat('HH:mm:ss', 'id').format(jam);
-
-    // Prepare your API request
-    final apiUrl = 'YOUR_API_ENDPOINT';
-    final apiBody = {
-      'latitude': locationData.latitude.toString(),
-      'longitude': locationData.longitude.toString(),
-      'address': address.toString(),
-      'tanggal': formattedDate.toString(),
-      'masuk': formattedTime.toString(),
-      // Add other necessary parameters
-    };
-
-    // Prepare the multipart request
-    final request = http.MultipartRequest('POST', Uri.parse(apiUrl))
-      ..fields.addAll(apiBody)
-      ..files.add(await http.MultipartFile.fromPath('image', _image!.path));
-
-    print(apiBody.values);
-
-    // print(_image);
-
-    try {
-      final response = await request.send();
-      if (response.statusCode == 200) {
-        // Handle a successful response from the API
-        print('Attendance sent successfully!');
-      } else {
-        // Handle other response statuses
-        print('Failed to send attendance. Status code: ${response.statusCode}');
-      }
-    } catch (e) {
-      // Handle network errors or other exceptions
-      print('Error sending attendance: $e');
-    }
-  }
+  File? _image;
 
   @override
   void initState() {
@@ -155,13 +84,487 @@ class _AbsensiState extends State<Absensi> {
     return null;
   }
 
+  Future<void> _getImage() async {
+    final pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+      preferredCameraDevice: CameraDevice.front,
+    );
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+      print('Image picked successfully: ${_image?.path}');
+    } else {
+      print('Image picking canceled');
+    }
+  }
+
+  // Future<void> _sendAttendance() async {
+  //   final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+  //   final pickedFile = await ImagePicker().pickImage(
+  //     source: ImageSource.camera,
+  //     preferredCameraDevice: CameraDevice.front,
+  //   );
+
+  //   if (pickedFile != null) {
+  //     setState(() {
+  //       _image = File(pickedFile.path);
+  //     });
+  //     print('Image picked successfully: ${_image?.path}');
+  //   } else {
+  //     print('Image picking canceled');
+  //   }
+  //   if (_image == null) {
+  //     print('ga ada foto');
+  //     return;
+  //   }
+
+  //   // Get the location
+  //   final locationData = await _currenctLocation();
+  //   if (locationData == null) {
+  //     print('ga ada lokasi');
+  //     return;
+  //   }
+
+  //   // Get the address
+  //   final address =
+  //       await _getAddress(locationData.latitude!, locationData.longitude!);
+  //   if (address == null) {
+  //     print('ga ada alamat');
+  //     return;
+  //   }
+
+  //   //get tanggal dan jam
+  //   final DateTime tanggalHariIni = DateTime.now();
+  //   final DateTime jam = DateTime.now();
+
+  //   final String formattedDate =
+  //       DateFormat('d-M-yyyy', 'id').format(tanggalHariIni);
+  //   final String formattedTime = DateFormat('HH:mm:ss', 'id').format(jam);
+
+  //   // Prepare your API request
+  //   const apiUrl = 'http://192.168.2.65:8000/absensi';
+  //   final apiBody = {
+  //     'npp': '${authProvider.user.user.dakar.npp}',
+  //     'latitude': locationData.latitude.toString(),
+  //     'longitude': locationData.longitude.toString(),
+  //     'address': address.toString(),
+  //     'tanggal': formattedDate.toString(),
+  //     'masuk': formattedTime.toString(),
+  //     'keluar': '',
+  //     'status': '0',
+  //     'validate': 'ANAKKAMPRETMAULEWAT',
+  //     // Add other necessary parameters
+  //   };
+
+  //   print('API URL: $apiUrl');
+  //   print('API Body: $apiBody');
+  //   print('Image Path: ${_image?.path}');
+  //   // Prepare the multipart request
+  //   final request = http.MultipartRequest('POST', Uri.parse(apiUrl))
+  //     ..fields.addAll(apiBody)
+  //     ..files.add(await http.MultipartFile.fromPath('image', _image!.path));
+
+  //   try {
+  //     // Print request headers and fields for debugging
+  //     print('Request Headers: ${request.headers}');
+  //     print('Request Fields: ${request.fields}');
+
+  //     final response = await request.send();
+
+  //     // Print response details for debugging
+  //     print('Response Headers: ${response.headers}');
+  //     print('Response Status Code: ${response.statusCode}');
+
+  //     if (response.statusCode == 200) {
+  //       // Handle a successful response from the API
+  //       print('Attendance sent successfully!');
+  //     } else {
+  //       // Handle other response statuses
+  //       print('Failed to send attendance. Status code: ${response.statusCode}');
+  //     }
+  //   } catch (e) {
+  //     // Handle network errors or other exceptions
+  //     print('Error sending attendance: $e');
+  //   }
+  // }
+
+  // Future<void> _sendAttendance() async {
+  //   final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+  //   final pickedFile = await ImagePicker().pickImage(
+  //     source: ImageSource.camera,
+  //     preferredCameraDevice: CameraDevice.front,
+  //   );
+
+  //   if (pickedFile == null) {
+  //     print('Image picking canceled');
+  //     return;
+  //   }
+
+  //   final imageFile = File(pickedFile.path);
+
+  //   var bytes = await rootBundle.load(imageFile);
+  //   var buffer = bytes.buffer;
+  //   var imageBytes =
+  //       buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
+
+  //   // Encode the bytes
+  //   var base64Image = base64Encode(imageBytes);
+
+  //   // if (pickedFile != null) {
+  //   //   setState(() {
+  //   //     _image = File(pickedFile.path);
+  //   //   });
+  //   //   print('Image picked successfully: ${_image?.path}');
+  //   // } else {
+  //   //   print('Image picking canceled');
+  //   // }
+  //   // if (_image == null) {
+  //   //   print('ga ada foto');
+  //   //   return;
+  //   // }
+
+  //   // Get the location
+  //   final locationData = await _currenctLocation();
+  //   if (locationData == null) {
+  //     print('ga ada lokasi');
+  //     return;
+  //   }
+
+  //   // Get the address
+  //   final address =
+  //       await _getAddress(locationData.latitude!, locationData.longitude!);
+  //   if (address == null) {
+  //     print('ga ada alamat');
+  //     return;
+  //   }
+
+  //   // get tanggal dan jam
+  //   final DateTime tanggalHariIni = DateTime.now();
+  //   final DateTime jam = DateTime.now();
+
+  //   final String formattedDate =
+  //       DateFormat('d-M-yyyy', 'id').format(tanggalHariIni);
+  //   final String formattedTime = DateFormat('HH:mm:ss', 'id').format(jam);
+
+  //   // Prepare your API request
+  //   final apiUrl = 'http://192.168.2.65:8000/absensi';
+
+  //   try {
+  //     final response = await http.post(
+  //       Uri.parse(apiUrl),
+  //       body: {
+  //         'npp': '${authProvider.user.user.dakar.npp}',
+  //         'latitude': locationData.latitude.toString(),
+  //         'longitude': locationData.longitude.toString(),
+  //         'address': address,
+  //         'tanggal': formattedDate,
+  //         'masuk': formattedTime,
+  //         'keluar': '',
+  //         'status': '0',
+  //         'validate': 'ANAKKAMPRETMAULEWAT',
+  //         'image': base64Image,
+  //       },
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       // Handle a successful response from the API
+  //       print('Attendance sent successfully!');
+  //     } else {
+  //       // Handle other response statuses
+  //       print('Failed to send attendance. Status code: ${response.statusCode}');
+  //     }
+  //   } catch (e) {
+  //     // Handle network errors or other exceptions
+  //     print('Error sending attendance: $e');
+  //   }
+  // }
+
+  // Future<void> _sendAttendance() async {
+  //   final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+  //   final pickedFile = await ImagePicker().pickImage(
+  //     source: ImageSource.camera,
+  //     preferredCameraDevice: CameraDevice.front,
+  //   );
+
+  //   if (pickedFile == null) {
+  //     print('Image picking canceled');
+  //     return;
+  //   }
+
+  //   final imageFile = File(pickedFile.path);
+
+  //   try {
+  //     final imageBytes = await imageFile.readAsBytes();
+  //     var base64Image = base64Encode(imageBytes);
+
+  //     // Get the location
+  //     final locationData = await _currenctLocation();
+  //     if (locationData == null) {
+  //       print('ga ada lokasi');
+  //       return;
+  //     }
+
+  //     // Get the address
+  //     final address =
+  //         await _getAddress(locationData.latitude!, locationData.longitude!);
+  //     if (address == null) {
+  //       print('ga ada alamat');
+  //       return;
+  //     }
+
+  //     // get tanggal dan jam
+  //     final DateTime tanggalHariIni = DateTime.now();
+  //     final DateTime jam = DateTime.now();
+
+  //     final String formattedDate =
+  //         DateFormat('d-M-yyyy', 'id').format(tanggalHariIni);
+  //     final String formattedTime = DateFormat('HH:mm:ss', 'id').format(jam);
+  //     final apiBody = {
+  //       'npp': '${authProvider.user.user.dakar.npp}',
+  //       'latitude': locationData.latitude.toString(),
+  //       'longitude': locationData.longitude.toString(),
+  //       'address': address,
+  //       'tanggal': formattedDate,
+  //       'masuk': formattedTime,
+  //       'keluar': '',
+  //       'status': '0',
+  //       'validate': 'ANAKKAMPRETMAULEWAT',
+  //       'image': base64Image,
+  //     };
+  //     // Prepare your API request
+  //     final apiUrl = 'http://192.168.2.65:8000/absensi';
+
+  //     final response = await http.post(
+  //       Uri.parse(apiUrl),
+  //       body: {
+  //         'npp': '${authProvider.user.user.dakar.npp}',
+  //         'latitude': locationData.latitude.toString(),
+  //         'longitude': locationData.longitude.toString(),
+  //         'address': address,
+  //         'tanggal': formattedDate,
+  //         'masuk': formattedTime,
+  //         'keluar': '',
+  //         'status': '0',
+  //         'validate': 'ANAKKAMPRETMAULEWAT',
+  //         'image': base64Image,
+  //       },
+  //     );
+  //     print(apiBody);
+  //     if (response.statusCode == 200) {
+  //       // Handle a successful response from the API
+  //       print('Attendance sent successfully!');
+  //     } else {
+  //       // Handle other response statuses
+  //       print('Failed to send attendance. Status code: ${response.statusCode}');
+  //     }
+  //   } catch (e) {
+  //     // Handle network errors or other exceptions
+  //     print('Error sending attendance: $e');
+  //   }
+  // }
+
+  Future<void> sendDataAndImageToApi() async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    final pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+      preferredCameraDevice: CameraDevice.front,
+    );
+
+    if (pickedFile == null) {
+      print('Image picking canceled');
+      return;
+    }
+
+    //DATA
+    // Get the location
+    final locationData = await _currenctLocation();
+    if (locationData == null) {
+      print('ga ada lokasi');
+      return;
+    }
+
+    // Get the address
+    final address =
+        await _getAddress(locationData.latitude!, locationData.longitude!);
+    if (address == null) {
+      print('ga ada alamat');
+      return;
+    }
+
+    // get tanggal dan jam
+    final DateTime tanggalHariIni = DateTime.now();
+    final DateTime jam = DateTime.now();
+    final String formattedDate =
+        DateFormat('d-M-yyyy', 'id').format(tanggalHariIni);
+    final String formattedTime = DateFormat('HH:mm:ss', 'id').format(jam);
+    final npp = '${authProvider.user.user.dakar.npp}';
+    final latitude = locationData.latitude.toString();
+    final longitude = locationData.longitude.toString();
+    final keluar = '';
+    final status = '0';
+    final validate = 'ANAKKAMPRETMAULEWAT';
+    final imageFile = File(pickedFile.path);
+
+    // final compressedImage = await compressImage(File(pickedFile.path));
+
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse('http://192.168.2.65:8000/absensi'),
+    );
+
+    // Menambahkan data dan gambar ke request
+    request.fields['npp'] = npp;
+    request.fields['latitude'] = latitude;
+    request.fields['longitude'] = longitude;
+    request.fields['masuk'] = formattedTime;
+    request.fields['tanggal'] = formattedDate;
+    request.fields['keluar'] = keluar;
+    request.fields['alamat'] = address;
+    request.fields['status'] = status;
+    request.fields['validate'] = validate;
+    request.files.add(await http.MultipartFile.fromPath('image', imageFile.path,
+        filename: '${npp} ${formattedTime} ${formattedDate}.jpg'));
+    // request.files.add(http.MultipartFile.fromBytes('image', compressedImage));
+
+    // Mengirim request
+    var response = await request.send();
+
+    if (response.statusCode == 200) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            icon: Lottie.asset('assets/lottie/berhasil.json', height: 100),
+            surfaceTintColor: putih,
+            backgroundColor: putih,
+            content: Text(
+              'BERHASIL MELAKUKAN PRESENSI MASUK',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  height: 1.2,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  fontSize: 14),
+            ),
+            actions: [
+              TextButton(
+                child: Container(
+                  padding: EdgeInsets.zero,
+                  margin: EdgeInsets.zero,
+                  alignment: Alignment.center,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: secondaryColor,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Tutup'.toUpperCase(),
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: putih,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setState(() {});
+                },
+              ),
+            ],
+          );
+        },
+      );
+      print(
+          'Berhasil Mengirim Data dan Gambar ke API. Status code: ${response.statusCode}');
+    } else {
+      final uhuy = await response.stream.bytesToString();
+      final jsonData = json.decode(uhuy);
+      final erorrData = json.encode(jsonData);
+      print(erorrData);
+      // print(uhuy[]);
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            icon: Lottie.asset('assets/lottie/silang.json', height: 100),
+            surfaceTintColor: putih,
+            backgroundColor: putih,
+            content: Text(
+              'xwx',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  height: 1.2,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  fontSize: 14),
+            ),
+            actions: [
+              TextButton(
+                child: Container(
+                  padding: EdgeInsets.zero,
+                  margin: EdgeInsets.zero,
+                  alignment: Alignment.center,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: secondaryColor,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Tutup'.toUpperCase(),
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: putih,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setState(() {});
+                },
+              ),
+            ],
+          );
+        },
+      );
+      print(
+          'Gagal mengirim data dan gambar ke API. Status code: ${response.statusCode}');
+      // print('Response message: ${await response.stream.bytesToString()}');
+    }
+  }
+
+  // Future<List<int>> compressImage(File imageFile) async {
+  //   // Mengompres gambar dengan flutter_image_compress
+  //   List<int> result = await FlutterImageCompress.compressWithList(
+  //     imageFile.readAsBytesSync(),
+  //     quality: 60, // Sesuaikan kualitas kompresi (0 - 100)
+  //   );
+
+  //   return result;
+  // }
+
   @override
   Widget build(BuildContext context) {
     DateTime tanggalHariIni = DateTime.now();
-    // String formattedDate =
-    //     "${tanggalHariIni.day}-${tanggalHariIni.month}-${tanggalHariIni.year}";
+
     String formattedDate = DateFormat('d MMM y', 'id').format(tanggalHariIni);
-    // String formattedjam = DateFormat('h:mm a', 'id').format(tanggalHariIni);
 
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -171,9 +574,21 @@ class _AbsensiState extends State<Absensi> {
         elevation: 6,
         shadowColor: secondaryColor,
         iconTheme: const IconThemeData(color: putih),
-        centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            icon: const FaIcon(
+              FontAwesomeIcons.clockRotateLeft,
+              size: 20,
+            ),
+            // tooltip: 'Show Snackbar',
+            onPressed: () {
+              // ScaffoldMessenger.of(context).showSnackBar(
+              //     const SnackBar(content: Text('This is a snackbar')));
+            },
+          ),
+        ],
         title: Text(
-          'Absensi',
+          'Presensi',
           style: GoogleFonts.heebo(
             fontWeight: FontWeight.bold,
             letterSpacing: 1.7,
@@ -363,9 +778,11 @@ class _AbsensiState extends State<Absensi> {
                                   Container(
                                     width: size.width,
                                     child: ElevatedButton(
-                                      onPressed: () async {
-                                        await _sendAttendance();
-                                        await _getImage();
+                                      onPressed: () {
+                                        // await _getImage();
+                                        // await _sendAttendance();
+                                        sendDataAndImageToApi();
+                                        // print('Button Pressed');
                                       },
                                       style: ButtonStyle(
                                         backgroundColor:

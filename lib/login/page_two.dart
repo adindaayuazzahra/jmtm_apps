@@ -127,30 +127,19 @@ class _Page_twoState extends State<Page_two> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
+                                icon: Lottie.asset('assets/lottie/silang.json',
+                                    height: 130),
                                 surfaceTintColor: putih,
                                 backgroundColor: putih,
-                                content: Container(
-                                  alignment: Alignment.center,
-                                  height: 160,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Lottie.asset('assets/lottie/silang.json'),
-                                      const SizedBox(height: 20),
-                                      Text(
-                                        'Login Gagal \nPassword atau Username Salah! '
-                                            .toUpperCase(),
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                            height: 1.2,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                            fontSize: 14),
-                                      ),
-                                    ],
-                                  ),
+                                content: Text(
+                                  'Login Gagal \nPassword atau Username Salah! '
+                                      .toUpperCase(),
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                      height: 1.2,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: 14),
                                 ),
                                 actions: [
                                   TextButton(

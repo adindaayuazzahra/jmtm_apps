@@ -44,7 +44,7 @@ class HeaderMenu extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => Webtampil(
                     url:
-                        'http://192.168.2.126:3038', // Ganti dengan URL yang diinginkan
+                        'http://192.168.2.65:3038', // Ganti dengan URL yang diinginkan
                     title: 'IT-SERVICES',
                     authProvider: authProvider,
                     // Ganti dengan URL yang diinginkan
@@ -247,12 +247,12 @@ class HeaderHome extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 35,
-                        // backgroundImage: NetworkImage(authProvider
-                        //         .user.user.dakar.foto_link.isNotEmpty
-                        //     ? "http://192.168.2.126:8080/fotoUser/${authProvider.user.user.dakar.foto_link}"
-                        //     : 'https://www.copaster.com/wp-content/uploads/2023/03/pp-kosong-wa-default.jpeg'),
-                        backgroundImage: NetworkImage(
-                            'https://www.copaster.com/wp-content/uploads/2023/03/pp-kosong-wa-default.jpeg'),
+                        backgroundImage: NetworkImage(authProvider
+                                .user.user.dakar.foto_link.isNotEmpty
+                            ? "http://192.168.2.65:8080/fotoUser/${authProvider.user.user.dakar.foto_link}"
+                            : 'https://www.copaster.com/wp-content/uploads/2023/03/pp-kosong-wa-default.jpeg'),
+                        // backgroundImage: NetworkImage(
+                        //     'https://www.copaster.com/wp-content/uploads/2023/03/pp-kosong-wa-default.jpeg'),
                       ),
                     ],
                   ),
@@ -269,8 +269,8 @@ class HeaderHome extends StatelessWidget {
                             Container(
                               width: size.width * 0.54,
                               child: Text(
-                                '${authProvider.user.nama}',
-                                // '${authProvider.user.user.dakar.nama}',
+                                // '${authProvider.user.nama}',
+                                '${authProvider.user.user.dakar.nama}',
                                 // textAlign: TextAlign.center,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
@@ -287,8 +287,8 @@ class HeaderHome extends StatelessWidget {
                             Container(
                               width: size.width * 0.54,
                               child: Text(
-                                '(${authProvider.user.npp}) - ${authProvider.user.jabatan}',
-                                // '(${authProvider.user.user.dakar.npp}) - ${authProvider.user.user.dajab.jabatan}',
+                                // '(${authProvider.user.npp}) - ${authProvider.user.jabatan}',
+                                '${authProvider.user.user.dakar.npp} - ${authProvider.user.user.dajab.jabatan}',
                                 // textAlign: TextAlign.center,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,

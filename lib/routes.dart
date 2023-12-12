@@ -55,7 +55,6 @@ class Routes {
       handler: Handler(
         handlerFunc: (context, parameters) {
           final id = parameters['id']!.first;
-          print('ID dari rute: $id');
           return DetailBeritaPage(
             id: id,
           );

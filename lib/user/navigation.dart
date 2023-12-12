@@ -83,7 +83,7 @@ class _NavigationState extends State<Navigation> {
             ),
             TitledNavigationBarItem(
               title: Text(
-                'Absensi',
+                'Presensi',
                 style: TextStyle(
                   // fontSize: 10,
                   fontWeight: FontWeight.bold,
