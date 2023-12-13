@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:appjmtm/provider/UserProvider.dart';
 import 'package:appjmtm/styles.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +61,7 @@ class Webtampil extends StatefulWidget {
   final String url;
   final String title;
   final AuthProvider authProvider;
-  Webtampil(
+  const Webtampil(
       {Key? key,
       required this.url,
       required this.title,

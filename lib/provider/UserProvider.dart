@@ -77,6 +77,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 // }
 
 class AuthProvider with ChangeNotifier {
+  // final AbsenProvider? absenProvider;
+
+  // AuthProvider(this.absenProvider);
+
   late User _user = User(
     user: UserClass(
       dajab: Dajab(
@@ -102,7 +106,6 @@ class AuthProvider with ChangeNotifier {
       id_master_akses: 0,
     ),
   );
-
   bool get isAuthenticated => _user.user.dakar.npp.isNotEmpty;
 
   User get user => _user;
@@ -174,7 +177,7 @@ class AuthProvider with ChangeNotifier {
         id_master_akses: 0,
       ),
     );
-
+    // absenProvider?.resetDataAbsen();
     notifyListeners();
   }
 

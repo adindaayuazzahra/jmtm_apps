@@ -460,9 +460,7 @@ class BeritaHome extends StatelessWidget {
             },
           );
         } else {
-          return Container(
-            child: const Text('UHUYY'),
-          );
+          return CircularProgressIndicator();
         }
       },
     );

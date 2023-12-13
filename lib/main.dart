@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously, prefer_const_constructors
 
+import 'package:appjmtm/provider/AbsenProvider.dart';
 import 'package:appjmtm/provider/BeritaProvider.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
 import 'package:appjmtm/routes.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<NewsProvider>(create: (_) => NewsProvider()),
         ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
+        ChangeNotifierProvider<AbsenProvider>(create: (_) => AbsenProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

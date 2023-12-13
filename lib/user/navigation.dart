@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_const_constructors
-
+import 'package:appjmtm/provider/UserProvider.dart';
 import 'package:appjmtm/styles.dart';
 import 'package:appjmtm/user/Home.dart';
 import 'package:appjmtm/user/absensi/absensi.dart';
@@ -7,7 +7,11 @@ import 'package:appjmtm/user/profil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:titled_navigation_bar/titled_navigation_bar.dart';
+
+import '../provider/AbsenProvider.dart';
 
 class Navigation extends StatefulWidget {
   @override
@@ -22,21 +26,22 @@ class _NavigationState extends State<Navigation> {
   @override
   void initState() {
     super.initState();
-    // Ambil token dari SharedPreferences atau sumber data lainnya
+    final DateTime tanggalHariIni = DateTime.now();
+    final String formattedDate =
+        DateFormat('yyyy-M-d', 'id').format(tanggalHariIni);
+    final absenProvider = Provider.of<AbsenProvider>(context, listen: false);
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final npp = '${authProvider.user.user.dakar.npp}';
+    absenProvider.fetchDataAbsen(npp, formattedDate);
+    // print('halaman home : ${absenProvider.absenData.absen.length}');
+
+    // final newsProvider = Provider.of<NewsProvider>(context, listen: false);
+    // newsProvider.fetchNews();
     setState(() {
       // _token = token; // Simpan token ke _token
       _pages = [Home(), Absensi(), Profil()];
     }); // Buat fungsi getToken untuk mendapatkan token
   }
-
-  // void getToken() async {
-  //   // final prefs = await SharedPreferences.getInstance();
-  //   // String token = prefs.getString('token') ?? "";
-  //   setState(() {
-  //     // _token = token; // Simpan token ke _token
-  //     _pages = [Home(), Absensi(), Profil()];
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {

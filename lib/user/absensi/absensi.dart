@@ -3,8 +3,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:appjmtm/provider/AbsenProvider.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
 import 'package:appjmtm/styles.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -27,21 +29,26 @@ class Absensi extends StatefulWidget {
 class _AbsensiState extends State<Absensi> {
   late StreamController<DateTime> _streamController;
   late DateTime _currentTime;
-  File? _image;
+  // File? _image;
 
   @override
   void initState() {
     super.initState();
+
     _streamController = StreamController<DateTime>();
     _currentTime = DateTime.now();
 
     // Setiap detik, tambahkan waktu sekarang ke stream
     Timer.periodic(Duration(seconds: 1), (timer) {
       _currentTime = DateTime.now();
-      if (!_streamController.isClosed) {
-        _streamController.add(_currentTime);
+      if (mounted) {
+        _currentTime = DateTime.now();
+        if (!_streamController.isClosed) {
+          _streamController.add(_currentTime);
+        }
       }
     });
+    // Memanggil metode fetchData saat halaman diinisialisasi
   }
 
   Future<LocationData?> _currenctLocation() async {
@@ -84,290 +91,6 @@ class _AbsensiState extends State<Absensi> {
     return null;
   }
 
-  Future<void> _getImage() async {
-    final pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.camera,
-      preferredCameraDevice: CameraDevice.front,
-    );
-
-    if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-      });
-      print('Image picked successfully: ${_image?.path}');
-    } else {
-      print('Image picking canceled');
-    }
-  }
-
-  // Future<void> _sendAttendance() async {
-  //   final authProvider = Provider.of<AuthProvider>(context, listen: false);
-
-  //   final pickedFile = await ImagePicker().pickImage(
-  //     source: ImageSource.camera,
-  //     preferredCameraDevice: CameraDevice.front,
-  //   );
-
-  //   if (pickedFile != null) {
-  //     setState(() {
-  //       _image = File(pickedFile.path);
-  //     });
-  //     print('Image picked successfully: ${_image?.path}');
-  //   } else {
-  //     print('Image picking canceled');
-  //   }
-  //   if (_image == null) {
-  //     print('ga ada foto');
-  //     return;
-  //   }
-
-  //   // Get the location
-  //   final locationData = await _currenctLocation();
-  //   if (locationData == null) {
-  //     print('ga ada lokasi');
-  //     return;
-  //   }
-
-  //   // Get the address
-  //   final address =
-  //       await _getAddress(locationData.latitude!, locationData.longitude!);
-  //   if (address == null) {
-  //     print('ga ada alamat');
-  //     return;
-  //   }
-
-  //   //get tanggal dan jam
-  //   final DateTime tanggalHariIni = DateTime.now();
-  //   final DateTime jam = DateTime.now();
-
-  //   final String formattedDate =
-  //       DateFormat('d-M-yyyy', 'id').format(tanggalHariIni);
-  //   final String formattedTime = DateFormat('HH:mm:ss', 'id').format(jam);
-
-  //   // Prepare your API request
-  //   const apiUrl = 'http://192.168.2.65:8000/absensi';
-  //   final apiBody = {
-  //     'npp': '${authProvider.user.user.dakar.npp}',
-  //     'latitude': locationData.latitude.toString(),
-  //     'longitude': locationData.longitude.toString(),
-  //     'address': address.toString(),
-  //     'tanggal': formattedDate.toString(),
-  //     'masuk': formattedTime.toString(),
-  //     'keluar': '',
-  //     'status': '0',
-  //     'validate': 'ANAKKAMPRETMAULEWAT',
-  //     // Add other necessary parameters
-  //   };
-
-  //   print('API URL: $apiUrl');
-  //   print('API Body: $apiBody');
-  //   print('Image Path: ${_image?.path}');
-  //   // Prepare the multipart request
-  //   final request = http.MultipartRequest('POST', Uri.parse(apiUrl))
-  //     ..fields.addAll(apiBody)
-  //     ..files.add(await http.MultipartFile.fromPath('image', _image!.path));
-
-  //   try {
-  //     // Print request headers and fields for debugging
-  //     print('Request Headers: ${request.headers}');
-  //     print('Request Fields: ${request.fields}');
-
-  //     final response = await request.send();
-
-  //     // Print response details for debugging
-  //     print('Response Headers: ${response.headers}');
-  //     print('Response Status Code: ${response.statusCode}');
-
-  //     if (response.statusCode == 200) {
-  //       // Handle a successful response from the API
-  //       print('Attendance sent successfully!');
-  //     } else {
-  //       // Handle other response statuses
-  //       print('Failed to send attendance. Status code: ${response.statusCode}');
-  //     }
-  //   } catch (e) {
-  //     // Handle network errors or other exceptions
-  //     print('Error sending attendance: $e');
-  //   }
-  // }
-
-  // Future<void> _sendAttendance() async {
-  //   final authProvider = Provider.of<AuthProvider>(context, listen: false);
-
-  //   final pickedFile = await ImagePicker().pickImage(
-  //     source: ImageSource.camera,
-  //     preferredCameraDevice: CameraDevice.front,
-  //   );
-
-  //   if (pickedFile == null) {
-  //     print('Image picking canceled');
-  //     return;
-  //   }
-
-  //   final imageFile = File(pickedFile.path);
-
-  //   var bytes = await rootBundle.load(imageFile);
-  //   var buffer = bytes.buffer;
-  //   var imageBytes =
-  //       buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
-
-  //   // Encode the bytes
-  //   var base64Image = base64Encode(imageBytes);
-
-  //   // if (pickedFile != null) {
-  //   //   setState(() {
-  //   //     _image = File(pickedFile.path);
-  //   //   });
-  //   //   print('Image picked successfully: ${_image?.path}');
-  //   // } else {
-  //   //   print('Image picking canceled');
-  //   // }
-  //   // if (_image == null) {
-  //   //   print('ga ada foto');
-  //   //   return;
-  //   // }
-
-  //   // Get the location
-  //   final locationData = await _currenctLocation();
-  //   if (locationData == null) {
-  //     print('ga ada lokasi');
-  //     return;
-  //   }
-
-  //   // Get the address
-  //   final address =
-  //       await _getAddress(locationData.latitude!, locationData.longitude!);
-  //   if (address == null) {
-  //     print('ga ada alamat');
-  //     return;
-  //   }
-
-  //   // get tanggal dan jam
-  //   final DateTime tanggalHariIni = DateTime.now();
-  //   final DateTime jam = DateTime.now();
-
-  //   final String formattedDate =
-  //       DateFormat('d-M-yyyy', 'id').format(tanggalHariIni);
-  //   final String formattedTime = DateFormat('HH:mm:ss', 'id').format(jam);
-
-  //   // Prepare your API request
-  //   final apiUrl = 'http://192.168.2.65:8000/absensi';
-
-  //   try {
-  //     final response = await http.post(
-  //       Uri.parse(apiUrl),
-  //       body: {
-  //         'npp': '${authProvider.user.user.dakar.npp}',
-  //         'latitude': locationData.latitude.toString(),
-  //         'longitude': locationData.longitude.toString(),
-  //         'address': address,
-  //         'tanggal': formattedDate,
-  //         'masuk': formattedTime,
-  //         'keluar': '',
-  //         'status': '0',
-  //         'validate': 'ANAKKAMPRETMAULEWAT',
-  //         'image': base64Image,
-  //       },
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       // Handle a successful response from the API
-  //       print('Attendance sent successfully!');
-  //     } else {
-  //       // Handle other response statuses
-  //       print('Failed to send attendance. Status code: ${response.statusCode}');
-  //     }
-  //   } catch (e) {
-  //     // Handle network errors or other exceptions
-  //     print('Error sending attendance: $e');
-  //   }
-  // }
-
-  // Future<void> _sendAttendance() async {
-  //   final authProvider = Provider.of<AuthProvider>(context, listen: false);
-
-  //   final pickedFile = await ImagePicker().pickImage(
-  //     source: ImageSource.camera,
-  //     preferredCameraDevice: CameraDevice.front,
-  //   );
-
-  //   if (pickedFile == null) {
-  //     print('Image picking canceled');
-  //     return;
-  //   }
-
-  //   final imageFile = File(pickedFile.path);
-
-  //   try {
-  //     final imageBytes = await imageFile.readAsBytes();
-  //     var base64Image = base64Encode(imageBytes);
-
-  //     // Get the location
-  //     final locationData = await _currenctLocation();
-  //     if (locationData == null) {
-  //       print('ga ada lokasi');
-  //       return;
-  //     }
-
-  //     // Get the address
-  //     final address =
-  //         await _getAddress(locationData.latitude!, locationData.longitude!);
-  //     if (address == null) {
-  //       print('ga ada alamat');
-  //       return;
-  //     }
-
-  //     // get tanggal dan jam
-  //     final DateTime tanggalHariIni = DateTime.now();
-  //     final DateTime jam = DateTime.now();
-
-  //     final String formattedDate =
-  //         DateFormat('d-M-yyyy', 'id').format(tanggalHariIni);
-  //     final String formattedTime = DateFormat('HH:mm:ss', 'id').format(jam);
-  //     final apiBody = {
-  //       'npp': '${authProvider.user.user.dakar.npp}',
-  //       'latitude': locationData.latitude.toString(),
-  //       'longitude': locationData.longitude.toString(),
-  //       'address': address,
-  //       'tanggal': formattedDate,
-  //       'masuk': formattedTime,
-  //       'keluar': '',
-  //       'status': '0',
-  //       'validate': 'ANAKKAMPRETMAULEWAT',
-  //       'image': base64Image,
-  //     };
-  //     // Prepare your API request
-  //     final apiUrl = 'http://192.168.2.65:8000/absensi';
-
-  //     final response = await http.post(
-  //       Uri.parse(apiUrl),
-  //       body: {
-  //         'npp': '${authProvider.user.user.dakar.npp}',
-  //         'latitude': locationData.latitude.toString(),
-  //         'longitude': locationData.longitude.toString(),
-  //         'address': address,
-  //         'tanggal': formattedDate,
-  //         'masuk': formattedTime,
-  //         'keluar': '',
-  //         'status': '0',
-  //         'validate': 'ANAKKAMPRETMAULEWAT',
-  //         'image': base64Image,
-  //       },
-  //     );
-  //     print(apiBody);
-  //     if (response.statusCode == 200) {
-  //       // Handle a successful response from the API
-  //       print('Attendance sent successfully!');
-  //     } else {
-  //       // Handle other response statuses
-  //       print('Failed to send attendance. Status code: ${response.statusCode}');
-  //     }
-  //   } catch (e) {
-  //     // Handle network errors or other exceptions
-  //     print('Error sending attendance: $e');
-  //   }
-  // }
-
   Future<void> sendDataAndImageToApi() async {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
@@ -385,7 +108,7 @@ class _AbsensiState extends State<Absensi> {
     // Get the location
     final locationData = await _currenctLocation();
     if (locationData == null) {
-      print('ga ada lokasi');
+      print('LOKASI TIDAK TERDETEKASI');
       return;
     }
 
@@ -393,7 +116,7 @@ class _AbsensiState extends State<Absensi> {
     final address =
         await _getAddress(locationData.latitude!, locationData.longitude!);
     if (address == null) {
-      print('ga ada alamat');
+      print('ALAMAT TIDAK TERDETEKSI');
       return;
     }
 
@@ -410,8 +133,6 @@ class _AbsensiState extends State<Absensi> {
     final status = '0';
     final validate = 'ANAKKAMPRETMAULEWAT';
     final imageFile = File(pickedFile.path);
-
-    // final compressedImage = await compressImage(File(pickedFile.path));
 
     var request = http.MultipartRequest(
       'POST',
@@ -430,11 +151,18 @@ class _AbsensiState extends State<Absensi> {
     request.fields['validate'] = validate;
     request.files.add(await http.MultipartFile.fromPath('image', imageFile.path,
         filename: '${npp} ${formattedTime} ${formattedDate}.jpg'));
-    // request.files.add(http.MultipartFile.fromBytes('image', compressedImage));
 
     // Mengirim request
     var response = await request.send();
 
+    // RESPONSE DARI API STREAMED RESPONSE
+    final String responseData = await utf8.decodeStream(response.stream);
+    // Parse and use the response body
+    final parsedData = json.decode(responseData);
+    // Handle the parsed data as needed
+    final message = parsedData['message'];
+
+    //JIKA BERHASIL MENGIRIM DATA
     if (response.statusCode == 200) {
       showDialog(
         context: context,
@@ -444,7 +172,7 @@ class _AbsensiState extends State<Absensi> {
             surfaceTintColor: putih,
             backgroundColor: putih,
             content: Text(
-              'BERHASIL MELAKUKAN PRESENSI MASUK',
+              '${message}'.toUpperCase(),
               textAlign: TextAlign.center,
               style: const TextStyle(
                   height: 1.2,
@@ -477,9 +205,19 @@ class _AbsensiState extends State<Absensi> {
                     ],
                   ),
                 ),
-                onPressed: () {
-                  Navigator.of(context).pop();
+                onPressed: () async {
+                  final absenProvider =
+                      Provider.of<AbsenProvider>(context, listen: false);
+                  final authProvider =
+                      Provider.of<AuthProvider>(context, listen: false);
+                  final DateTime tanggalHariIni = DateTime.now();
+                  final String formattedDate =
+                      DateFormat('yyyy-M-d', 'id').format(tanggalHariIni);
+                  final npp = '${authProvider.user.user.dakar.npp}';
+                  await absenProvider.fetchDataAbsen(
+                      npp, formattedDate); // Lakukan pembaruan data
                   setState(() {});
+                  Navigator.of(context).pop(); // Perbarui tampilan
                 },
               ),
             ],
@@ -489,11 +227,6 @@ class _AbsensiState extends State<Absensi> {
       print(
           'Berhasil Mengirim Data dan Gambar ke API. Status code: ${response.statusCode}');
     } else {
-      final uhuy = await response.stream.bytesToString();
-      final jsonData = json.decode(uhuy);
-      final erorrData = json.encode(jsonData);
-      print(erorrData);
-      // print(uhuy[]);
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -502,7 +235,7 @@ class _AbsensiState extends State<Absensi> {
             surfaceTintColor: putih,
             backgroundColor: putih,
             content: Text(
-              'xwx',
+              '${message}'.toUpperCase(),
               textAlign: TextAlign.center,
               style: const TextStyle(
                   height: 1.2,
@@ -546,306 +279,757 @@ class _AbsensiState extends State<Absensi> {
       );
       print(
           'Gagal mengirim data dan gambar ke API. Status code: ${response.statusCode}');
-      // print('Response message: ${await response.stream.bytesToString()}');
     }
   }
 
-  // Future<List<int>> compressImage(File imageFile) async {
-  //   // Mengompres gambar dengan flutter_image_compress
-  //   List<int> result = await FlutterImageCompress.compressWithList(
-  //     imageFile.readAsBytesSync(),
-  //     quality: 60, // Sesuaikan kualitas kompresi (0 - 100)
-  //   );
+  Future<void> sendDataAndImageToApiKeluar() async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
-  //   return result;
-  // }
+    final pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+      preferredCameraDevice: CameraDevice.front,
+    );
+
+    if (pickedFile == null) {
+      print('Image picking canceled');
+      return;
+    }
+
+    //DATA
+    // Get the location
+    final locationData = await _currenctLocation();
+    if (locationData == null) {
+      print('LOKASI TIDAK TERDETEKASI');
+      return;
+    }
+
+    // Get the address
+    final address =
+        await _getAddress(locationData.latitude!, locationData.longitude!);
+    if (address == null) {
+      print('ALAMAT TIDAK TERDETEKSI');
+      return;
+    }
+
+    // get tanggal dan jam
+    final DateTime tanggalHariIni = DateTime.now();
+    final DateTime jam = DateTime.now();
+    final String formattedDate =
+        DateFormat('d-M-yyyy', 'id').format(tanggalHariIni);
+    final String formattedTime = DateFormat('HH:mm:ss', 'id').format(jam);
+    final npp = '${authProvider.user.user.dakar.npp}';
+    final latitude = locationData.latitude.toString();
+    final longitude = locationData.longitude.toString();
+    final masuk = '';
+    final status = '1';
+    final validate = 'ANAKKAMPRETMAULEWAT';
+    final imageFile = File(pickedFile.path);
+
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse('http://192.168.2.65:8000/absensi'),
+    );
+
+    // Menambahkan data dan gambar ke request
+    request.fields['npp'] = npp;
+    request.fields['latitude'] = latitude;
+    request.fields['longitude'] = longitude;
+    request.fields['masuk'] = masuk;
+    request.fields['tanggal'] = formattedDate;
+    request.fields['keluar'] = formattedTime;
+    request.fields['alamat'] = address;
+    request.fields['status'] = status;
+    request.fields['validate'] = validate;
+    request.files.add(await http.MultipartFile.fromPath('image', imageFile.path,
+        filename: '${npp} ${formattedTime} ${formattedDate}.jpg'));
+
+    // Mengirim request
+    var response = await request.send();
+
+    // RESPONSE DARI API STREAMED RESPONSE
+    final String responseData = await utf8.decodeStream(response.stream);
+    // Parse and use the response body
+    final parsedData = json.decode(responseData);
+    // Handle the parsed data as needed
+    final message = parsedData['message'];
+
+    //JIKA BERHASIL MENGIRIM DATA
+    if (response.statusCode == 200) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            icon: Lottie.asset('assets/lottie/berhasil.json', height: 100),
+            surfaceTintColor: putih,
+            backgroundColor: putih,
+            content: Text(
+              '${message}'.toUpperCase(),
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  height: 1.2,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  fontSize: 14),
+            ),
+            actions: [
+              TextButton(
+                child: Container(
+                  padding: EdgeInsets.zero,
+                  margin: EdgeInsets.zero,
+                  alignment: Alignment.center,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: secondaryColor,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Tutup'.toUpperCase(),
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: putih,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                onPressed: () async {
+                  final absenProvider =
+                      Provider.of<AbsenProvider>(context, listen: false);
+                  final authProvider =
+                      Provider.of<AuthProvider>(context, listen: false);
+                  final DateTime tanggalHariIni = DateTime.now();
+                  final String formattedDate =
+                      DateFormat('yyyy-M-d', 'id').format(tanggalHariIni);
+                  final npp = '${authProvider.user.user.dakar.npp}';
+                  await absenProvider.fetchDataAbsen(
+                      npp, formattedDate); // Lakukan pembaruan data
+                  setState(() {});
+                  Navigator.of(context).pop(); // Perbarui tampilan
+                },
+                // {
+                //   setState(() {
+
+                //   });
+                //   Navigator.of(context).pop();
+                // },
+              ),
+            ],
+          );
+        },
+      );
+      print(
+          'Berhasil Mengirim Data dan Gambar ke API. Status code: ${response.statusCode}');
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            icon: Lottie.asset('assets/lottie/silang.json', height: 100),
+            surfaceTintColor: putih,
+            backgroundColor: putih,
+            content: Text(
+              '${message}'.toUpperCase(),
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  height: 1.2,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  fontSize: 14),
+            ),
+            actions: [
+              TextButton(
+                child: Container(
+                  padding: EdgeInsets.zero,
+                  margin: EdgeInsets.zero,
+                  alignment: Alignment.center,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: secondaryColor,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Tutup'.toUpperCase(),
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: putih,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setState(() {});
+                },
+              ),
+            ],
+          );
+        },
+      );
+      print(
+          'Gagal mengirim data dan gambar ke API. Status code: ${response.statusCode}');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     DateTime tanggalHariIni = DateTime.now();
 
     String formattedDate = DateFormat('d MMM y', 'id').format(tanggalHariIni);
 
-    Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: primaryColor,
-        elevation: 6,
-        shadowColor: secondaryColor,
-        iconTheme: const IconThemeData(color: putih),
-        actions: <Widget>[
-          IconButton(
-            icon: const FaIcon(
-              FontAwesomeIcons.clockRotateLeft,
-              size: 20,
+    // final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    // final npp = '${authProvider.user.user.dakar.npp}';
+    final absenProvider = Provider.of<AbsenProvider>(context, listen: false);
+    // absenProvider.fetchDataAbsen(npp, formattedDate);
+    final absenData = absenProvider.absenData;
+
+    // print(absenData.absen.length);
+
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor: putih,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: primaryColor,
+          elevation: 6,
+          shadowColor: secondaryColor,
+          iconTheme: const IconThemeData(color: putih),
+          actions: <Widget>[
+            IconButton(
+              icon: const FaIcon(
+                FontAwesomeIcons.clockRotateLeft,
+                size: 20,
+              ),
+              // tooltip: 'Show Snackbar',
+              onPressed: () {
+                // ScaffoldMessenger.of(context).showSnackBar(
+                //     const SnackBar(content: Text('This is a snackbar')));
+              },
             ),
-            // tooltip: 'Show Snackbar',
-            onPressed: () {
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //     const SnackBar(content: Text('This is a snackbar')));
-            },
-          ),
-        ],
-        title: Text(
-          'Presensi',
-          style: GoogleFonts.heebo(
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.7,
-            color: putih,
+          ],
+          title: Text(
+            'Presensi',
+            style: GoogleFonts.heebo(
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.7,
+              color: putih,
+            ),
           ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            FutureBuilder<LocationData?>(
-              future: _currenctLocation(),
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                if (snapshot.hasData) {
-                  final LocationData currentLocation = snapshot.data;
-                  return Column(
-                    children: [
-                      SizedBox(
-                        height: size.height * 0.42,
-                        child: Stack(
-                          children: [
-                            Container(
-                              height: size.height * 0.4,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(20),
-                                  bottomRight: Radius.circular(20),
-                                ),
-                              ),
-                              child: SfMaps(
-                                layers: [
-                                  MapTileLayer(
-                                    initialFocalLatLng: MapLatLng(
-                                        currentLocation.latitude!,
-                                        currentLocation.longitude!),
-                                    initialZoomLevel: 15, // Initial zoom level
-                                    initialMarkersCount: 1,
-                                    urlTemplate:
-                                        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                                    markerBuilder:
-                                        (BuildContext context, int index) {
-                                      return MapMarker(
-                                        latitude: currentLocation.latitude!,
-                                        longitude: currentLocation.longitude!,
-                                        child: Icon(
-                                          Icons.location_on,
-                                          color: Colors.red,
-                                        ),
-                                      );
-                                    },
-                                  )
-                                ],
-                              ),
-                            ),
-
-                            // TANGGAL JAM
-                            Positioned(
-                              bottom: 0,
-                              right: 0,
-                              left: 0,
-                              child: Container(
-                                // alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(50),
-                                    topRight: Radius.circular(50),
-                                  ),
-                                  // boxShadow: [
-                                  //   BoxShadow(
-                                  //     offset: Offset(3, 0),
-                                  //     blurRadius: 2,
-                                  //     color: primaryColor.withOpacity(0.7),
-                                  //   ),
-                                  // ],
-                                  color: secondaryColor,
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 15),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    FaIcon(
-                                      FontAwesomeIcons.calendar,
-                                      color: putih,
-                                      size: 15,
-                                    ),
-                                    SizedBox(width: 6),
-                                    Text(
-                                      "$formattedDate",
-                                      style: GoogleFonts.heebo(
-                                          color: putih,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    // Spacer(),
-                                    SizedBox(width: 16),
-                                    FaIcon(
-                                      FontAwesomeIcons.clock,
-                                      color: putih,
-                                      size: 15,
-                                    ),
-                                    SizedBox(width: 6),
-                                    StreamBuilder<DateTime>(
-                                      stream: _streamController.stream,
-                                      builder: (context, snapshot) {
-                                        if (snapshot.hasData) {
-                                          String formattedTime =
-                                              DateFormat('HH:mm:ss', 'id')
-                                                  .format(snapshot.data!);
-                                          return Text(
-                                            formattedTime,
-                                            style: GoogleFonts.heebo(
-                                                color: putih,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
-                                          );
-                                        } else {
-                                          return Container(
-                                            width: 20,
-                                            height: 20,
-                                            child: CircularProgressIndicator(
-                                              strokeWidth: 4,
-                                              strokeCap: StrokeCap.round,
-                                            ),
-                                          );
-                                        }
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              FutureBuilder<LocationData?>(
+                future: _currenctLocation(),
+                builder:
+                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  if (snapshot.hasData) {
+                    final LocationData currentLocation = snapshot.data;
+                    return Column(
+                      children: [
+                        SizedBox(
+                          height: size.height * 0.4,
+                          child: Stack(
+                            children: [
+                              Container(
+                                height: size.height * 0.4,
+                                child: SfMaps(
+                                  layers: [
+                                    MapTileLayer(
+                                      initialFocalLatLng: MapLatLng(
+                                          currentLocation.latitude!,
+                                          currentLocation.longitude!),
+                                      initialZoomLevel:
+                                          15, // Initial zoom level
+                                      initialMarkersCount: 1,
+                                      urlTemplate:
+                                          "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                      markerBuilder:
+                                          (BuildContext context, int index) {
+                                        return MapMarker(
+                                          latitude: currentLocation.latitude!,
+                                          longitude: currentLocation.longitude!,
+                                          child: Icon(
+                                            Icons.location_on,
+                                            color: Colors.red,
+                                          ),
+                                        );
                                       },
+                                    )
+                                  ],
+                                ),
+                              ),
+
+                              // TANGGAL JAM
+                              Positioned(
+                                bottom: 0,
+                                right: 0,
+                                left: 0,
+                                child: Container(
+                                  // margin: EdgeInsets.only(right: 7),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(50),
+                                    ),
+                                    color: kuning,
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 24, vertical: 10),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    // mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      FaIcon(
+                                        FontAwesomeIcons.calendar,
+                                        color: putih,
+                                        size: 15,
+                                      ),
+                                      SizedBox(width: 6),
+                                      Text(
+                                        "$formattedDate",
+                                        style: GoogleFonts.heebo(
+                                            color: putih,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      // Spacer(),
+                                      SizedBox(width: 20),
+                                      FaIcon(
+                                        FontAwesomeIcons.clock,
+                                        color: putih,
+                                        size: 15,
+                                      ),
+                                      SizedBox(width: 6),
+                                      StreamBuilder<DateTime>(
+                                        stream: _streamController.stream,
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasData) {
+                                            String formattedTime =
+                                                DateFormat('HH:mm:ss', 'id')
+                                                    .format(snapshot.data!);
+                                            return Text(
+                                              formattedTime,
+                                              style: GoogleFonts.heebo(
+                                                  color: putih,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                            );
+                                          } else {
+                                            return Container(
+                                              width: 20,
+                                              height: 20,
+                                              child: CircularProgressIndicator(
+                                                strokeWidth: 4,
+                                                strokeCap: StrokeCap.round,
+                                              ),
+                                            );
+                                          }
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          child: Column(
+                            children: <Widget>[
+                              //TAB BAR
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  color:
+                                      secondaryColor, // Sesuaikan dengan warna AppBar Anda
+                                ),
+                                child: TabBar(
+                                  padding: EdgeInsets.all(6),
+                                  dragStartBehavior: DragStartBehavior.start,
+                                  indicatorSize: TabBarIndicatorSize.tab,
+                                  dividerColor: Colors.transparent,
+                                  indicatorPadding: EdgeInsets.all(5),
+                                  indicator: BoxDecoration(
+                                      color: orange,
+                                      borderRadius: BorderRadius.circular(30)),
+                                  tabs: [
+                                    Tab(
+                                      child: Text(
+                                        'LOKASI',
+                                        style: TextStyle(
+                                            color: putih,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w900,
+                                            letterSpacing: 1),
+                                      ),
+                                    ),
+                                    Tab(
+                                      child: Text(
+                                        'PRESENSI',
+                                        style: TextStyle(
+                                            color: putih,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w900,
+                                            letterSpacing: 1),
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        // padding: EdgeInsets.only(top: 10, left: 10, right: 10),
-                        padding: EdgeInsets.all(10),
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: secondaryColor,
-                                ),
-                              ),
-                              child: Column(
-                                children: <Widget>[
-                                  FutureBuilder<String?>(
-                                    future: _getAddress(
-                                      currentLocation.latitude!,
-                                      currentLocation.longitude!,
-                                    ),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot<String?> snapshot) {
-                                      if (snapshot.hasData) {
-                                        return Text(
-                                          '${snapshot.data}',
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.heebo(
-                                              // color: Colors.black,
-                                              height: 1.2,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w300),
-                                        );
-                                      } else if (snapshot.hasError) {
-                                        print("Error: ${snapshot.error}");
-                                        return Text("Error fetching address");
-                                      } else {
-                                        return const Text('Loading...');
-                                      }
-                                    },
-                                  ),
-                                  SizedBox(height: 10),
-                                  // InkWell(
-                                  //   onTap: () async {
-                                  //     await _getImage();
-                                  //     await _sendAttendance();
-                                  //   },
-                                  //   child:
-                                  Container(
-                                    width: size.width,
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        // await _getImage();
-                                        // await _sendAttendance();
-                                        sendDataAndImageToApi();
-                                        // print('Button Pressed');
-                                      },
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                orange),
-                                      ),
-                                      child: Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 11),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'MASUK',
-                                              style: TextStyle(
-                                                  color: putih,
+                              Container(
+                                height: size.height * 0.4,
+                                child: TabBarView(
+                                  children: <Widget>[
+                                    //LOKASI
+                                    SingleChildScrollView(
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 5, vertical: 15),
+                                        child: Container(
+                                          padding: EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            border: Border.all(
+                                              color: secondaryColor,
+                                            ),
+                                          ),
+                                          child: Column(
+                                            children: <Widget>[
+                                              const Text(
+                                                'Halo, Berikut adalah lokasi kamu saat ini :',
+                                                style: TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 16),
-                                            ),
-                                            SizedBox(width: 8),
-                                            FaIcon(
-                                              FontAwesomeIcons
-                                                  .personWalkingArrowRight,
-                                              color: putih,
-                                              // size: 20,
-                                            ),
+                                                  height: 1.1,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              SizedBox(height: 10),
+                                              FutureBuilder<String?>(
+                                                future: _getAddress(
+                                                  currentLocation.latitude!,
+                                                  currentLocation.longitude!,
+                                                ),
+                                                builder: (BuildContext context,
+                                                    AsyncSnapshot<String?>
+                                                        snapshot) {
+                                                  if (snapshot.hasData) {
+                                                    return Text(
+                                                      '${snapshot.data}',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: GoogleFonts.heebo(
+                                                          // color: Colors.black,
+                                                          height: 1.2,
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.w300),
+                                                    );
+                                                  } else if (snapshot
+                                                      .hasError) {
+                                                    print(
+                                                        "Error: ${snapshot.error}");
+                                                    return Text(
+                                                        "Error fetching address");
+                                                  } else {
+                                                    return const Text(
+                                                        'Loading...');
+                                                  }
+                                                },
+                                              ),
+                                              SizedBox(height: 20),
+                                              absenData.absen.length == 0
+                                                  ? ElevatedButton(
+                                                      onPressed: () {
+                                                        sendDataAndImageToApi();
+                                                        // if (DateTime.now().hour < 10) {
+                                                        //   // Lakukan aksi saat tombol ditekan
+                                                        //   sendDataAndImageToApi();
+                                                        // } else {
+                                                        //   // Jika sudah lewat jam 10:00, tampilkan pesan atau berikan aksi lain
+                                                        //   // Misalnya, tampilkan snackbar dengan pesan
+                                                        //   ScaffoldMessenger.of(context)
+                                                        //       .showSnackBar(
+                                                        //     SnackBar(
+                                                        //       content: Text(
+                                                        //           'Tidak dapat melakukan absen setelah jam 10:00'),
+                                                        //     ),
+                                                        //   );
+                                                        // }
+                                                      },
+                                                      style: ButtonStyle(
+                                                        backgroundColor:
+                                                            MaterialStateProperty
+                                                                .all<Color>(
+                                                                    Colors
+                                                                        .orange),
+                                                      ),
+                                                      child: Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 11),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                              'Masuk',
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 16,
+                                                              ),
+                                                            ),
+                                                            SizedBox(width: 8),
+                                                            FaIcon(
+                                                              FontAwesomeIcons
+                                                                  .personWalkingArrowRight,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : (absenData.absen.length >=
+                                                              1 &&
+                                                          absenData.absen
+                                                                  .length <
+                                                              2)
+                                                      ? ElevatedButton(
+                                                          onPressed: () {
+                                                            sendDataAndImageToApiKeluar();
+                                                          },
+                                                          style: ButtonStyle(
+                                                            backgroundColor:
+                                                                MaterialStateProperty
+                                                                    .all<Color>(
+                                                                        orange),
+                                                          ),
+                                                          child: Padding(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    vertical:
+                                                                        11),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Text(
+                                                                  'KELUAR',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        16,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                    width: 8),
+                                                                FaIcon(
+                                                                  FontAwesomeIcons
+                                                                      .personWalkingArrowRight,
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        )
+                                                      : Container(
+                                                          width: size.width,
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  10),
+                                                          decoration: BoxDecoration(
+                                                              color: Colors
+                                                                  .green
+                                                                  .shade400,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10)),
+                                                          child: Row(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceAround,
+                                                            children: <Widget>[
+                                                              FaIcon(FontAwesomeIcons
+                                                                  .circleCheck),
+                                                              const Text(
+                                                                'Yey! Presensi Kamu sudah lengkap, \nJangan lupa besok absen lagi ya ...',
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  height: 1.1,
+                                                                ),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .start,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
+                                    //PRESENSI
+                                    SingleChildScrollView(
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 15, horizontal: 5),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            if (absenData.absen.length != 0)
+                                              for (var absen in absenData.absen)
+                                                Card(
+                                                  color: putih,
+                                                  surfaceTintColor:
+                                                      secondaryColor,
+                                                  margin: EdgeInsets.symmetric(
+                                                    vertical: 8,
+                                                  ),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        vertical: 10,
+                                                        horizontal: 0),
+                                                    child: ListTile(
+                                                      leading: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                10.0), // Ganti nilai sesuai keinginan Anda
+                                                        child: Image.network(
+                                                          "http://192.168.2.65:8000/${absen.fotoLink}",
+                                                          height: 70,
+                                                          width: 70,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+
+                                                      // subtitle: Text('Alamat: ${absen.alamat}'),
+                                                      trailing: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                            'PRESENSI ${absen.status == "0" ? "Masuk" : "Keluar"}'
+                                                                .toUpperCase(),
+                                                            style: TextStyle(
+                                                              color: absen.status ==
+                                                                      "0"
+                                                                  ? Colors.green
+                                                                  : Colors.red,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                          Container(
+                                                            width: size.width *
+                                                                0.54,
+                                                            child: Text(
+                                                              // '${authProvider.user.nama}',
+                                                              '${absen.alamat}',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .start,
+                                                              maxLines: 2,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: GoogleFonts
+                                                                  .heebo(
+                                                                height: 1,
+                                                                fontSize: 10,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            '${absen.status == "0" ? formatDateTime(absen.masuk) : formatDateTime(absen.keluar)}',
+                                                            style: GoogleFonts.heebo(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          ),
+                                                          // Text(
+                                                          //     'Waktu: ${absen.status == "0" ? absen.masuk : absen.keluar}'),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )
+                                            else
+                                              const Text('')
                                           ],
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  // ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            // ElevatedButton(
-                            //   onPressed: () async {
-                            //     await _getImage();
-                            //     await _sendAttendance();
-                            //   },
-                            //   child: Text('Capture and Send Attendance'),
-                            // ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  );
-                } else {
-                  return Container(
-                    alignment: Alignment.center,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CircularProgressIndicator(),
                       ],
-                    ),
-                  );
-                }
-              },
-            ),
-            // SimpanPage(),
-          ],
+                    );
+                  } else {
+                    return Container(
+                      alignment: Alignment.center,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CircularProgressIndicator(),
+                        ],
+                      ),
+                    );
+                  }
+                },
+              ),
+              // SimpanPage(),
+            ],
+          ),
         ),
       ),
     );
@@ -855,5 +1039,14 @@ class _AbsensiState extends State<Absensi> {
   void dispose() {
     _streamController.close();
     super.dispose();
+  }
+}
+
+String formatDateTime(String dateTimeString) {
+  if (dateTimeString.isNotEmpty) {
+    DateTime parsedDateTime = DateTime.parse(dateTimeString);
+    return DateFormat('HH:mm:ss', 'id').format(parsedDateTime);
+  } else {
+    return 'Tanggal tidak valid'; // atau sesuaikan dengan nilai default lain jika diinginkan
   }
 }

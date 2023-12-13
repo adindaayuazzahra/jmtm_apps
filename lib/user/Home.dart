@@ -3,6 +3,7 @@
 import 'package:appjmtm/componen/home_component.dart';
 import 'package:appjmtm/componen/subtitle.dart';
 import 'package:appjmtm/componen/subtitlewithmore.dart';
+import 'package:appjmtm/provider/AbsenProvider.dart';
 import 'package:appjmtm/provider/BeritaProvider.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
 import 'package:appjmtm/routes.dart';
@@ -21,9 +22,25 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  //   // final DateTime tanggalHariIni = DateTime.now();
+  //   // final String formattedDate =
+  //   //     DateFormat('yyyy-M-d', 'id').format(tanggalHariIni);
+  //   // final absenProvider = Provider.of<AbsenProvider>(context, listen: false);
+  //   // final authProvider = Provider.of<AuthProvider>(context, listen: false);
+  //   // final npp = '${authProvider.user.user.dakar.npp}';
+  //   // absenProvider.fetchDataAbsen(npp, formattedDate);
+
+  //   // print('halaman home : ${absenProvider.absenData.absen.length}');
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: putih,
       appBar: AppBar(
         toolbarHeight: 75,
         elevation: 0,
@@ -62,6 +79,9 @@ class _HomeState extends State<Home> {
               size: 20,
             ),
             onPressed: () async {
+              final absenProvider =
+                  Provider.of<AbsenProvider>(context, listen: false);
+              absenProvider.resetDataAbsen();
               final authProvider =
                   Provider.of<AuthProvider>(context, listen: false);
               await authProvider.logout();
