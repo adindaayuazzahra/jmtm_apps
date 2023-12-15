@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors
+import 'package:appjmtm/provider/HistoryAbsenProvider.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
 import 'package:appjmtm/styles.dart';
 import 'package:appjmtm/user/Home.dart';
@@ -30,10 +31,16 @@ class _NavigationState extends State<Navigation> {
     final String formattedDate =
         DateFormat('yyyy-M-d', 'id').format(tanggalHariIni);
     final absenProvider = Provider.of<AbsenProvider>(context, listen: false);
+    final historyAbsenProvider =
+        Provider.of<HistoryAbsenProvider>(context, listen: false);
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final npp = '${authProvider.user.user.dakar.npp}';
     absenProvider.fetchDataAbsen(npp, formattedDate);
-    // print('halaman home : ${absenProvider.absenData.absen.length}');
+    historyAbsenProvider.history(npp, formattedDate);
+
+    print('halaman home : ${absenProvider.absenData.absen.length}');
+    print(
+        'halaman home History : ${historyAbsenProvider.absenHis.absen.length}');
 
     // final newsProvider = Provider.of<NewsProvider>(context, listen: false);
     // newsProvider.fetchNews();

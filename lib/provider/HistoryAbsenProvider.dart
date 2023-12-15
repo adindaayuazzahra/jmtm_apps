@@ -1,13 +1,11 @@
-// ignore_for_file: unnecessary_null_comparison
-
+import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:appjmtm/model/Absen.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 
-class AbsenProvider extends ChangeNotifier {
-  late AbsenData _absenData = AbsenData(absen: [
+class HistoryAbsenProvider extends ChangeNotifier {
+  late AbsenData _absenHis = AbsenData(absen: [
     Absen(
         npp: '',
         latitude: '',
@@ -19,15 +17,14 @@ class AbsenProvider extends ChangeNotifier {
         fotoLink: '',
         alamat: '')
   ], imgRouteAbsen: '');
-
-  AbsenData get absenData => _absenData;
-
-  void resetDataAbsen() {
-    _absenData.absen.clear();
+  AbsenData get absenHis => _absenHis;
+  void resethis() {
+    // _absenData.absen.clear();
+    _absenHis.absen.clear();
     notifyListeners();
   }
 
-  Future<void> fetchDataAbsen(npp, tanggal) async {
+  Future<void> history(npp, tanggal) async {
     //  final authProvider = Provider.of<AuthProvider>(context, listen: false);
     try {
       final response = await http.post(
@@ -42,10 +39,25 @@ class AbsenProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         final String token = responseData['token'];
+        print(token);
         if (token != null) {
           final Map<String, dynamic> userData = JwtDecoder.decode(token);
+          print(userData);
           final Map<String, dynamic> userData2 = userData['user'];
-          _absenData = AbsenData.fromJson(userData2);
+          _absenHis = AbsenData.fromJson(userData2);
+          print('Absen Data:');
+          for (var absen in _absenHis.absen) {
+            print('NPP: ${absen.npp}');
+            print('Latitude: ${absen.latitude}');
+            print('Longitude: ${absen.longitude}');
+            print('Masuk: ${absen.masuk}');
+            print('Keluar: ${absen.keluar}');
+            print('Status: ${absen.status}');
+            print('CreatedAt: ${absen.createdAt}');
+            print('Foto Link: ${absen.fotoLink}');
+            print('Alamat: ${absen.alamat}');
+            print('----------------------');
+          }
           notifyListeners();
         } else {
           throw Exception('Token is null in response');
@@ -56,7 +68,7 @@ class AbsenProvider extends ChangeNotifier {
       }
     } catch (e) {
       print('Error during fetch data: $e');
-      print('User Data: $_absenData');
+      print('User Data: $_absenHis');
       throw Exception('Failed to fetch data: $e');
     }
   }

@@ -1,14 +1,15 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously, unnecessary_string_interpolations
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously, unnecessary_string_interpolations, unnecessary_new
 
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:appjmtm/provider/AbsenProvider.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
+import 'package:appjmtm/routes.dart';
 import 'package:appjmtm/styles.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:google_fonts/google_fonts.dart';
@@ -29,7 +30,7 @@ class Absensi extends StatefulWidget {
 class _AbsensiState extends State<Absensi> {
   late StreamController<DateTime> _streamController;
   late DateTime _currentTime;
-  // File? _image;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -92,6 +93,9 @@ class _AbsensiState extends State<Absensi> {
   }
 
   Future<void> sendDataAndImageToApi() async {
+    setState(() {
+      isLoading = true;
+    });
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
     final pickedFile = await ImagePicker().pickImage(
@@ -100,7 +104,9 @@ class _AbsensiState extends State<Absensi> {
     );
 
     if (pickedFile == null) {
-      print('Image picking canceled');
+      setState(() {
+        isLoading = false;
+      });
       return;
     }
 
@@ -164,6 +170,9 @@ class _AbsensiState extends State<Absensi> {
 
     //JIKA BERHASIL MENGIRIM DATA
     if (response.statusCode == 200) {
+      setState(() {
+        isLoading = false;
+      });
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -227,6 +236,9 @@ class _AbsensiState extends State<Absensi> {
       print(
           'Berhasil Mengirim Data dan Gambar ke API. Status code: ${response.statusCode}');
     } else {
+      setState(() {
+        isLoading = false;
+      });
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -283,6 +295,9 @@ class _AbsensiState extends State<Absensi> {
   }
 
   Future<void> sendDataAndImageToApiKeluar() async {
+    setState(() {
+      isLoading = true;
+    });
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
     final pickedFile = await ImagePicker().pickImage(
@@ -291,7 +306,9 @@ class _AbsensiState extends State<Absensi> {
     );
 
     if (pickedFile == null) {
-      print('Image picking canceled');
+      setState(() {
+        isLoading = false;
+      });
       return;
     }
 
@@ -355,6 +372,9 @@ class _AbsensiState extends State<Absensi> {
 
     //JIKA BERHASIL MENGIRIM DATA
     if (response.statusCode == 200) {
+      setState(() {
+        isLoading = false;
+      });
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -424,6 +444,9 @@ class _AbsensiState extends State<Absensi> {
       print(
           'Berhasil Mengirim Data dan Gambar ke API. Status code: ${response.statusCode}');
     } else {
+      setState(() {
+        isLoading = false;
+      });
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -510,8 +533,9 @@ class _AbsensiState extends State<Absensi> {
                 FontAwesomeIcons.clockRotateLeft,
                 size: 20,
               ),
-              // tooltip: 'Show Snackbar',
               onPressed: () {
+                Routes.router.navigateTo(context, '/history_absen',
+                    transition: TransitionType.inFromRight);
                 // ScaffoldMessenger.of(context).showSnackBar(
                 //     const SnackBar(content: Text('This is a snackbar')));
               },
@@ -541,34 +565,8 @@ class _AbsensiState extends State<Absensi> {
                           height: size.height * 0.4,
                           child: Stack(
                             children: [
-                              Container(
-                                height: size.height * 0.4,
-                                child: SfMaps(
-                                  layers: [
-                                    MapTileLayer(
-                                      initialFocalLatLng: MapLatLng(
-                                          currentLocation.latitude!,
-                                          currentLocation.longitude!),
-                                      initialZoomLevel:
-                                          15, // Initial zoom level
-                                      initialMarkersCount: 1,
-                                      urlTemplate:
-                                          "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                                      markerBuilder:
-                                          (BuildContext context, int index) {
-                                        return MapMarker(
-                                          latitude: currentLocation.latitude!,
-                                          longitude: currentLocation.longitude!,
-                                          child: Icon(
-                                            Icons.location_on,
-                                            color: Colors.red,
-                                          ),
-                                        );
-                                      },
-                                    )
-                                  ],
-                                ),
-                              ),
+                              Maps(
+                                  size: size, currentLocation: currentLocation),
 
                               // TANGGAL JAM
                               Positioned(
@@ -652,45 +650,7 @@ class _AbsensiState extends State<Absensi> {
                           child: Column(
                             children: <Widget>[
                               //TAB BAR
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  color:
-                                      secondaryColor, // Sesuaikan dengan warna AppBar Anda
-                                ),
-                                child: TabBar(
-                                  padding: EdgeInsets.all(6),
-                                  dragStartBehavior: DragStartBehavior.start,
-                                  indicatorSize: TabBarIndicatorSize.tab,
-                                  dividerColor: Colors.transparent,
-                                  indicatorPadding: EdgeInsets.all(5),
-                                  indicator: BoxDecoration(
-                                      color: orange,
-                                      borderRadius: BorderRadius.circular(30)),
-                                  tabs: [
-                                    Tab(
-                                      child: Text(
-                                        'LOKASI',
-                                        style: TextStyle(
-                                            color: putih,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w900,
-                                            letterSpacing: 1),
-                                      ),
-                                    ),
-                                    Tab(
-                                      child: Text(
-                                        'PRESENSI',
-                                        style: TextStyle(
-                                            color: putih,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w900,
-                                            letterSpacing: 1),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              TabBarAbsen(),
                               Container(
                                 height: size.height * 0.4,
                                 child: TabBarView(
@@ -720,6 +680,8 @@ class _AbsensiState extends State<Absensi> {
                                                 textAlign: TextAlign.center,
                                               ),
                                               SizedBox(height: 10),
+
+                                              // MENAMPILKAN ALAMAT
                                               FutureBuilder<String?>(
                                                 future: _getAddress(
                                                   currentLocation.latitude!,
@@ -753,10 +715,19 @@ class _AbsensiState extends State<Absensi> {
                                                 },
                                               ),
                                               SizedBox(height: 20),
+
+                                              // TOMBOL PRESENSI
                                               absenData.absen.length == 0
                                                   ? ElevatedButton(
                                                       onPressed: () {
-                                                        sendDataAndImageToApi();
+                                                        (isLoading)
+                                                            ? ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(
+                                                                    const SnackBar(
+                                                                        content:
+                                                                            Text('Tunggu ya,Sedang Memproses Presensi Kamu')))
+                                                            : sendDataAndImageToApi();
                                                         // if (DateTime.now().hour < 10) {
                                                         //   // Lakukan aksi saat tombol ditekan
                                                         //   sendDataAndImageToApi();
@@ -775,9 +746,9 @@ class _AbsensiState extends State<Absensi> {
                                                       style: ButtonStyle(
                                                         backgroundColor:
                                                             MaterialStateProperty
-                                                                .all<Color>(
-                                                                    Colors
-                                                                        .orange),
+                                                                .all<Color>(Colors
+                                                                    .green
+                                                                    .shade700),
                                                       ),
                                                       child: Padding(
                                                         padding: EdgeInsets
@@ -788,17 +759,24 @@ class _AbsensiState extends State<Absensi> {
                                                               MainAxisAlignment
                                                                   .center,
                                                           children: [
-                                                            Text(
-                                                              'Masuk',
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: 16,
-                                                              ),
-                                                            ),
+                                                            (isLoading)
+                                                                ? CircularProgressIndicator(
+                                                                    color:
+                                                                        kuning,
+                                                                  )
+                                                                : Text(
+                                                                    'MASUK',
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          16,
+                                                                    ),
+                                                                  ),
                                                             SizedBox(width: 8),
                                                             FaIcon(
                                                               FontAwesomeIcons
@@ -817,7 +795,13 @@ class _AbsensiState extends State<Absensi> {
                                                               2)
                                                       ? ElevatedButton(
                                                           onPressed: () {
-                                                            sendDataAndImageToApiKeluar();
+                                                            (isLoading)
+                                                                ? ScaffoldMessenger.of(
+                                                                        context)
+                                                                    .showSnackBar(const SnackBar(
+                                                                        content:
+                                                                            Text('Tunggu ya,Sedang Memproses Presensi Kamu')))
+                                                                : sendDataAndImageToApiKeluar();
                                                           },
                                                           style: ButtonStyle(
                                                             backgroundColor:
@@ -835,19 +819,22 @@ class _AbsensiState extends State<Absensi> {
                                                                   MainAxisAlignment
                                                                       .center,
                                                               children: [
-                                                                Text(
-                                                                  'KELUAR',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        16,
-                                                                  ),
-                                                                ),
+                                                                (isLoading)
+                                                                    ? CircularProgressIndicator(
+                                                                        color:
+                                                                            primaryColor)
+                                                                    : Text(
+                                                                        'KELUAR',
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              Colors.white,
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                          fontSize:
+                                                                              16,
+                                                                        ),
+                                                                      ),
                                                                 SizedBox(
                                                                     width: 8),
                                                                 FaIcon(
@@ -1001,7 +988,33 @@ class _AbsensiState extends State<Absensi> {
                                                   ),
                                                 )
                                             else
-                                              const Text('')
+                                              Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 15),
+                                                alignment: Alignment.center,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    const Text(
+                                                      'Maaf, kamu belum melakukan presensi.',
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 16,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 9,
+                                                    ),
+                                                    Lottie.asset(
+                                                      'assets/lottie/silang.json',
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
                                           ],
                                         ),
                                       ),
@@ -1039,6 +1052,92 @@ class _AbsensiState extends State<Absensi> {
   void dispose() {
     _streamController.close();
     super.dispose();
+  }
+}
+
+class TabBarAbsen extends StatelessWidget {
+  const TabBarAbsen({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        color: secondaryColor, // Sesuaikan dengan warna AppBar Anda
+      ),
+      child: TabBar(
+        padding: EdgeInsets.all(6),
+        dragStartBehavior: DragStartBehavior.start,
+        indicatorSize: TabBarIndicatorSize.tab,
+        dividerColor: Colors.transparent,
+        indicatorPadding: EdgeInsets.all(5),
+        indicator: BoxDecoration(
+            color: orange, borderRadius: BorderRadius.circular(30)),
+        tabs: [
+          Tab(
+            child: Text(
+              'LOKASI',
+              style: TextStyle(
+                  color: putih,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 1),
+            ),
+          ),
+          Tab(
+            child: Text(
+              'PRESENSI',
+              style: TextStyle(
+                  color: putih,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 1),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Maps extends StatelessWidget {
+  const Maps({
+    super.key,
+    required this.size,
+    required this.currentLocation,
+  });
+
+  final Size size;
+  final LocationData currentLocation;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: size.height * 0.4,
+      child: SfMaps(
+        layers: [
+          MapTileLayer(
+            initialFocalLatLng: MapLatLng(
+                currentLocation.latitude!, currentLocation.longitude!),
+            initialZoomLevel: 15, // Initial zoom level
+            initialMarkersCount: 1,
+            urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+            markerBuilder: (BuildContext context, int index) {
+              return MapMarker(
+                latitude: currentLocation.latitude!,
+                longitude: currentLocation.longitude!,
+                child: Icon(
+                  Icons.location_on,
+                  color: Colors.red,
+                ),
+              );
+            },
+          )
+        ],
+      ),
+    );
   }
 }
 

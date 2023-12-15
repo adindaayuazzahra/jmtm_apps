@@ -1,6 +1,7 @@
 import 'package:appjmtm/login/login.dart';
 import 'package:appjmtm/user/Home.dart';
 import 'package:appjmtm/user/absensi/absensi.dart';
+import 'package:appjmtm/user/absensi/history_absen.dart';
 import 'package:appjmtm/user/berita/berita.dart';
 import 'package:appjmtm/user/berita/detail_berita.dart';
 import 'package:appjmtm/user/navigation.dart';
@@ -26,6 +27,14 @@ class Routes {
       handler: Handler(
         handlerFunc: (context, parameters) {
           return BeritaPage();
+        },
+      ),
+    );
+    router.define(
+      '/history_absen',
+      handler: Handler(
+        handlerFunc: (context, parameters) {
+          return HistoryAbsen();
         },
       ),
     );

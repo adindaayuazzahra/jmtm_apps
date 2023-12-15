@@ -2,9 +2,11 @@
 
 import 'package:appjmtm/provider/AbsenProvider.dart';
 import 'package:appjmtm/provider/BeritaProvider.dart';
+import 'package:appjmtm/provider/HistoryAbsenProvider.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
 import 'package:appjmtm/routes.dart';
 import 'package:appjmtm/styles.dart';
+import 'package:appjmtm/user/absensi/history_absen.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +36,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<NewsProvider>(create: (_) => NewsProvider()),
         ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
         ChangeNotifierProvider<AbsenProvider>(create: (_) => AbsenProvider()),
+        ChangeNotifierProvider<HistoryAbsenProvider>(
+            create: (_) => HistoryAbsenProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

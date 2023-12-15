@@ -32,314 +32,318 @@ class Profil extends StatelessWidget {
     );
     return Scaffold(
       backgroundColor: putih,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: SizedBox(
-            height: 480,
-            child: Stack(
-              children: [
-                Container(
+      body:
+          // SafeArea(
+          // top: false,
+          // maintainBottomViewPadding: false,
+          // child:
+          SingleChildScrollView(
+        child: SizedBox(
+          height: 520,
+          child: Stack(
+            children: [
+              Container(
+                alignment: Alignment.center,
+                height: 310,
+                width: size.width,
+                decoration: BoxDecoration(
+                  color: primaryColor,
+                ),
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 60,
+                    ),
+                    CircleAvatar(
+                      radius: 50,
+                      backgroundImage: NetworkImage(authProvider
+                              .user.user.dakar.foto_link.isNotEmpty
+                          ? "http://192.168.2.65:8080/fotoUser/${authProvider.user.user.dakar.foto_link}"
+                          : 'https://www.copaster.com/wp-content/uploads/2023/03/pp-kosong-wa-default.jpeg'),
+                      // backgroundImage: NetworkImage(
+                      //     'https://www.copaster.com/wp-content/uploads/2023/03/pp-kosong-wa-default.jpeg'),
+                    ),
+                    // const Spacer(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                      ),
+                      child: Consumer<AuthProvider>(
+                        builder: (context, userProvider, child) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                // '${authProvider.user.nama}',
+                                // 'lorem aisjcn aoksjcna askmao caoskcm aoiikxmao cqwc cqokc  cqokmc cqokcm qpwkcm cqpkwcm weckwemc cw ec ecw',
+                                '${authProvider.user.user.dakar.nama}',
+                                textAlign: TextAlign.center,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.heebo(
+                                  height: 1,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: putih,
+                                ),
+                              ),
+                              Text(
+                                // '${authProvider.user.jabatan}',
+                                // 'lorem aisjcn aoksjcna askmao caoskcm aoiikxmao cqwc cqokc  cqokmc cqokcm qpwkcm cqpkwcm weckwemc cw ec ecw',
+                                '${authProvider.user.user.dajab.jabatan}',
+                                textAlign: TextAlign.center,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.heebo(
+                                  height: 1.1,
+                                  fontSize: 14,
+                                  color: putih,
+                                ),
+                              ),
+                              Text(
+                                // '${authProvider.user.npp}',
+                                '${authProvider.user.user.dakar.npp}',
+                                textAlign: TextAlign.center,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.heebo(
+                                  height: 1.1,
+                                  fontSize: 14,
+                                  color: putih,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // INI UNTUK Button
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
                   alignment: Alignment.center,
-                  height: 270,
-                  width: size.width,
-                  decoration: BoxDecoration(
-                    color: primaryColor,
-                  ),
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.all(10),
+                  // height: 120,
+                  // decoration: BoxDecoration(
+                  //   color: Colors.white,
+                  //   borderRadius: BorderRadius.circular(20),
+                  //   boxShadow: [
+                  //     BoxShadow(
+                  //       offset: Offset(0, 10),
+                  //       blurRadius: 15,
+                  //       color: primaryColor.withOpacity(0.5),
+                  //     ),
+                  //   ],
+                  // ),
                   child: Column(
-                    // mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      SizedBox(
-                        height: 20,
+                      ElevatedButton(
+                        onPressed: () async {},
+                        style: ElevatedButton.styleFrom(
+                          elevation: 4,
+                          shadowColor: primaryColor,
+                          backgroundColor: orange,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                10.0), // Adjust the border radius as needed
+                          ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: <Widget>[
+                                  FaIcon(
+                                    FontAwesomeIcons.solidIdCard,
+                                    color: putih,
+                                    size: 40,
+                                  ),
+                                  SizedBox(width: 15),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        'Info Karyawan',
+                                        style: TextStyle(
+                                          color: putih,
+                                          // height: 0.8,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Employee Information',
+                                        textAlign: TextAlign.left,
+                                        style: GoogleFonts.heebo(
+                                            color: putih,
+                                            fontWeight: FontWeight.w200,
+                                            fontSize: 14),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              FaIcon(
+                                FontAwesomeIcons.chevronRight,
+                                color: putih,
+                                size: 15,
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundImage: NetworkImage(authProvider
-                                .user.user.dakar.foto_link.isNotEmpty
-                            ? "http://192.168.2.65:8080/fotoUser/${authProvider.user.user.dakar.foto_link}"
-                            : 'https://www.copaster.com/wp-content/uploads/2023/03/pp-kosong-wa-default.jpeg'),
-                        // backgroundImage: NetworkImage(
-                        //     'https://www.copaster.com/wp-content/uploads/2023/03/pp-kosong-wa-default.jpeg'),
-                      ),
-                      // const Spacer(),
                       SizedBox(
                         height: 10,
                       ),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20,
+                      ElevatedButton(
+                        onPressed: () async {},
+                        style: ElevatedButton.styleFrom(
+                          elevation: 4,
+                          shadowColor: primaryColor,
+                          backgroundColor: orange,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                10.0), // Adjust the border radius as needed
+                          ),
                         ),
-                        child: Consumer<AuthProvider>(
-                          builder: (context, userProvider, child) {
-                            return Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  // '${authProvider.user.nama}',
-                                  // 'lorem aisjcn aoksjcna askmao caoskcm aoiikxmao cqwc cqokc  cqokmc cqokcm qpwkcm cqpkwcm weckwemc cw ec ecw',
-                                  '${authProvider.user.user.dakar.nama}',
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.heebo(
-                                    height: 1,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: <Widget>[
+                                  // Icon(
+                                  //   Icons.work_history_rounded,
+                                  //   color: putih,
+                                  //   size: 40,
+                                  // ),
+                                  FaIcon(
+                                    FontAwesomeIcons.briefcase,
                                     color: putih,
+                                    size: 40,
                                   ),
-                                ),
-                                Text(
-                                  // '${authProvider.user.jabatan}',
-                                  // 'lorem aisjcn aoksjcna askmao caoskcm aoiikxmao cqwc cqokc  cqokmc cqokcm qpwkcm cqpkwcm weckwemc cw ec ecw',
-                                  '${authProvider.user.user.dajab.jabatan}',
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.heebo(
-                                    height: 1.1,
-                                    fontSize: 14,
+                                  SizedBox(width: 15),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        'Jabatan',
+                                        style: TextStyle(
+                                          color: putih,
+                                          // height: 0.8,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      Text(
+                                        'History Jabatan',
+                                        textAlign: TextAlign.left,
+                                        style: GoogleFonts.heebo(
+                                            color: putih,
+                                            fontWeight: FontWeight.w200,
+                                            fontSize: 14),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              FaIcon(
+                                FontAwesomeIcons.chevronRight,
+                                color: putih,
+                                size: 15,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {},
+                        style: ElevatedButton.styleFrom(
+                          elevation: 4,
+                          shadowColor: primaryColor,
+                          backgroundColor: orange,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                10.0), // Adjust the border radius as needed
+                          ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  FaIcon(
+                                    FontAwesomeIcons.medal,
                                     color: putih,
+                                    size: 40,
                                   ),
-                                ),
-                                Text(
-                                  // '${authProvider.user.npp}',
-                                  '${authProvider.user.user.dakar.npp}',
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.heebo(
-                                    height: 1.1,
-                                    fontSize: 14,
-                                    color: putih,
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
+                                  SizedBox(width: 15),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        'Education',
+                                        style: TextStyle(
+                                          color: putih,
+                                          // height: 0.8,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Pelatihan dan Sertifikasi',
+                                        textAlign: TextAlign.left,
+                                        style: GoogleFonts.heebo(
+                                            color: putih,
+                                            fontWeight: FontWeight.w200,
+                                            fontSize: 14),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              FaIcon(
+                                FontAwesomeIcons.chevronRight,
+                                color: putih,
+                                size: 15,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-
-                // INI UNTUK Button
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    padding: EdgeInsets.all(10),
-                    // height: 120,
-                    // decoration: BoxDecoration(
-                    //   color: Colors.white,
-                    //   borderRadius: BorderRadius.circular(20),
-                    //   boxShadow: [
-                    //     BoxShadow(
-                    //       offset: Offset(0, 10),
-                    //       blurRadius: 15,
-                    //       color: primaryColor.withOpacity(0.5),
-                    //     ),
-                    //   ],
-                    // ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        ElevatedButton(
-                          onPressed: () async {},
-                          style: ElevatedButton.styleFrom(
-                            elevation: 4,
-                            shadowColor: primaryColor,
-                            backgroundColor: orange,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  10.0), // Adjust the border radius as needed
-                            ),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 15),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: <Widget>[
-                                    FaIcon(
-                                      FontAwesomeIcons.solidIdCard,
-                                      color: putih,
-                                      size: 40,
-                                    ),
-                                    SizedBox(width: 15),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          'Info Karyawan',
-                                          style: TextStyle(
-                                            color: putih,
-                                            // height: 0.8,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        Text(
-                                          'Employee Information',
-                                          textAlign: TextAlign.left,
-                                          style: GoogleFonts.heebo(
-                                              color: putih,
-                                              fontWeight: FontWeight.w200,
-                                              fontSize: 14),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                FaIcon(
-                                  FontAwesomeIcons.chevronRight,
-                                  color: putih,
-                                  size: 15,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        ElevatedButton(
-                          onPressed: () async {},
-                          style: ElevatedButton.styleFrom(
-                            elevation: 4,
-                            shadowColor: primaryColor,
-                            backgroundColor: orange,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  10.0), // Adjust the border radius as needed
-                            ),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 15),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: <Widget>[
-                                    // Icon(
-                                    //   Icons.work_history_rounded,
-                                    //   color: putih,
-                                    //   size: 40,
-                                    // ),
-                                    FaIcon(
-                                      FontAwesomeIcons.briefcase,
-                                      color: putih,
-                                      size: 40,
-                                    ),
-                                    SizedBox(width: 15),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          'Jabatan',
-                                          style: TextStyle(
-                                            color: putih,
-                                            // height: 0.8,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        Text(
-                                          'History Jabatan',
-                                          textAlign: TextAlign.left,
-                                          style: GoogleFonts.heebo(
-                                              color: putih,
-                                              fontWeight: FontWeight.w200,
-                                              fontSize: 14),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                FaIcon(
-                                  FontAwesomeIcons.chevronRight,
-                                  color: putih,
-                                  size: 15,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        ElevatedButton(
-                          onPressed: () async {},
-                          style: ElevatedButton.styleFrom(
-                            elevation: 4,
-                            shadowColor: primaryColor,
-                            backgroundColor: orange,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  10.0), // Adjust the border radius as needed
-                            ),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 15),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    FaIcon(
-                                      FontAwesomeIcons.medal,
-                                      color: putih,
-                                      size: 40,
-                                    ),
-                                    SizedBox(width: 15),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          'Education',
-                                          style: TextStyle(
-                                            color: putih,
-                                            // height: 0.8,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        Text(
-                                          'Pelatihan dan Sertifikasi',
-                                          textAlign: TextAlign.left,
-                                          style: GoogleFonts.heebo(
-                                              color: putih,
-                                              fontWeight: FontWeight.w200,
-                                              fontSize: 14),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                FaIcon(
-                                  FontAwesomeIcons.chevronRight,
-                                  color: putih,
-                                  size: 15,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
+      // ),
     );
   }
 }
