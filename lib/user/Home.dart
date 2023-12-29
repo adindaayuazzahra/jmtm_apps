@@ -130,7 +130,7 @@ class _HomeState extends State<Home> {
               SizedBox(
                 height: 10,
               ),
-              // BeritaHome(),
+              BeritaHome(),
               SizedBox(
                 height: 30,
               ),

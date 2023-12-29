@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison
 
 import 'dart:convert';
+import 'package:appjmtm/Config/config.dart';
 import 'package:appjmtm/model/Absen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -27,11 +28,13 @@ class AbsenProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  final apiUrl = AppConfig.apiUrl;
+
   Future<void> fetchDataAbsen(npp, tanggal) async {
     //  final authProvider = Provider.of<AuthProvider>(context, listen: false);
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.2.65:8000/cek_absensi'),
+        Uri.parse('${apiUrl}cek_absensi'),
         body: {
           'npp': npp,
           'tanggal': tanggal,

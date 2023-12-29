@@ -1,3 +1,4 @@
+import 'package:appjmtm/config/config.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:appjmtm/model/Absen.dart';
@@ -24,11 +25,12 @@ class HistoryAbsenProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  final apiUrl = AppConfig.apiUrl;
+
   Future<void> history(npp, tanggal) async {
-    //  final authProvider = Provider.of<AuthProvider>(context, listen: false);
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.2.65:8000/cek_absensi'),
+        Uri.parse('${apiUrl}cek_absensi'),
         body: {
           'npp': npp,
           'tanggal': tanggal,
@@ -39,25 +41,25 @@ class HistoryAbsenProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         final String token = responseData['token'];
-        print(token);
-        if (token != null) {
+        // print(token);
+        if (token.isNotEmpty) {
           final Map<String, dynamic> userData = JwtDecoder.decode(token);
-          print(userData);
+          // print(userData);
           final Map<String, dynamic> userData2 = userData['user'];
           _absenHis = AbsenData.fromJson(userData2);
-          print('Absen Data:');
-          for (var absen in _absenHis.absen) {
-            print('NPP: ${absen.npp}');
-            print('Latitude: ${absen.latitude}');
-            print('Longitude: ${absen.longitude}');
-            print('Masuk: ${absen.masuk}');
-            print('Keluar: ${absen.keluar}');
-            print('Status: ${absen.status}');
-            print('CreatedAt: ${absen.createdAt}');
-            print('Foto Link: ${absen.fotoLink}');
-            print('Alamat: ${absen.alamat}');
-            print('----------------------');
-          }
+          // print('Absen Data:');
+          // for (var absen in _absenHis.absen) {
+          //   print('NPP: ${absen.npp}');
+          //   print('Latitude: ${absen.latitude}');
+          //   print('Longitude: ${absen.longitude}');
+          //   print('Masuk: ${absen.masuk}');
+          //   print('Keluar: ${absen.keluar}');
+          //   print('Status: ${absen.status}');
+          //   print('CreatedAt: ${absen.createdAt}');
+          //   print('Foto Link: ${absen.fotoLink}');
+          //   print('Alamat: ${absen.alamat}');
+          //   print('----------------------');
+          // }
           notifyListeners();
         } else {
           throw Exception('Token is null in response');
@@ -67,8 +69,8 @@ class HistoryAbsenProvider extends ChangeNotifier {
             'Failed to login. Status code: ${response.statusCode}, Body: ${response.body}');
       }
     } catch (e) {
-      print('Error during fetch data: $e');
-      print('User Data: $_absenHis');
+      // print('Error during fetch data: $e');
+      // print('User Data: $_absenHis');
       throw Exception('Failed to fetch data: $e');
     }
   }

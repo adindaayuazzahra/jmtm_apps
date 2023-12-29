@@ -903,20 +903,37 @@ class _AbsensiState extends State<Absensi> {
                                           children: [
                                             if (absenData.absen.length != 0)
                                               for (var absen in absenData.absen)
-                                                Card(
-                                                  color: putih,
-                                                  surfaceTintColor:
-                                                      secondaryColor,
+                                                Container(
+                                                  padding: EdgeInsets.all(12),
+                                                  // surfaceTintColor: secondaryColor,
                                                   margin: EdgeInsets.symmetric(
                                                     vertical: 8,
                                                   ),
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        vertical: 10,
-                                                        horizontal: 0),
-                                                    child: ListTile(
-                                                      leading: ClipRRect(
+                                                  decoration: BoxDecoration(
+                                                      color: putih,
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10)),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors
+                                                              .grey.shade400,
+                                                          spreadRadius: 0,
+                                                          blurRadius: 10,
+                                                          offset: Offset(0, 3),
+                                                          // spreadRadius: 1,
+                                                        )
+                                                      ]),
+                                                  child: Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: <Widget>[
+                                                      ClipRRect(
                                                         borderRadius:
                                                             BorderRadius.circular(
                                                                 10.0), // Ganti nilai sesuai keinginan Anda
@@ -927,15 +944,10 @@ class _AbsensiState extends State<Absensi> {
                                                           fit: BoxFit.cover,
                                                         ),
                                                       ),
-
-                                                      // subtitle: Text('Alamat: ${absen.alamat}'),
-                                                      trailing: Column(
+                                                      Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
                                                                 .start,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
                                                         children: [
                                                           Text(
                                                             'PRESENSI ${absen.status == "0" ? "Masuk" : "Keluar"}'
@@ -950,11 +962,11 @@ class _AbsensiState extends State<Absensi> {
                                                                       .bold,
                                                             ),
                                                           ),
+                                                          SizedBox(height: 3),
                                                           Container(
                                                             width: size.width *
-                                                                0.54,
+                                                                0.57,
                                                             child: Text(
-                                                              // '${authProvider.user.nama}',
                                                               '${absen.alamat}',
                                                               textAlign:
                                                                   TextAlign
@@ -965,55 +977,62 @@ class _AbsensiState extends State<Absensi> {
                                                                       .ellipsis,
                                                               style: GoogleFonts
                                                                   .heebo(
-                                                                height: 1,
-                                                                fontSize: 10,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
+                                                                height: 1.1,
+                                                                fontSize: 12,
+                                                                // fontWeight: FontWeight.bold,
                                                               ),
                                                             ),
                                                           ),
+                                                          SizedBox(height: 3),
                                                           Text(
-                                                            '${absen.status == "0" ? formatDateTime(absen.masuk) : formatDateTime(absen.keluar)}',
-                                                            style: GoogleFonts.heebo(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
+                                                            '${absen.status == "0" ? formatHari(absen.masuk) + " - " + formatDateTime(absen.masuk) : formatHari(absen.keluar) + " - " + formatDateTime(absen.keluar)}',
+                                                            style: GoogleFonts
+                                                                .heebo(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 12,
+                                                            ),
                                                           ),
                                                           // Text(
-                                                          //     'Waktu: ${absen.status == "0" ? absen.masuk : absen.keluar}'),
+                                                          //   '${absen.status == "0" ? formatDateTime(absen.masuk) : formatDateTime(absen.keluar)}',
+                                                          //   style: GoogleFonts.heebo(
+                                                          //       fontWeight: FontWeight.w500, height: 1),
+                                                          // ),
                                                         ],
                                                       ),
-                                                    ),
+                                                    ],
                                                   ),
                                                 )
                                             else
                                               Container(
                                                 padding: EdgeInsets.symmetric(
-                                                    horizontal: 15),
+                                                    horizontal: 15,
+                                                    vertical: 10),
                                                 alignment: Alignment.center,
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    const Text(
-                                                      'Maaf, kamu belum melakukan presensi.',
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 16,
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 9,
-                                                    ),
+                                                child:
+                                                    // Column(
+                                                    //   mainAxisAlignment:
+                                                    //       MainAxisAlignment.center,
+                                                    //   crossAxisAlignment:
+                                                    //       CrossAxisAlignment.center,
+                                                    //   children: [
+                                                    //     const Text(
+                                                    //       'Maaf, kamu belum melakukan presensi.',
+                                                    //       style: TextStyle(
+                                                    //         fontWeight:
+                                                    //             FontWeight.bold,
+                                                    //         fontSize: 16,
+                                                    //       ),
+                                                    //     ),
+                                                    //     SizedBox(
+                                                    //       height: 9,
+                                                    //     ),
                                                     Lottie.asset(
-                                                      'assets/lottie/silang.json',
-                                                    ),
-                                                  ],
+                                                  'assets/lottie/nodata.json',
                                                 ),
+                                                //   ],
+                                                // ),
                                               )
                                           ],
                                         ),
@@ -1144,7 +1163,16 @@ class Maps extends StatelessWidget {
 String formatDateTime(String dateTimeString) {
   if (dateTimeString.isNotEmpty) {
     DateTime parsedDateTime = DateTime.parse(dateTimeString);
-    return DateFormat('HH:mm:ss', 'id').format(parsedDateTime);
+    return DateFormat('HH:mm', 'id').format(parsedDateTime);
+  } else {
+    return 'Tanggal tidak valid'; // atau sesuaikan dengan nilai default lain jika diinginkan
+  }
+}
+
+String formatHari(String dateTimeString) {
+  if (dateTimeString.isNotEmpty) {
+    DateTime parsedDateTime = DateTime.parse(dateTimeString);
+    return DateFormat('d MMM yyyy', 'id').format(parsedDateTime);
   } else {
     return 'Tanggal tidak valid'; // atau sesuaikan dengan nilai default lain jika diinginkan
   }

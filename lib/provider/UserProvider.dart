@@ -2,13 +2,13 @@
 
 import 'dart:convert';
 
+import 'package:appjmtm/Config/config.dart';
 import 'package:appjmtm/model/User.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 // class AuthProvider with ChangeNotifier {
 //   late User _user = User(npp: '', nama: '', jabatan: '');
 
@@ -80,7 +80,7 @@ class AuthProvider with ChangeNotifier {
   // final AbsenProvider? absenProvider;
 
   // AuthProvider(this.absenProvider);
-
+  // final apiUrl = dotenv.env['API_URL'];
   late User _user = User(
     user: UserClass(
       dajab: Dajab(
@@ -110,11 +110,13 @@ class AuthProvider with ChangeNotifier {
 
   User get user => _user;
 
+  final apiUrl = AppConfig.apiUrl;
+
   Future<void> login(TextEditingController nppController,
       TextEditingController passwordController) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.2.65:8000/login'),
+        Uri.parse('${apiUrl}login'),
         body: {
           'username_admin': nppController.text,
           'password_admin': passwordController.text,
