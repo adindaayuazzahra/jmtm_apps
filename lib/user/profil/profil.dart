@@ -1,7 +1,9 @@
 // ignore_for_file: use_build_context_synchronously, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:appjmtm/common/routes.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
-import 'package:appjmtm/styles.dart';
+import 'package:appjmtm/common/styles.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -150,7 +152,7 @@ class Profil extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       ElevatedButton(
-                        onPressed: () async {},
+                        onPressed: () {},
                         style: ElevatedButton.styleFrom(
                           elevation: 4,
                           shadowColor: primaryColor,
@@ -211,7 +213,10 @@ class Profil extends StatelessWidget {
                         height: 10,
                       ),
                       ElevatedButton(
-                        onPressed: () async {},
+                        onPressed: () async {
+                          await Routes.router.navigateTo(context, '/jabatan',
+                              transition: TransitionType.inFromRight);
+                        },
                         style: ElevatedButton.styleFrom(
                           elevation: 4,
                           shadowColor: primaryColor,
@@ -228,11 +233,6 @@ class Profil extends StatelessWidget {
                             children: [
                               Row(
                                 children: <Widget>[
-                                  // Icon(
-                                  //   Icons.work_history_rounded,
-                                  //   color: putih,
-                                  //   size: 40,
-                                  // ),
                                   FaIcon(
                                     FontAwesomeIcons.briefcase,
                                     color: putih,

@@ -1,7 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:appjmtm/provider/UserProvider.dart';
-import 'package:appjmtm/styles.dart';
+import 'package:appjmtm/common/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:webview_flutter/webview_flutter.dart';

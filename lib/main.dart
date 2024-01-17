@@ -4,8 +4,8 @@ import 'package:appjmtm/provider/AbsenProvider.dart';
 import 'package:appjmtm/provider/BeritaProvider.dart';
 import 'package:appjmtm/provider/HistoryAbsenProvider.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
-import 'package:appjmtm/routes.dart';
-import 'package:appjmtm/styles.dart';
+import 'package:appjmtm/common/routes.dart';
+import 'package:appjmtm/common/styles.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        onGenerateRoute: Routes.router.generator,
         title: 'JMTM SERVICES',
         theme: ThemeData(
           splashColor: Colors.transparent,

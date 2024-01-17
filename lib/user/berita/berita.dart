@@ -1,7 +1,7 @@
 import 'package:appjmtm/componen/home_component.dart';
 import 'package:appjmtm/provider/BeritaProvider.dart';
-import 'package:appjmtm/routes.dart';
-import 'package:appjmtm/styles.dart';
+import 'package:appjmtm/common/routes.dart';
+import 'package:appjmtm/common/styles.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

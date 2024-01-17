@@ -5,12 +5,12 @@ import 'package:appjmtm/user/absensi/history_absen.dart';
 import 'package:appjmtm/user/berita/berita.dart';
 import 'package:appjmtm/user/berita/detail_berita.dart';
 import 'package:appjmtm/user/navigation.dart';
-import 'package:appjmtm/user/profil.dart';
-import 'package:appjmtm/user/test.dart';
+import 'package:appjmtm/user/profil/jabatan.dart';
+import 'package:appjmtm/user/profil/profil.dart';
 import 'package:fluro/fluro.dart';
 
 class Routes {
-  static FluroRouter router = FluroRouter();
+  static final FluroRouter router = FluroRouter();
 
   static void configureRoutes() {
     // Definisikan rute-rute aplikasi di sini
@@ -42,8 +42,15 @@ class Routes {
       '/profil',
       handler: Handler(
         handlerFunc: (context, parameters) {
-          // final token = parameters['token']!.first;
           return Profil();
+        },
+      ),
+    );
+    router.define(
+      '/jabatan',
+      handler: Handler(
+        handlerFunc: (context, parameters) {
+          return Jabatan();
         },
       ),
     );
@@ -83,10 +90,10 @@ class Routes {
       '/login',
       handler: Handler(handlerFunc: (context, parameters) => Login()),
     );
-    router.define(
-      '/test',
-      handler: Handler(handlerFunc: (context, parameters) => Test()),
-    );
+    // router.define(
+    //   '/test',
+    //   handler: Handler(handlerFunc: (context, parameters) => Test()),
+    // );
     router.define(
       '/navigation',
       handler: Handler(handlerFunc: (context, parameters) => Navigation()),

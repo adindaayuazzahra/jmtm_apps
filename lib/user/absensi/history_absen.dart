@@ -2,7 +2,7 @@
 
 import 'package:appjmtm/provider/HistoryAbsenProvider.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
-import 'package:appjmtm/styles.dart';
+import 'package:appjmtm/common/styles.dart';
 import 'package:appjmtm/user/absensi/absensi.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:appjmtm/styles.dart';
+import 'package:appjmtm/common/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 

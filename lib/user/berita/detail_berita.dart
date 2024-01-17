@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:appjmtm/provider/BeritaProvider.dart';
-import 'package:appjmtm/styles.dart';
+import 'package:appjmtm/common/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';

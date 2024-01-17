@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_string_interpolations
 import 'package:appjmtm/provider/HistoryAbsenProvider.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
-import 'package:appjmtm/styles.dart';
+import 'package:appjmtm/common/styles.dart';
 import 'package:appjmtm/user/Home.dart';
 import 'package:appjmtm/user/absensi/absensi.dart';
-import 'package:appjmtm/user/profil.dart';
+import 'package:appjmtm/user/profil/profil.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -44,8 +44,8 @@ class _NavigationState extends State<Navigation> {
     setState(() {
       _pages = [
         Home(),
-        Profil(),
         Absensi(),
+        Profil(),
       ];
     }); // Buat fungsi getToken untuk mendapatkan token
   }

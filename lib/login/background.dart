@@ -38,29 +38,6 @@ class Background extends StatelessWidget {
             right: 0,
             child: Image.asset("assets/images/bottom1.png", width: size.width),
           ),
-          // Positioned(
-          //     bottom: 0,
-          //     right: 0,
-          //     child: Container(
-          //       // height: size.height,
-          //       width: size.width,
-          //       // color: Colors.transparent,
-          //       decoration: BoxDecoration(
-          //         borderRadius: BorderRadius.only(
-          //           bottomLeft: Radius.circular(30),
-          //           bottomRight: Radius.circular(30),
-          //         ),
-          //         // border: Border.all(
-          //         //   //<-- SEE HERE
-          //         //   width: 5,
-          //         // ),
-          //       ),
-          //       child: Image.asset('assets/images/oo.jpg'),
-          //     )
-
-          //     // Image.asset("assets/images/ss.gif", width: size.width),
-          //     ),
-          child
         ],
       ),
     );

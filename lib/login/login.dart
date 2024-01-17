@@ -1,6 +1,6 @@
 import 'package:appjmtm/login/page_one.dart';
 import 'package:appjmtm/login/page_two.dart';
-import 'package:appjmtm/styles.dart';
+import 'package:appjmtm/common/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

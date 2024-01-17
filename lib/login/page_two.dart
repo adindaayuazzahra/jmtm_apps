@@ -1,8 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:appjmtm/provider/UserProvider.dart';
-import 'package:appjmtm/routes.dart';
-import 'package:appjmtm/styles.dart';
+import 'package:appjmtm/common/routes.dart';
+import 'package:appjmtm/common/styles.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
