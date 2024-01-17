@@ -52,7 +52,7 @@ class _HomeState extends State<Home> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "JMTM SERVICES",
+              "JMTM SERVICES ",
               style: GoogleFonts.heebo(
                 letterSpacing: 3,
                 fontWeight: FontWeight.bold,
