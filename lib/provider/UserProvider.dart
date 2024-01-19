@@ -123,7 +123,7 @@ class AuthProvider with ChangeNotifier {
           'validate': 'ANAKKAMPRETMAULEWAT',
         },
       );
-
+      print('${apiUrl}login');
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         final String token = responseData['token'];

@@ -249,7 +249,7 @@ class HeaderHome extends StatelessWidget {
                         radius: 35,
                         backgroundImage: NetworkImage(authProvider
                                 .user.user.dakar.foto_link.isNotEmpty
-                            ? "http://192.168.2.65:8080/fotoUser/${authProvider.user.user.dakar.foto_link}"
+                            ? "http://10.8.0.4:8080/fotoUser/${authProvider.user.user.dakar.foto_link}"
                             : 'https://www.copaster.com/wp-content/uploads/2023/03/pp-kosong-wa-default.jpeg'),
                         // backgroundImage: NetworkImage(
                         //     'https://www.copaster.com/wp-content/uploads/2023/03/pp-kosong-wa-default.jpeg'),
