@@ -101,7 +101,7 @@ class _JabatanState extends State<Jabatan> {
                                 ),
                               ),
                               Text(
-                                  'opposite contents opposite contents opposite contents opposite contents opposite contents opposite contents'),
+                                  'Uhuy test ahayyy'),
                             ],
                           ),
                         ),
