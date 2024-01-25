@@ -17,6 +17,8 @@ import 'package:titled_navigation_bar/titled_navigation_bar.dart';
 import '../provider/AbsenProvider.dart';
 
 class Navigation extends StatefulWidget {
+  const Navigation({super.key});
+
   @override
   _NavigationState createState() => _NavigationState();
 }

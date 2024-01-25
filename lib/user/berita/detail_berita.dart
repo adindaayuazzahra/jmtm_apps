@@ -9,13 +9,14 @@ import 'package:provider/provider.dart';
 class DetailBeritaPage extends StatefulWidget {
   final String id;
 
-  DetailBeritaPage({required this.id});
+  const DetailBeritaPage({super.key, required this.id});
 
   @override
   State<DetailBeritaPage> createState() => _DetailBeritaPageState();
 }
 
 class _DetailBeritaPageState extends State<DetailBeritaPage> {
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     final newsProvider = Provider.of<NewsProvider>(context, listen: false);

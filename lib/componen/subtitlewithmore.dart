@@ -63,7 +63,7 @@ class SubtitleWithMore extends StatelessWidget {
                       color: Colors.black45,
                     ),
                   ),
-                  Icon(
+                  const Icon(
                     Icons.arrow_right_alt_rounded,
                     size: 20,
                     color: Colors.black45,

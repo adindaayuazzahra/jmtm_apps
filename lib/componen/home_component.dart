@@ -266,11 +266,11 @@ class HeaderHome extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Container(
+                            SizedBox(
                               width: size.width * 0.54,
                               child: Text(
                                 // '${authProvider.user.nama}',
-                                '${authProvider.user.user.dakar.nama}',
+                                authProvider.user.user.dakar.nama,
                                 // textAlign: TextAlign.center,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
@@ -284,11 +284,26 @@ class HeaderHome extends StatelessWidget {
                             SizedBox(
                               height: 5,
                             ),
-                            Container(
+                            SizedBox(
                               width: size.width * 0.54,
                               child: Text(
                                 // '(${authProvider.user.npp}) - ${authProvider.user.jabatan}',
-                                '${authProvider.user.user.dakar.npp} - ${authProvider.user.user.dajab.jabatan}',
+                                '${authProvider.user.user.dajab.jabatan}',
+                                // textAlign: TextAlign.center,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.heebo(
+                                  height: 1.1,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 2),
+                            SizedBox(
+                              width: size.width * 0.54,
+                              child: Text(
+                                // '(${authProvider.user.npp}) - ${authProvider.user.jabatan}',
+                                '${authProvider.user.user.dakar.npp}',
                                 // textAlign: TextAlign.center,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,

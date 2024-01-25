@@ -3,9 +3,7 @@
 import 'package:appjmtm/common/styles.dart';
 import 'package:appjmtm/componen/subtitle.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
-import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:timelines/timelines.dart';
@@ -99,8 +97,7 @@ class _JabatanState extends State<Jabatan> {
                                   ),
                                 ),
                               ),
-                              Text(
-                                  'Uhuy test ahayyy'),
+                              Text('Uhuy test ahayyy'),
                             ],
                           ),
                         ),

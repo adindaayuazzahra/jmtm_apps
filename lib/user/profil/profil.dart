@@ -82,7 +82,7 @@ class Profil extends StatelessWidget {
                               Text(
                                 // '${authProvider.user.nama}',
                                 // 'lorem aisjcn aoksjcna askmao caoskcm aoiikxmao cqwc cqokc  cqokmc cqokcm qpwkcm cqpkwcm weckwemc cw ec ecw',
-                                '${authProvider.user.user.dakar.nama}',
+                                authProvider.user.user.dakar.nama,
                                 textAlign: TextAlign.center,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
@@ -96,7 +96,7 @@ class Profil extends StatelessWidget {
                               Text(
                                 // '${authProvider.user.jabatan}',
                                 // 'lorem aisjcn aoksjcna askmao caoskcm aoiikxmao cqwc cqokc  cqokmc cqokcm qpwkcm cqpkwcm weckwemc cw ec ecw',
-                                '${authProvider.user.user.dajab.jabatan}',
+                                authProvider.user.user.dajab.jabatan,
                                 textAlign: TextAlign.center,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
@@ -108,7 +108,7 @@ class Profil extends StatelessWidget {
                               ),
                               Text(
                                 // '${authProvider.user.npp}',
-                                '${authProvider.user.user.dakar.npp}',
+                                authProvider.user.user.dakar.npp,
                                 textAlign: TextAlign.center,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,

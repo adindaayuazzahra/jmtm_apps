@@ -18,7 +18,7 @@ class Routes {
       '/home',
       handler: Handler(
         handlerFunc: (context, parameters) {
-          return Home();
+          return const Home();
         },
       ),
     );
@@ -26,7 +26,7 @@ class Routes {
       '/berita',
       handler: Handler(
         handlerFunc: (context, parameters) {
-          return BeritaPage();
+          return const BeritaPage();
         },
       ),
     );
@@ -34,7 +34,7 @@ class Routes {
       '/history_absen',
       handler: Handler(
         handlerFunc: (context, parameters) {
-          return HistoryAbsen();
+          return const HistoryAbsen();
         },
       ),
     );
@@ -42,7 +42,7 @@ class Routes {
       '/profil',
       handler: Handler(
         handlerFunc: (context, parameters) {
-          return Profil();
+          return const Profil();
         },
       ),
     );
@@ -50,7 +50,7 @@ class Routes {
       '/jabatan',
       handler: Handler(
         handlerFunc: (context, parameters) {
-          return Jabatan();
+          return const Jabatan();
         },
       ),
     );
@@ -82,13 +82,13 @@ class Routes {
       '/absensi/:token',
       handler: Handler(
         handlerFunc: (context, parameters) {
-          return Absensi();
+          return const Absensi();
         },
       ),
     );
     router.define(
       '/login',
-      handler: Handler(handlerFunc: (context, parameters) => Login()),
+      handler: Handler(handlerFunc: (context, parameters) => const Login()),
     );
     // router.define(
     //   '/test',
@@ -96,7 +96,7 @@ class Routes {
     // );
     router.define(
       '/navigation',
-      handler: Handler(handlerFunc: (context, parameters) => Navigation()),
+      handler: Handler(handlerFunc: (context, parameters) => const Navigation()),
     );
     // Tambahkan rute-rute lain sesuai kebutuhan Anda
   }

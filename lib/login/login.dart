@@ -65,14 +65,14 @@ class _LoginState extends State<Login> {
 
   Widget _buildBottomBar() {
     return Container(
-      padding: EdgeInsets.only(bottom: 10), // Atur warna latar belakang di sini
+      padding: const EdgeInsets.only(bottom: 10), // Atur warna latar belakang di sini
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: List<Widget>.generate(2, (int index) {
           return Container(
             width: 10,
             height: 8,
-            margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+            margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: _currentPage == index

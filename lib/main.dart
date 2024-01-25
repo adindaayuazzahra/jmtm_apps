@@ -13,11 +13,13 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-    // statusBarIconBrightness: Brightness.dark,
-    // systemNavigationBarColor: Colors.transparent,
-  ));
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      // statusBarIconBrightness: Brightness.dark,
+      // systemNavigationBarColor: Colors.transparent,
+    ),
+  );
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('id');
   await AuthProvider().autoLogin();

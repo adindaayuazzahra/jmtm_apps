@@ -41,7 +41,7 @@ class _BeritaPageState extends State<BeritaPage> {
         iconTheme: const IconThemeData(color: putih),
         centerTitle: true,
         leading: IconButton(
-          icon: FaIcon(FontAwesomeIcons.angleLeft, size: 20),
+          icon: const FaIcon(FontAwesomeIcons.angleLeft, size: 20),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
@@ -67,11 +67,11 @@ class _BeritaPageState extends State<BeritaPage> {
               final newsList = newsProvider.newsList;
               if (newsProvider.isLoading) {
                 return ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: newsList.length,
                   itemBuilder: (context, index) {
-                    return ShimmerBerita();
+                    return const ShimmerBerita();
                   },
                 );
               } else if (newsProvider.isNotEmpty) {
@@ -101,7 +101,7 @@ class _BeritaPageState extends State<BeritaPage> {
                               color: secondaryColor.withOpacity(0.5),
                               spreadRadius: 3,
                               blurRadius: 5,
-                              offset: Offset(0, 3),
+                              offset: const Offset(0, 3),
                             ),
                           ],
                         ),
@@ -119,7 +119,7 @@ class _BeritaPageState extends State<BeritaPage> {
                             news.title,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 14,
                               height: 1.1,
                               fontWeight: FontWeight.bold,
@@ -129,7 +129,7 @@ class _BeritaPageState extends State<BeritaPage> {
                             news.date,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12,
                             ),
                           ),

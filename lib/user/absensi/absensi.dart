@@ -1,8 +1,7 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously, unnecessary_string_interpolations, unnecessary_new
-
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:appjmtm/model/Absen.dart';
 import 'package:appjmtm/provider/AbsenProvider.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
 import 'package:appjmtm/common/routes.dart';
@@ -20,9 +19,10 @@ import 'package:location/location.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Absensi extends StatefulWidget {
+  const Absensi({super.key});
+
   @override
   State<Absensi> createState() => _AbsensiState();
 }
@@ -135,14 +135,14 @@ class _AbsensiState extends State<Absensi> {
     final npp = '${authProvider.user.user.dakar.npp}';
     final latitude = locationData.latitude.toString();
     final longitude = locationData.longitude.toString();
-    final keluar = '';
-    final status = '0';
-    final validate = 'ANAKKAMPRETMAULEWAT';
+    const keluar = '';
+    const status = '0';
+    const validate = 'ANAKKAMPRETMAULEWAT';
     final imageFile = File(pickedFile.path);
 
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse('http://192.168.2.65:8000/absensi'),
+      Uri.parse('http://10.8.0.4:8000/absensi'),
     );
 
     // Menambahkan data dan gambar ke request
@@ -156,7 +156,7 @@ class _AbsensiState extends State<Absensi> {
     request.fields['status'] = status;
     request.fields['validate'] = validate;
     request.files.add(await http.MultipartFile.fromPath('image', imageFile.path,
-        filename: '${npp} ${formattedTime} ${formattedDate}.jpg'));
+        filename: '$npp $formattedTime $formattedDate.jpg'));
 
     // Mengirim request
     var response = await request.send();
@@ -181,7 +181,7 @@ class _AbsensiState extends State<Absensi> {
             surfaceTintColor: putih,
             backgroundColor: putih,
             content: Text(
-              '${message}'.toUpperCase(),
+              '$message'.toUpperCase(),
               textAlign: TextAlign.center,
               style: const TextStyle(
                   height: 1.2,
@@ -247,7 +247,7 @@ class _AbsensiState extends State<Absensi> {
             surfaceTintColor: putih,
             backgroundColor: putih,
             content: Text(
-              '${message}'.toUpperCase(),
+              '$message'.toUpperCase(),
               textAlign: TextAlign.center,
               style: const TextStyle(
                   height: 1.2,
@@ -337,14 +337,14 @@ class _AbsensiState extends State<Absensi> {
     final npp = '${authProvider.user.user.dakar.npp}';
     final latitude = locationData.latitude.toString();
     final longitude = locationData.longitude.toString();
-    final masuk = '';
-    final status = '1';
-    final validate = 'ANAKKAMPRETMAULEWAT';
+    const masuk = '';
+    const status = '1';
+    const validate = 'ANAKKAMPRETMAULEWAT';
     final imageFile = File(pickedFile.path);
 
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse('http://192.168.2.65:8000/absensi'),
+      Uri.parse('http://10.8.0.4:8000/absensi'),
     );
 
     // Menambahkan data dan gambar ke request
@@ -358,7 +358,7 @@ class _AbsensiState extends State<Absensi> {
     request.fields['status'] = status;
     request.fields['validate'] = validate;
     request.files.add(await http.MultipartFile.fromPath('image', imageFile.path,
-        filename: '${npp} ${formattedTime} ${formattedDate}.jpg'));
+        filename: '$npp $formattedTime $formattedDate.jpg'));
 
     // Mengirim request
     var response = await request.send();
@@ -383,7 +383,7 @@ class _AbsensiState extends State<Absensi> {
             surfaceTintColor: putih,
             backgroundColor: putih,
             content: Text(
-              '${message}'.toUpperCase(),
+              '$message'.toUpperCase(),
               textAlign: TextAlign.center,
               style: const TextStyle(
                   height: 1.2,
@@ -455,7 +455,7 @@ class _AbsensiState extends State<Absensi> {
             surfaceTintColor: putih,
             backgroundColor: putih,
             content: Text(
-              '${message}'.toUpperCase(),
+              '$message'.toUpperCase(),
               textAlign: TextAlign.center,
               style: const TextStyle(
                   height: 1.2,
@@ -509,14 +509,67 @@ class _AbsensiState extends State<Absensi> {
 
     String formattedDate = DateFormat('d MMM y', 'id').format(tanggalHariIni);
 
-    // final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
     // final npp = '${authProvider.user.user.dakar.npp}';
     final absenProvider = Provider.of<AbsenProvider>(context, listen: false);
     // absenProvider.fetchDataAbsen(npp, formattedDate);
     final absenData = absenProvider.absenData;
 
     // print(absenData.absen.length);
+    if (authProvider.user.user.dakar.kd_comp != 'PJTM' &&
+        authProvider.user.user.dakar.kd_comp != 'JSMR') {
+      return aktif(context, size, formattedDate, absenData);
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: primaryColor,
+          elevation: 6,
+          centerTitle: true,
+          shadowColor: secondaryColor,
+          iconTheme: const IconThemeData(color: putih),
+          title: Text(
+            'Presensi',
+            style: GoogleFonts.heebo(
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.7,
+              color: putih,
+            ),
+          ),
+        ),
+        body: Container(
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Lottie.asset('assets/lottie/bingung.json', width: size.width),
+              Container(
+                padding: const EdgeInsets.all(10),
+                margin: EdgeInsets.symmetric(horizontal: 20),
+                decoration: BoxDecoration(
+                  border: Border.all(width: 3, color: Colors.red),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  // '${authProvider.user.nama}',
+                  'Maaf, Untuk saat ini fitur Presensi hanya tersedia untuk Magang dan Outsourcing',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.heebo(
+                    height: 1,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+  }
 
+  DefaultTabController aktif(BuildContext context, Size size,
+      String formattedDate, AbsenData absenData) {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -567,7 +620,6 @@ class _AbsensiState extends State<Absensi> {
                             children: [
                               Maps(
                                   size: size, currentLocation: currentLocation),
-
                               // TANGGAL JAM
                               Positioned(
                                 bottom: 0,
@@ -624,7 +676,7 @@ class _AbsensiState extends State<Absensi> {
                                                   fontWeight: FontWeight.bold),
                                             );
                                           } else {
-                                            return Container(
+                                            return SizedBox(
                                               width: 20,
                                               height: 20,
                                               child: CircularProgressIndicator(
@@ -651,7 +703,7 @@ class _AbsensiState extends State<Absensi> {
                             children: <Widget>[
                               //TAB BAR
                               TabBarAbsen(),
-                              Container(
+                              SizedBox(
                                 height: size.height * 0.4,
                                 child: TabBarView(
                                   children: <Widget>[
@@ -717,16 +769,18 @@ class _AbsensiState extends State<Absensi> {
                                               SizedBox(height: 20),
 
                                               // TOMBOL PRESENSI
-                                              absenData.absen.length == 0
+                                              absenData.absen.isEmpty
                                                   ? ElevatedButton(
                                                       onPressed: () {
                                                         (isLoading)
                                                             ? ScaffoldMessenger
                                                                     .of(context)
                                                                 .showSnackBar(
-                                                                    const SnackBar(
-                                                                        content:
-                                                                            Text('Tunggu ya,Sedang Memproses Presensi Kamu')))
+                                                                const SnackBar(
+                                                                  content: Text(
+                                                                      'Tunggu ya,Sedang Memproses Presensi Kamu'),
+                                                                ),
+                                                              )
                                                             : sendDataAndImageToApi();
                                                         // if (DateTime.now().hour < 10) {
                                                         //   // Lakukan aksi saat tombol ditekan
@@ -788,8 +842,8 @@ class _AbsensiState extends State<Absensi> {
                                                         ),
                                                       ),
                                                     )
-                                                  : (absenData.absen.length >=
-                                                              1 &&
+                                                  : (absenData.absen
+                                                              .isNotEmpty &&
                                                           absenData.absen
                                                                   .length <
                                                               2)
@@ -822,7 +876,8 @@ class _AbsensiState extends State<Absensi> {
                                                                 (isLoading)
                                                                     ? CircularProgressIndicator(
                                                                         color:
-                                                                            primaryColor)
+                                                                            primaryColor,
+                                                                      )
                                                                     : Text(
                                                                         'KELUAR',
                                                                         style:
@@ -852,14 +907,15 @@ class _AbsensiState extends State<Absensi> {
                                                           padding:
                                                               EdgeInsets.all(
                                                                   10),
-                                                          decoration: BoxDecoration(
-                                                              color: Colors
-                                                                  .green
-                                                                  .shade400,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10)),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Colors
+                                                                .green.shade400,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                          ),
                                                           child: Row(
                                                             crossAxisAlignment:
                                                                 CrossAxisAlignment
@@ -901,107 +957,98 @@ class _AbsensiState extends State<Absensi> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            if (absenData.absen.length != 0)
+                                            if (absenData.absen.isNotEmpty)
                                               for (var absen in absenData.absen)
                                                 Container(
-                                                  padding: EdgeInsets.all(12),
-                                                  // surfaceTintColor: secondaryColor,
-                                                  margin: EdgeInsets.symmetric(
-                                                    vertical: 8,
+                                                  alignment: Alignment.center,
+                                                  margin: const EdgeInsets
+                                                      .symmetric(
+                                                    horizontal: 5,
+                                                    vertical: 12,
                                                   ),
                                                   decoration: BoxDecoration(
-                                                      color: putih,
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  10)),
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          color: Colors
-                                                              .grey.shade400,
-                                                          spreadRadius: 0,
-                                                          blurRadius: 10,
-                                                          offset: Offset(0, 3),
-                                                          // spreadRadius: 1,
-                                                        )
-                                                      ]),
-                                                  child: Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: <Widget>[
-                                                      ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                10.0), // Ganti nilai sesuai keinginan Anda
-                                                        child: Image.network(
-                                                          "http://192.168.2.65:8000/${absen.fotoLink}",
-                                                          height: 70,
-                                                          width: 70,
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                                      Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            'PRESENSI ${absen.status == "0" ? "Masuk" : "Keluar"}'
-                                                                .toUpperCase(),
-                                                            style: TextStyle(
-                                                              color: absen.status ==
-                                                                      "0"
-                                                                  ? Colors.green
-                                                                  : Colors.red,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
-                                                          ),
-                                                          SizedBox(height: 3),
-                                                          Container(
-                                                            width: size.width *
-                                                                0.57,
-                                                            child: Text(
-                                                              '${absen.alamat}',
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .start,
-                                                              maxLines: 2,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style: GoogleFonts
-                                                                  .heebo(
-                                                                height: 1.1,
-                                                                fontSize: 12,
-                                                                // fontWeight: FontWeight.bold,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(height: 3),
-                                                          Text(
-                                                            '${absen.status == "0" ? formatHari(absen.masuk) + " - " + formatDateTime(absen.masuk) : formatHari(absen.keluar) + " - " + formatDateTime(absen.keluar)}',
-                                                            style: GoogleFonts
-                                                                .heebo(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontSize: 12,
-                                                            ),
-                                                          ),
-                                                          // Text(
-                                                          //   '${absen.status == "0" ? formatDateTime(absen.masuk) : formatDateTime(absen.keluar)}',
-                                                          //   style: GoogleFonts.heebo(
-                                                          //       fontWeight: FontWeight.w500, height: 1),
-                                                          // ),
-                                                        ],
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: secondaryColor
+                                                            .withOpacity(0.5),
+                                                        spreadRadius: 3,
+                                                        blurRadius: 5,
+                                                        offset:
+                                                            const Offset(0, 3),
                                                       ),
                                                     ],
+                                                  ),
+                                                  child: ListTile(
+                                                    onTap: () {
+                                                      // MASIH NGEDIT SHOW DIALOG
+                                                      DetailAbsen(
+                                                          context, absen);
+                                                    },
+                                                    contentPadding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 15,
+                                                            vertical: 3),
+                                                    visualDensity:
+                                                        VisualDensity(
+                                                            vertical: 2),
+                                                    horizontalTitleGap: 12,
+                                                    leading: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                      child: Image.network(
+                                                        "http://10.8.0.4:8000/${absen.fotoLink}",
+                                                        width: 70,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                    subtitle: Text(
+                                                      '${absen.status == "0" ? "${formatHari(absen.masuk)} - ${formatDateTime(absen.masuk)}" : "${formatHari(absen.keluar)} - ${formatDateTime(absen.keluar)}"}',
+                                                      style: GoogleFonts.heebo(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 12,
+                                                      ),
+                                                    ),
+                                                    title: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: <Widget>[
+                                                        Text(
+                                                          'PRESENSI ${absen.status == "0" ? "Masuk" : "Keluar"}'
+                                                              .toUpperCase(),
+                                                          style: TextStyle(
+                                                            color:
+                                                                absen.status ==
+                                                                        "0"
+                                                                    ? Colors
+                                                                        .green
+                                                                    : Colors
+                                                                        .red,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          '${absen.alamat}',
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontSize: 12,
+                                                                  height: 1.2),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 )
                                             else
@@ -1010,30 +1057,10 @@ class _AbsensiState extends State<Absensi> {
                                                     horizontal: 15,
                                                     vertical: 10),
                                                 alignment: Alignment.center,
-                                                child:
-                                                    // Column(
-                                                    //   mainAxisAlignment:
-                                                    //       MainAxisAlignment.center,
-                                                    //   crossAxisAlignment:
-                                                    //       CrossAxisAlignment.center,
-                                                    //   children: [
-                                                    //     const Text(
-                                                    //       'Maaf, kamu belum melakukan presensi.',
-                                                    //       style: TextStyle(
-                                                    //         fontWeight:
-                                                    //             FontWeight.bold,
-                                                    //         fontSize: 16,
-                                                    //       ),
-                                                    //     ),
-                                                    //     SizedBox(
-                                                    //       height: 9,
-                                                    //     ),
-                                                    Lottie.asset(
+                                                child: Lottie.asset(
                                                   'assets/lottie/nodata.json',
                                                 ),
-                                                //   ],
-                                                // ),
-                                              )
+                                              ),
                                           ],
                                         ),
                                       ),
@@ -1064,6 +1091,120 @@ class _AbsensiState extends State<Absensi> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<dynamic> DetailAbsen(BuildContext context, Absen absen) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'PRESENSI ${absen.status == "0" ? "Masuk" : "Keluar"}'
+                .toUpperCase(),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: absen.status == "0" ? Colors.green : Colors.red,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // FOTO
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: Image.network(
+                  "http://10.8.0.4:8000/${absen.fotoLink}",
+                  fit: BoxFit.cover,
+                ),
+              ),
+              SizedBox(height: 15),
+              // LOKASI ALAMAT
+              Row(
+                children: [
+                  FaIcon(
+                    FontAwesomeIcons.mapPin,
+                    size: 14,
+                    color: primaryColor,
+                  ),
+                  SizedBox(width: 5),
+                  Text(
+                    'Lokasi',
+                    textAlign: TextAlign.justify,
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              SizedBox(height: 5),
+              Text(
+                '${absen.alamat}',
+                textAlign: TextAlign.justify,
+                style: const TextStyle(fontSize: 12, height: 1.2),
+              ),
+              // TANGGAL
+              SizedBox(height: 10),
+              Row(
+                children: [
+                  FaIcon(
+                    FontAwesomeIcons.calendar,
+                    size: 14,
+                    color: primaryColor,
+                  ),
+                  SizedBox(width: 5),
+                  Text(
+                    'Tanggal',
+                    textAlign: TextAlign.justify,
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              SizedBox(height: 5),
+              Text(
+                '${absen.status == "0" ? "${formatHari(absen.masuk)}" : "${formatHari(absen.keluar)}"}',
+                textAlign: TextAlign.justify,
+                style: const TextStyle(fontSize: 12, height: 1.2),
+              ),
+              SizedBox(height: 10),
+              // WAKTU
+              Row(
+                children: [
+                  FaIcon(
+                    FontAwesomeIcons.clock,
+                    size: 14,
+                    color: primaryColor,
+                  ),
+                  SizedBox(width: 5),
+                  Text(
+                    'Waktu',
+                    textAlign: TextAlign.justify,
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              SizedBox(height: 5),
+              Text(
+                '${absen.status == "0" ? "${formatDateTime(absen.masuk)}" : "${formatDateTime(absen.keluar)}"}',
+                textAlign: TextAlign.justify,
+                style: const TextStyle(fontSize: 12, height: 1.2),
+              ),
+            ],
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -1133,7 +1274,7 @@ class Maps extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: size.height * 0.4,
       child: SfMaps(
         layers: [
