@@ -55,6 +55,7 @@ dependencies:
   image_picker: ^1.0.4
   connectivity: ^3.0.6
   timelines: ^0.1.0
+  url_launcher: ^6.2.4
  
 
 

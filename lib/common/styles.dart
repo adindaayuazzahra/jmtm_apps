@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 const Color primaryColor = Color(0XFF001E6C);
 const Color secondaryColor = Color(0XFF035397);
 const Color orange = Color(0XFFE8630A);
+// const Color orange = Color(0XFFFFFFFF);
 Color kuning = Colors.amber.shade600;
 // const Color kuning = Color(0XFFFCD900);
 const Color putih = Color(0XFFFFFFFF);

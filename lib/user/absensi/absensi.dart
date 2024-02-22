@@ -516,8 +516,8 @@ class _AbsensiState extends State<Absensi> {
     final absenData = absenProvider.absenData;
 
     // print(absenData.absen.length);
-    if (authProvider.user.user.dakar.kd_comp != 'PJTM' &&
-        authProvider.user.user.dakar.kd_comp != 'JSMR') {
+    if (authProvider.user.user.status_absen == 1) {
+      // if (authProvider.user.user.status_absen == 0) {
       return aktif(context, size, formattedDate, absenData);
     } else {
       return Scaffold(
@@ -540,19 +540,27 @@ class _AbsensiState extends State<Absensi> {
         body: Container(
           alignment: Alignment.center,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
+              SizedBox(height: 90),
+
               Lottie.asset('assets/lottie/bingung.json', width: size.width),
+              // Container(
+              //   padding: EdgeInsets.zero,
+              //   margin: EdgeInsets.only(top: 100),
+              //   child: Lottie.asset('assets/lottie/bingung.json',
+              //       width: size.width),
+              // ),
               Container(
                 padding: const EdgeInsets.all(10),
-                margin: EdgeInsets.symmetric(horizontal: 20),
+                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
                 decoration: BoxDecoration(
                   border: Border.all(width: 3, color: Colors.red),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
                   // '${authProvider.user.nama}',
-                  'Maaf, Untuk saat ini fitur Presensi hanya tersedia untuk Magang dan Outsourcing',
+                  'Maaf, Untuk saat ini fitur Presensi tidak tersedia untuk Anda.',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.heebo(
                     height: 1,
@@ -631,7 +639,7 @@ class _AbsensiState extends State<Absensi> {
                                     borderRadius: BorderRadius.only(
                                       topRight: Radius.circular(50),
                                     ),
-                                    color: kuning,
+                                    color: orange,
                                   ),
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 24, vertical: 10),
@@ -1234,7 +1242,7 @@ class TabBarAbsen extends StatelessWidget {
         dividerColor: Colors.transparent,
         indicatorPadding: EdgeInsets.all(5),
         indicator: BoxDecoration(
-            color: orange, borderRadius: BorderRadius.circular(30)),
+            color: kuning, borderRadius: BorderRadius.circular(30)),
         tabs: [
           Tab(
             child: Text(
