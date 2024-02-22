@@ -143,7 +143,10 @@ class _JabatanState extends State<Jabatan> {
                     ],
                   ),
                 ),
-                Subtitle(text: 'Riwayat Jabatan'),
+                if (authProvider.user.user.hisjab == []) ...[
+                  Subtitle(text: 'Riwayat Jabatan'),
+                  const Text('Halo'),
+                ],
                 SizedBox(
                   height: 18,
                 ),
@@ -195,7 +198,6 @@ class _JabatanState extends State<Jabatan> {
                                 ),
                               ),
                             ),
-
                             TimelineTile(
                               node: TimelineNode(
                                 overlap: true,
