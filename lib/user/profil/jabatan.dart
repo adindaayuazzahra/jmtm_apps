@@ -145,8 +145,9 @@ class _JabatanState extends State<Jabatan> {
                 ),
                 if (authProvider.user.user.hisjab == []) ...[
                   Subtitle(text: 'Riwayat Jabatan'),
-                  const Text('Halo'),
+                  // const Text('Halo'),
                 ],
+                Subtitle(text: 'Riwayat Jabatan'),
                 SizedBox(
                   height: 18,
                 ),
@@ -167,6 +168,7 @@ class _JabatanState extends State<Jabatan> {
                       ),
                     ),
                     child: Column(
+                      // padding: EdgeInsets.only(bottom: 10),
                       children: sortedHisjab.map((hisjabData) {
                         return Column(
                           children: [
@@ -283,7 +285,10 @@ class _JabatanState extends State<Jabatan> {
                       }).toList(),
                     ),
                   ),
-                )
+                ),
+                SizedBox(
+                  height: 18,
+                ),
               ],
             ),
           ),
