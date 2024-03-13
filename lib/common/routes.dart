@@ -5,6 +5,7 @@ import 'package:appjmtm/user/absensi/history_absen.dart';
 import 'package:appjmtm/user/berita/berita.dart';
 import 'package:appjmtm/user/berita/detail_berita.dart';
 import 'package:appjmtm/user/navigation.dart';
+import 'package:appjmtm/user/profil/infokaryawan.dart';
 import 'package:appjmtm/user/profil/jabatan.dart';
 import 'package:appjmtm/user/profil/profil.dart';
 import 'package:fluro/fluro.dart';
@@ -22,6 +23,7 @@ class Routes {
         },
       ),
     );
+
     router.define(
       '/berita',
       handler: Handler(
@@ -30,6 +32,7 @@ class Routes {
         },
       ),
     );
+
     router.define(
       '/history_absen',
       handler: Handler(
@@ -46,6 +49,13 @@ class Routes {
         },
       ),
     );
+
+    router.define(
+      "/info/karyawan",
+      handler:
+          Handler(handlerFunc: (context, parameters) => const Infokaryawan()),
+    );
+
     router.define(
       '/jabatan',
       handler: Handler(
@@ -90,13 +100,11 @@ class Routes {
       '/login',
       handler: Handler(handlerFunc: (context, parameters) => const Login()),
     );
-    // router.define(
-    //   '/test',
-    //   handler: Handler(handlerFunc: (context, parameters) => Test()),
-    // );
+
     router.define(
       '/navigation',
-      handler: Handler(handlerFunc: (context, parameters) => const Navigation()),
+      handler:
+          Handler(handlerFunc: (context, parameters) => const Navigation()),
     );
     // Tambahkan rute-rute lain sesuai kebutuhan Anda
   }

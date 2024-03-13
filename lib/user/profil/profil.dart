@@ -3,6 +3,7 @@
 import 'package:appjmtm/common/routes.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
 import 'package:appjmtm/common/styles.dart';
+import 'package:appjmtm/user/profil/infokaryawan.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -152,7 +153,13 @@ class Profil extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Infokaryawan()),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           elevation: 4,
                           shadowColor: primaryColor,
