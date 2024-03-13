@@ -272,91 +272,93 @@ class _HistoryAbsenState extends State<HistoryAbsen> {
               fontSize: 18,
             ),
           ),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // FOTO
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: Image.network(
-                  "http://10.8.0.4:8000/${absen.fotoLink}",
-                  fit: BoxFit.cover,
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // FOTO
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Image.network(
+                    "http://10.8.0.4:8000/${absen.fotoLink}",
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-              SizedBox(height: 15),
-              // LOKASI ALAMAT
-              Row(
-                children: [
-                  FaIcon(
-                    FontAwesomeIcons.mapPin,
-                    size: 14,
-                    color: primaryColor,
-                  ),
-                  SizedBox(width: 5),
-                  Text(
-                    'Lokasi',
-                    textAlign: TextAlign.justify,
-                    style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              SizedBox(height: 5),
-              Text(
-                '${absen.alamat}',
-                textAlign: TextAlign.justify,
-                style: const TextStyle(fontSize: 12, height: 1.2),
-              ),
-              // TANGGAL
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  FaIcon(
-                    FontAwesomeIcons.calendar,
-                    size: 14,
-                    color: primaryColor,
-                  ),
-                  SizedBox(width: 5),
-                  Text(
-                    'Tanggal',
-                    textAlign: TextAlign.justify,
-                    style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              SizedBox(height: 5),
-              Text(
-                '${absen.status == "0" ? "${formatHari(absen.masuk)}" : "${formatHari(absen.keluar)}"}',
-                textAlign: TextAlign.justify,
-                style: const TextStyle(fontSize: 12, height: 1.2),
-              ),
-              SizedBox(height: 10),
-              // WAKTU
-              Row(
-                children: [
-                  FaIcon(
-                    FontAwesomeIcons.clock,
-                    size: 14,
-                    color: primaryColor,
-                  ),
-                  SizedBox(width: 5),
-                  Text(
-                    'Waktu',
-                    textAlign: TextAlign.justify,
-                    style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              SizedBox(height: 5),
-              Text(
-                '${absen.status == "0" ? "${formatDateTime(absen.masuk)}" : "${formatDateTime(absen.keluar)}"}',
-                textAlign: TextAlign.justify,
-                style: const TextStyle(fontSize: 12, height: 1.2),
-              ),
-            ],
+                SizedBox(height: 15),
+                // LOKASI ALAMAT
+                Row(
+                  children: [
+                    FaIcon(
+                      FontAwesomeIcons.mapPin,
+                      size: 14,
+                      color: primaryColor,
+                    ),
+                    SizedBox(width: 5),
+                    Text(
+                      'Lokasi',
+                      textAlign: TextAlign.justify,
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5),
+                Text(
+                  '${absen.alamat}',
+                  textAlign: TextAlign.justify,
+                  style: const TextStyle(fontSize: 12, height: 1.2),
+                ),
+                // TANGGAL
+                SizedBox(height: 10),
+                Row(
+                  children: [
+                    FaIcon(
+                      FontAwesomeIcons.calendar,
+                      size: 14,
+                      color: primaryColor,
+                    ),
+                    SizedBox(width: 5),
+                    Text(
+                      'Tanggal',
+                      textAlign: TextAlign.justify,
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5),
+                Text(
+                  '${absen.status == "0" ? "${formatHari(absen.masuk)}" : "${formatHari(absen.keluar)}"}',
+                  textAlign: TextAlign.justify,
+                  style: const TextStyle(fontSize: 12, height: 1.2),
+                ),
+                SizedBox(height: 10),
+                // WAKTU
+                Row(
+                  children: [
+                    FaIcon(
+                      FontAwesomeIcons.clock,
+                      size: 14,
+                      color: primaryColor,
+                    ),
+                    SizedBox(width: 5),
+                    Text(
+                      'Waktu',
+                      textAlign: TextAlign.justify,
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5),
+                Text(
+                  '${absen.status == "0" ? "${formatDateTime(absen.masuk)}" : "${formatDateTime(absen.keluar)}"}',
+                  textAlign: TextAlign.justify,
+                  style: const TextStyle(fontSize: 12, height: 1.2),
+                ),
+              ],
+            ),
           ),
           actions: [
             ElevatedButton(
