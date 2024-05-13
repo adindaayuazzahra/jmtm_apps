@@ -5,6 +5,7 @@ import 'package:appjmtm/user/absensi/history_absen.dart';
 import 'package:appjmtm/user/berita/berita.dart';
 import 'package:appjmtm/user/berita/detail_berita.dart';
 import 'package:appjmtm/user/navigation.dart';
+import 'package:appjmtm/user/profil/gantipassword.dart';
 import 'package:appjmtm/user/profil/infokaryawan.dart';
 import 'package:appjmtm/user/profil/jabatan.dart';
 import 'package:appjmtm/user/profil/profil.dart';
@@ -54,6 +55,12 @@ class Routes {
       "/info/karyawan",
       handler:
           Handler(handlerFunc: (context, parameters) => const Infokaryawan()),
+    );
+
+    router.define(
+      "/ganti_password",
+      handler:
+          Handler(handlerFunc: (context, parameters) => const Gantipassword()),
     );
 
     router.define(

@@ -79,23 +79,27 @@ class _WebtampilState extends State<Webtampil> {
     super.initState();
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(NavigationDelegate(
-        onPageStarted: (_) {
-          _passDataToJavaScript();
-        },
-      ))
+      // ..setNavigationDelegate(
+      //   NavigationDelegate(
+      //     onPageStarted: (_) {
+      //       // _passDataToJavaScript();
+      //     },
+      //   ),
+      // )
       ..loadRequest(
         Uri.parse(
-          '${widget.url}?npp=${widget.authProvider.user.user.dakar.npp}&nama=${widget.authProvider.user.user.dakar.nama}&kd_comp=${widget.authProvider.user.user.dakar.kd_comp}&id_role=${widget.authProvider.user.user.id_role}&id_master_akses=${widget.authProvider.user.user.id_master_akses}&status_akses=${widget.authProvider.user.user.status_akses}&jabatan=${widget.authProvider.user.user.dajab.jabatan}',
-        ),
+            // '${widget.url}?npp=${widget.authProvider.user.user.dakar.npp}&nama=${widget.authProvider.user.user.dakar.nama}&kd_comp=${widget.authProvider.user.user.dakar.kdComp}&id_role=${widget.authProvider.user.user.id_role}&id_master_akses=${widget.authProvider.user.user.id_master_akses}&status_akses=${widget.authProvider.user.user.status_akses}&jabatan=${widget.authProvider.user.user.dajab.jabatan}',
+            '${widget.url}?token=${widget.authProvider.token}&token_api=ANAKKAMPRETMAULEWAT'),
       );
     // print(widget.authProvider.user.user.id_role);
   }
 
-  Future<void> _passDataToJavaScript() async {
-    await controller.runJavaScriptReturningResult(
-        'terima_module(${widget.authProvider.user.user.dakar.npp}, ${widget.authProvider.user.user.dakar.nama},${widget.authProvider.user.user.dakar.kd_comp},${widget.authProvider.user.user.id_role},${widget.authProvider.user.user.id_master_akses}, ${widget.authProvider.user.user.status_akses}, ${widget.authProvider.user.user.dajab.jabatan})');
-  }
+  // Future<void> _passDataToJavaScript() async {
+  //   await controller.runJavaScriptReturningResult(
+  //     'terima_module(${widget.authProvider.token}})',
+  //     // 'terima_module(${widget.authProvider.user.user.dakar.npp}, ${widget.authProvider.user.user.dakar.nama},${widget.authProvider.user.user.dakar.kdComp},${widget.authProvider.user.user.id_role},${widget.authProvider.user.user.id_master_akses}, ${widget.authProvider.user.user.status_akses}, ${widget.authProvider.user.user.dajab.jabatan})',
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {

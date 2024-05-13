@@ -255,40 +255,145 @@ class Dajab {
 
 class Dakar {
   int id;
-  String nama;
   String npp;
-  String kd_comp;
-  String status_pegawai;
-  String foto_link;
+  String nama;
+  String statusPegawai;
+  String jenisKelamin;
+  String tempatLahir;
+  String tglLahir;
+  String agama;
+  String tglMasuk;
+  String pendidikan;
+  String ktp;
+  String alamat;
+  String alamatKtp;
+  String asalPenugasan;
+  String rw;
+  String kelurahan;
+  String kecamatan;
+  String kota;
+  String provinsi;
+  String npwp;
+  String statusDiri;
+  String kdComp;
+
+  String bpjsTk;
+  String bpjsKesehatan;
+  String telpon;
+  String email;
+  String fotoLink;
+  String alasanKeluar;
+  String tglKeluar;
+  String emailKantor;
+  String golDarah;
+  String password;
 
   Dakar({
     required this.id,
-    required this.nama,
     required this.npp,
-    required this.kd_comp,
-    required this.status_pegawai,
-    required this.foto_link,
+    required this.nama,
+    required this.statusPegawai,
+    required this.jenisKelamin,
+    required this.tempatLahir,
+    required this.tglLahir,
+    required this.agama,
+    required this.tglMasuk,
+    required this.pendidikan,
+    required this.ktp,
+    required this.alamat,
+    required this.alamatKtp,
+    required this.asalPenugasan,
+    required this.rw,
+    required this.kelurahan,
+    required this.kecamatan,
+    required this.kota,
+    required this.provinsi,
+    required this.npwp,
+    required this.statusDiri,
+    required this.kdComp,
+    required this.bpjsTk,
+    required this.bpjsKesehatan,
+    required this.telpon,
+    required this.email,
+    required this.fotoLink,
+    required this.alasanKeluar,
+    required this.tglKeluar,
+    required this.emailKantor,
+    required this.golDarah,
+    required this.password,
   });
 
   factory Dakar.fromJson(Map<String, dynamic> json) {
     return Dakar(
       id: json['id'] ?? 0,
-      nama: json['nama'] ?? '',
-      npp: json['npp'] ?? '',
-      kd_comp: json['kd_comp'] ?? '',
-      status_pegawai: json['status_pegawai'] ?? '',
-      foto_link: json['foto_link'] ?? '',
+      npp: json["npp"] ?? "",
+      nama: json["nama"] ?? "",
+      statusPegawai: json["status_pegawai"] ?? "",
+      jenisKelamin: json["jenis_kelamin"] ?? "",
+      tempatLahir: json["tempat_lahir"] ?? "",
+      tglLahir: json["tgl_lahir"] ?? "",
+      agama: json["agama"] ?? "",
+      tglMasuk: json["tgl_masuk"] ?? "",
+      pendidikan: json["pendidikan"] ?? "",
+      ktp: json["KTP"] ?? "",
+      alamat: json["alamat"] ?? "",
+      alamatKtp: json["alamat_ktp"] ?? "",
+      asalPenugasan: json["asal_penugasan"] ?? "",
+      rw: json["rw"] ?? "",
+      kelurahan: json["kelurahan"] ?? "",
+      kecamatan: json["kecamatan"] ?? "",
+      kota: json["kota"] ?? "",
+      provinsi: json["provinsi"] ?? "",
+      npwp: json["npwp"] ?? "",
+      statusDiri: json["status_diri"] ?? "",
+      kdComp: json["kd_comp"] ?? "",
+      bpjsTk: json["bpjs_tk"] ?? "",
+      bpjsKesehatan: json["bpjs_kesehatan"] ?? "",
+      telpon: json["telpon"] ?? "",
+      email: json["email"] ?? "",
+      fotoLink: json["foto_link"] ?? "",
+      alasanKeluar: json["alasan_keluar"] ?? "",
+      tglKeluar: json["tgl_keluar"] ?? "",
+      emailKantor: json["email_kantor"] ?? "",
+      golDarah: json["gol_darah"] ?? "",
+      password: json["password"] ?? "",
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
-      'nama': nama,
-      'npp': npp,
-      'kd_comp': kd_comp,
-      'status_pegawai': status_pegawai,
-      'foto_link': foto_link,
+      "id": id,
+      "npp": npp,
+      "nama": nama,
+      "status_pegawai": statusPegawai,
+      "jenis_kelamin": jenisKelamin,
+      "tempat_lahir": tempatLahir,
+      "tgl_lahir": tglLahir,
+      "agama": agama,
+      "tgl_masuk": tglMasuk,
+      "pendidikan": pendidikan,
+      "KTP": ktp,
+      "alamat": alamat,
+      "alamat_ktp": alamatKtp,
+      "asal_penugasan": asalPenugasan,
+      "rw": rw,
+      "kelurahan": kelurahan,
+      "kecamatan": kecamatan,
+      "kota": kota,
+      "provinsi": provinsi,
+      "npwp": npwp,
+      "status_diri": statusDiri,
+      "kd_comp": kdComp,
+      "bpjs_tk": bpjsTk,
+      "bpjs_kesehatan": bpjsKesehatan,
+      "telpon": telpon,
+      "email": email,
+      "foto_link": fotoLink,
+      "alasan_keluar": alasanKeluar,
+      "tgl_keluar": tglKeluar,
+      "email_kantor": emailKantor,
+      "gol_darah": golDarah,
+      "password": password,
     };
   }
 }

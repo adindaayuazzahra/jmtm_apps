@@ -3,6 +3,7 @@
 import 'package:appjmtm/common/routes.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
 import 'package:appjmtm/common/styles.dart';
+import 'package:appjmtm/user/profil/gantipassword.dart';
 import 'package:appjmtm/user/profil/infokaryawan.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class Profil extends StatelessWidget {
           // child:
           SingleChildScrollView(
         child: SizedBox(
-          height: 520,
+          height: 600,
           child: Stack(
             children: [
               Container(
@@ -61,8 +62,8 @@ class Profil extends StatelessWidget {
                     CircleAvatar(
                       radius: 50,
                       backgroundImage: NetworkImage(authProvider
-                              .user.user.dakar.foto_link.isNotEmpty
-                          ? "http://10.8.0.4:8080/fotoUser/${authProvider.user.user.dakar.foto_link}"
+                              .user.user.dakar.fotoLink.isNotEmpty
+                          ? "http://10.8.0.4:8080/fotoUser/${authProvider.user.user.dakar.fotoLink}"
                           : 'https://www.copaster.com/wp-content/uploads/2023/03/pp-kosong-wa-default.jpeg'),
                       // backgroundImage: NetworkImage(
                       //     'https://www.copaster.com/wp-content/uploads/2023/03/pp-kosong-wa-default.jpeg'),
@@ -323,6 +324,74 @@ class Profil extends StatelessWidget {
                                       ),
                                       Text(
                                         'Pelatihan dan Sertifikasi',
+                                        textAlign: TextAlign.left,
+                                        style: GoogleFonts.heebo(
+                                            color: putih,
+                                            fontWeight: FontWeight.w200,
+                                            fontSize: 14),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              FaIcon(
+                                FontAwesomeIcons.chevronRight,
+                                color: putih,
+                                size: 15,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Gantipassword()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          elevation: 4,
+                          shadowColor: primaryColor,
+                          backgroundColor: orange,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                10.0), // Adjust the border radius as needed
+                          ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  FaIcon(
+                                    FontAwesomeIcons.lock,
+                                    color: putih,
+                                    size: 40,
+                                  ),
+                                  SizedBox(width: 15),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        'Password',
+                                        style: TextStyle(
+                                          color: putih,
+                                          // height: 0.8,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Ganti Password',
                                         textAlign: TextAlign.left,
                                         style: GoogleFonts.heebo(
                                             color: putih,

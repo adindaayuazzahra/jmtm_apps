@@ -36,7 +36,7 @@ class _HistoryAbsenState extends State<HistoryAbsen> {
         Provider.of<HistoryAbsenProvider>(context, listen: false);
     String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
     await absenProvider.history(npp, formattedDate);
-    print('History Call: ${absenProvider.absenHis.absen.length}');
+    // print('History Call: ${absenProvider.absenHis.absen.length}');
   }
 
   Future<void> _selectDate() async {
@@ -65,195 +65,191 @@ class _HistoryAbsenState extends State<HistoryAbsen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HistoryAbsenProvider>(
-      builder: (context, absenProvider, _) {
-        final absenData = absenProvider.absenHis;
-        // Size size = MediaQuery.of(context).size;
-
-        return Scaffold(
-          backgroundColor: putih,
-          appBar: AppBar(
-            backgroundColor: primaryColor,
-            elevation: 6,
-            centerTitle: true,
-            shadowColor: secondaryColor,
-            iconTheme: const IconThemeData(color: putih),
-            title: Text(
-              'Riwayat Presensi',
-              style: GoogleFonts.heebo(
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.7,
-                color: putih,
-              ),
-            ),
+    return Scaffold(
+      backgroundColor: putih,
+      appBar: AppBar(
+        backgroundColor: primaryColor,
+        elevation: 6,
+        centerTitle: true,
+        shadowColor: secondaryColor,
+        iconTheme: const IconThemeData(color: putih),
+        title: Text(
+          'Riwayat Presensi',
+          style: GoogleFonts.heebo(
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.7,
+            color: putih,
           ),
-          body: SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 24),
-              child: Column(
-                children: <Widget>[
-                  Stack(
-                    children: [
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                        alignment: Alignment.centerLeft,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: secondaryColor, // Warna border
-                            width: 2.0, // Lebar border
-                          ),
-                          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      body:
+          Consumer<HistoryAbsenProvider>(builder: (context, absenProvider, _) {
+        final absenData = absenProvider.absenHis;
+        return SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+            child: Column(
+              children: <Widget>[
+                Stack(
+                  children: [
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: secondaryColor, // Warna border
+                          width: 2.0, // Lebar border
                         ),
-                        child: Text(
-                          DateFormat('dd  MMMM  yyyy', 'id')
-                              .format(selectedDate)
-                              .toUpperCase(),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              letterSpacing: 2),
-                        ),
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      SizedBox(height: 5),
-                      Positioned(
-                        right: 0,
-                        top: 0,
-                        bottom: 0,
-                        child: Container(
-                          // width: size.width,
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10),
-                                  ), // Atur nilai border radius sesuai keinginan
-                                ),
+                      child: Text(
+                        DateFormat('dd  MMMM  yyyy', 'id')
+                            .format(selectedDate)
+                            .toUpperCase(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            letterSpacing: 2),
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      bottom: 0,
+                      child: Container(
+                        // width: size.width,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(10),
+                                  bottomRight: Radius.circular(10),
+                                ), // Atur nilai border radius sesuai keinginan
                               ),
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  secondaryColor),
                             ),
-                            onPressed: () {
-                              _selectDate();
-                            },
-                            child: FaIcon(
-                              FontAwesomeIcons.calendarCheck,
-                              color: putih,
-                              size: 20,
-                            ),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                secondaryColor),
+                          ),
+                          onPressed: () {
+                            _selectDate();
+                          },
+                          child: FaIcon(
+                            FontAwesomeIcons.calendarCheck,
+                            color: putih,
+                            size: 20,
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                  // ),
-                  SizedBox(height: 20.0),
-                  if (absenData.absen.isNotEmpty)
-                    for (var absen in absenData.absen)
-                      Container(
-                        alignment: Alignment.center,
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 5,
-                          vertical: 12,
+                    ),
+                  ],
+                ),
+                // ),
+
+                SizedBox(height: 20.0),
+                if (absenData.absen.isNotEmpty)
+                  for (var absen in absenData.absen)
+                    Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 5,
+                        vertical: 12,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                            color: secondaryColor.withOpacity(0.5),
+                            spreadRadius: 3,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: ListTile(
+                        onTap: () {
+                          DetailAbsen(context, absen);
+                        },
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                        visualDensity: VisualDensity(vertical: 2),
+                        horizontalTitleGap: 12,
+                        leading: ClipRRect(
+                          borderRadius: BorderRadius.circular(
+                              10.0), // Ganti nilai sesuai keinginan Anda
+                          child: Image.network(
+                            "http://10.8.0.4:8000/${absen.fotoLink}",
+                            height: 500,
+                            width: 70,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                          boxShadow: [
-                            BoxShadow(
-                              color: secondaryColor.withOpacity(0.5),
-                              spreadRadius: 3,
-                              blurRadius: 5,
-                              offset: const Offset(0, 3),
+                        subtitle: Text(
+                          '${absen.status == "0" ? "${formatHari(absen.masuk)} - ${formatDateTime(absen.masuk)}" : "${formatHari(absen.keluar)} - ${formatDateTime(absen.keluar)}"}',
+                          style: GoogleFonts.heebo(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
+                        title: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'PRESENSI ${absen.status == "0" ? "Masuk" : "Keluar"}'
+                                  .toUpperCase(),
+                              style: TextStyle(
+                                color: absen.status == "0"
+                                    ? Colors.green
+                                    : Colors.red,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              '${absen.alamat}',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 12, height: 1.2),
                             ),
                           ],
                         ),
-                        child: ListTile(
-                          onTap: () {
-                            DetailAbsen(context, absen);
-                          },
-                          contentPadding:
-                              EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-                          visualDensity: VisualDensity(vertical: 2),
-                          horizontalTitleGap: 12,
-                          leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(
-                                10.0), // Ganti nilai sesuai keinginan Anda
-                            child: Image.network(
-                              "http://10.8.0.4:8000/${absen.fotoLink}",
-                              height: 500,
-                              width: 70,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          subtitle: Text(
-                            '${absen.status == "0" ? "${formatHari(absen.masuk)} - ${formatDateTime(absen.masuk)}" : "${formatHari(absen.keluar)} - ${formatDateTime(absen.keluar)}"}',
-                            style: GoogleFonts.heebo(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
-                          ),
-                          title: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'PRESENSI ${absen.status == "0" ? "Masuk" : "Keluar"}'
-                                    .toUpperCase(),
-                                style: TextStyle(
-                                  color: absen.status == "0"
-                                      ? Colors.green
-                                      : Colors.red,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                '${absen.alamat}',
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style:
-                                    const TextStyle(fontSize: 12, height: 1.2),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                  else
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                      alignment: Alignment.center,
-                      child:
-                          // Column(
-                          //   mainAxisAlignment: MainAxisAlignment.center,
-                          //   crossAxisAlignment: CrossAxisAlignment.center,
-                          //   children: [
-                          //     const Text(
-                          //       'Tidak Ada Data',
-                          //       textAlign: TextAlign.center,
-                          //       style: TextStyle(
-                          //         fontWeight: FontWeight.bold,
-                          //         fontSize: 16,
-                          //       ),
-                          //     ),
-                          //     SizedBox(
-                          //       height: 9,
-                          //     ),
-                          Lottie.asset(
-                        'assets/lottie/nodata.json',
                       ),
-                      //   ],
-                      // ),
                     )
-                ],
-              ),
+                else
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    alignment: Alignment.center,
+                    child:
+                        // Column(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   crossAxisAlignment: CrossAxisAlignment.center,
+                        //   children: [
+                        //     const Text(
+                        //       'Tidak Ada Data',
+                        //       textAlign: TextAlign.center,
+                        //       style: TextStyle(
+                        //         fontWeight: FontWeight.bold,
+                        //         fontSize: 16,
+                        //       ),
+                        //     ),
+                        //     SizedBox(
+                        //       height: 9,
+                        //     ),
+                        Lottie.asset(
+                      'assets/lottie/nodata.json',
+                    ),
+                    //   ],
+                    // ),
+                  )
+              ],
             ),
           ),
         );
-      },
+      }),
     );
   }
 

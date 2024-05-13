@@ -60,7 +60,7 @@ class _DetailBeritaPageState extends State<DetailBeritaPage> {
                       height: 10,
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Column(
                         children: [
                           Text(

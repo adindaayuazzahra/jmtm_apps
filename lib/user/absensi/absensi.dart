@@ -294,7 +294,7 @@ class _AbsensiState extends State<Absensi> {
     setState(() {
       isLoading = true;
     });
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final authProvider = Provider.of<AuthProvider>(context, listen: true);
 
     final pickedFile = await ImagePicker().pickImage(
       source: ImageSource.camera,
@@ -501,79 +501,80 @@ class _AbsensiState extends State<Absensi> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     DateTime tanggalHariIni = DateTime.now();
 
     String formattedDate = DateFormat('d MMM y', 'id').format(tanggalHariIni);
 
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    // final authProvider = Provider.of<AuthProvider>(context, listen: true);
     // final npp = '${authProvider.user.user.dakar.npp}';
-    final absenProvider = Provider.of<AbsenProvider>(context, listen: false);
-    // absenProvider.fetchDataAbsen(npp, formattedDate);
-    final absenData = absenProvider.absenData;
+    // // // absenProvider.fetchDataAbsen(npp, formattedDate);
+    // final absenProvider = Provider.of<AbsenProvider>(context, listen: true);
+    // final absenData = absenProvider.absenData;
 
     // print(absenData.absen.length);
-    if (authProvider.user.user.status_absen == 1) {
-      // if (authProvider.user.user.status_absen == 0) {
-      return aktif(context, size, formattedDate, absenData);
-    } else {
-      return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: primaryColor,
-          elevation: 6,
-          centerTitle: true,
-          shadowColor: secondaryColor,
-          iconTheme: const IconThemeData(color: putih),
-          title: Text(
-            'Presensi',
-            style: GoogleFonts.heebo(
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.7,
-              color: putih,
-            ),
-          ),
-        ),
-        body: Container(
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              SizedBox(height: 90),
+    // if (authProvider.user.user.status_absen == 1) {
+    //   // if (authProvider.user.user.status_absen == 0) {
+    return aktif(context, size, formattedDate);
+    // } else {
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     automaticallyImplyLeading: false,
+    //     backgroundColor: primaryColor,
+    //     elevation: 6,
+    //     centerTitle: true,
+    //     shadowColor: secondaryColor,
+    //     iconTheme: const IconThemeData(color: putih),
+    //     title: Text(
+    //       'Presensi',
+    //       style: GoogleFonts.heebo(
+    //         fontWeight: FontWeight.bold,
+    //         letterSpacing: 1.7,
+    //         color: putih,
+    //       ),
+    //     ),
+    //   ),
+    //   body: Container(
+    //     alignment: Alignment.center,
+    //     child: Column(
+    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //       children: <Widget>[
+    //         SizedBox(height: 90),
 
-              Lottie.asset('assets/lottie/bingung.json', width: size.width),
-              // Container(
-              //   padding: EdgeInsets.zero,
-              //   margin: EdgeInsets.only(top: 100),
-              //   child: Lottie.asset('assets/lottie/bingung.json',
-              //       width: size.width),
-              // ),
-              Container(
-                padding: const EdgeInsets.all(10),
-                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
-                decoration: BoxDecoration(
-                  border: Border.all(width: 3, color: Colors.red),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  // '${authProvider.user.nama}',
-                  'Maaf, Untuk saat ini fitur Presensi tidak tersedia untuk Anda.',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.heebo(
-                    height: 1,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
+    //         Lottie.asset('assets/lottie/bingung.json', width: size.width),
+    //         // Container(
+    //         //   padding: EdgeInsets.zero,
+    //         //   margin: EdgeInsets.only(top: 100),
+    //         //   child: Lottie.asset('assets/lottie/bingung.json',
+    //         //       width: size.width),
+    //         // ),
+    //         Container(
+    //           padding: const EdgeInsets.all(10),
+    //           margin: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+    //           decoration: BoxDecoration(
+    //             border: Border.all(width: 3, color: Colors.red),
+    //             borderRadius: BorderRadius.circular(10),
+    //           ),
+    //           child: Text(
+    //             // '${authProvider.user.nama}',
+    //             'Maaf, Untuk saat ini fitur Presensi tidak tersedia untuk Anda.',
+    //             textAlign: TextAlign.center,
+    //             style: GoogleFonts.heebo(
+    //               height: 1,
+    //               fontSize: 16,
+    //               fontWeight: FontWeight.bold,
+    //             ),
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
+    // }
   }
 
-  DefaultTabController aktif(BuildContext context, Size size,
-      String formattedDate, AbsenData absenData) {
+  DefaultTabController aktif(
+      BuildContext context, Size size, String formattedDate) {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -635,7 +636,7 @@ class _AbsensiState extends State<Absensi> {
                                     borderRadius: BorderRadius.only(
                                       topRight: Radius.circular(50),
                                     ),
-                                    color: orange,
+                                    color: Colors.grey.shade200,
                                   ),
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 24, vertical: 10),
@@ -646,14 +647,14 @@ class _AbsensiState extends State<Absensi> {
                                     children: <Widget>[
                                       FaIcon(
                                         FontAwesomeIcons.calendar,
-                                        color: putih,
+                                        color: Colors.black,
                                         size: 15,
                                       ),
                                       SizedBox(width: 6),
                                       Text(
                                         "$formattedDate",
                                         style: GoogleFonts.heebo(
-                                            color: putih,
+                                            color: Colors.black,
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -661,7 +662,7 @@ class _AbsensiState extends State<Absensi> {
                                       SizedBox(width: 20),
                                       FaIcon(
                                         FontAwesomeIcons.clock,
-                                        color: putih,
+                                        color: Colors.black,
                                         size: 15,
                                       ),
                                       SizedBox(width: 6),
@@ -675,7 +676,7 @@ class _AbsensiState extends State<Absensi> {
                                             return Text(
                                               formattedTime,
                                               style: GoogleFonts.heebo(
-                                                  color: putih,
+                                                  color: Colors.black,
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.bold),
                                             );
@@ -707,165 +708,114 @@ class _AbsensiState extends State<Absensi> {
                             children: <Widget>[
                               //TAB BAR
                               TabBarAbsen(),
-                              SizedBox(
-                                height: size.height * 0.4,
-                                child: TabBarView(
-                                  children: <Widget>[
-                                    //LOKASI
-                                    SingleChildScrollView(
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 5, vertical: 15),
+                              Consumer<AbsenProvider>(
+                                  builder: (context, absenProvider, _) {
+                                final absenData = absenProvider.absenData;
+                                return SizedBox(
+                                  height: size.height * 0.4,
+                                  child: TabBarView(
+                                    children: <Widget>[
+                                      //LOKASI
+                                      SingleChildScrollView(
                                         child: Container(
-                                          padding: EdgeInsets.all(10),
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            border: Border.all(
-                                              color: secondaryColor,
-                                            ),
-                                          ),
-                                          child: Column(
-                                            children: <Widget>[
-                                              const Text(
-                                                'Halo, Berikut adalah lokasi kamu saat ini :',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  height: 1.1,
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 5, vertical: 15),
+                                          child: Container(
+                                              padding: EdgeInsets.all(10),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                border: Border.all(
+                                                  color: secondaryColor,
                                                 ),
-                                                textAlign: TextAlign.center,
                                               ),
-                                              SizedBox(height: 10),
+                                              child: Column(
+                                                children: <Widget>[
+                                                  const Text(
+                                                    'Halo, Berikut adalah lokasi kamu saat ini :',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      height: 1.1,
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                  SizedBox(height: 10),
 
-                                              // MENAMPILKAN ALAMAT
-                                              FutureBuilder<String?>(
-                                                future: _getAddress(
-                                                  currentLocation.latitude!,
-                                                  currentLocation.longitude!,
-                                                ),
-                                                builder: (BuildContext context,
-                                                    AsyncSnapshot<String?>
-                                                        snapshot) {
-                                                  if (snapshot.hasData) {
-                                                    return Text(
-                                                      '${snapshot.data}',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: GoogleFonts.heebo(
-                                                          // color: Colors.black,
-                                                          height: 1.2,
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.w300),
-                                                    );
-                                                  } else if (snapshot
-                                                      .hasError) {
-                                                    print(
-                                                        "Error: ${snapshot.error}");
-                                                    return Text(
-                                                        "Error fetching address");
-                                                  } else {
-                                                    return const Text(
-                                                        'Loading...');
-                                                  }
-                                                },
-                                              ),
-                                              SizedBox(height: 20),
+                                                  // MENAMPILKAN ALAMAT
+                                                  FutureBuilder<String?>(
+                                                    future: _getAddress(
+                                                      currentLocation.latitude!,
+                                                      currentLocation
+                                                          .longitude!,
+                                                    ),
+                                                    builder: (BuildContext
+                                                            context,
+                                                        AsyncSnapshot<String?>
+                                                            snapshot) {
+                                                      if (snapshot.hasData) {
+                                                        return Text(
+                                                          '${snapshot.data}',
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style:
+                                                              GoogleFonts.heebo(
+                                                                  // color: Colors.black,
+                                                                  height: 1.2,
+                                                                  fontSize: 15,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w300),
+                                                        );
+                                                      } else if (snapshot
+                                                          .hasError) {
+                                                        print(
+                                                            "Error: ${snapshot.error}");
+                                                        return Text(
+                                                            "Error fetching address");
+                                                      } else {
+                                                        return const Text(
+                                                            'Loading...');
+                                                      }
+                                                    },
+                                                  ),
+                                                  SizedBox(height: 20),
 
-                                              // TOMBOL PRESENSI
-                                              absenData.absen.isEmpty
-                                                  ? ElevatedButton(
-                                                      onPressed: () {
-                                                        (isLoading)
-                                                            ? ScaffoldMessenger
-                                                                    .of(context)
-                                                                .showSnackBar(
-                                                                const SnackBar(
-                                                                  content: Text(
-                                                                      'Tunggu ya,Sedang Memproses Presensi Kamu'),
-                                                                ),
-                                                              )
-                                                            : sendDataAndImageToApi();
-                                                        // if (DateTime.now().hour < 10) {
-                                                        //   // Lakukan aksi saat tombol ditekan
-                                                        //   sendDataAndImageToApi();
-                                                        // } else {
-                                                        //   // Jika sudah lewat jam 10:00, tampilkan pesan atau berikan aksi lain
-                                                        //   // Misalnya, tampilkan snackbar dengan pesan
-                                                        //   ScaffoldMessenger.of(context)
-                                                        //       .showSnackBar(
-                                                        //     SnackBar(
-                                                        //       content: Text(
-                                                        //           'Tidak dapat melakukan absen setelah jam 10:00'),
-                                                        //     ),
-                                                        //   );
-                                                        // }
-                                                      },
-                                                      style: ButtonStyle(
-                                                        backgroundColor:
-                                                            MaterialStateProperty
-                                                                .all<Color>(Colors
-                                                                    .green
-                                                                    .shade700),
-                                                      ),
-                                                      child: Padding(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                vertical: 11),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            (isLoading)
-                                                                ? CircularProgressIndicator(
-                                                                    color:
-                                                                        kuning,
-                                                                  )
-                                                                : Text(
-                                                                    'MASUK',
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      fontSize:
-                                                                          16,
-                                                                    ),
-                                                                  ),
-                                                            SizedBox(width: 8),
-                                                            FaIcon(
-                                                              FontAwesomeIcons
-                                                                  .personWalkingArrowRight,
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    )
-                                                  : (absenData.absen
-                                                              .isNotEmpty &&
-                                                          absenData.absen
-                                                                  .length <
-                                                              2)
+                                                  // TOMBOL PRESENSI
+                                                  absenData.absen.isEmpty
                                                       ? ElevatedButton(
                                                           onPressed: () {
                                                             (isLoading)
                                                                 ? ScaffoldMessenger.of(
                                                                         context)
-                                                                    .showSnackBar(const SnackBar(
-                                                                        content:
-                                                                            Text('Tunggu ya,Sedang Memproses Presensi Kamu')))
-                                                                : sendDataAndImageToApiKeluar();
+                                                                    .showSnackBar(
+                                                                    const SnackBar(
+                                                                      content: Text(
+                                                                          'Tunggu ya,Sedang Memproses Presensi Kamu'),
+                                                                    ),
+                                                                  )
+                                                                : sendDataAndImageToApi();
+                                                            // if (DateTime.now().hour < 10) {
+                                                            //   // Lakukan aksi saat tombol ditekan
+                                                            //   sendDataAndImageToApi();
+                                                            // } else {
+                                                            //   // Jika sudah lewat jam 10:00, tampilkan pesan atau berikan aksi lain
+                                                            //   // Misalnya, tampilkan snackbar dengan pesan
+                                                            //   ScaffoldMessenger.of(context)
+                                                            //       .showSnackBar(
+                                                            //     SnackBar(
+                                                            //       content: Text(
+                                                            //           'Tidak dapat melakukan absen setelah jam 10:00'),
+                                                            //     ),
+                                                            //   );
+                                                            // }
                                                           },
                                                           style: ButtonStyle(
                                                             backgroundColor:
-                                                                MaterialStateProperty
-                                                                    .all<Color>(
-                                                                        orange),
+                                                                MaterialStateProperty.all<
+                                                                        Color>(
+                                                                    Colors.green
+                                                                        .shade700),
                                                           ),
                                                           child: Padding(
                                                             padding: EdgeInsets
@@ -880,10 +830,10 @@ class _AbsensiState extends State<Absensi> {
                                                                 (isLoading)
                                                                     ? CircularProgressIndicator(
                                                                         color:
-                                                                            primaryColor,
+                                                                            kuning,
                                                                       )
                                                                     : Text(
-                                                                        'KELUAR',
+                                                                        'MASUK',
                                                                         style:
                                                                             TextStyle(
                                                                           color:
@@ -906,172 +856,236 @@ class _AbsensiState extends State<Absensi> {
                                                             ),
                                                           ),
                                                         )
-                                                      : Container(
-                                                          width: size.width,
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  10),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Colors
-                                                                .green.shade400,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                          ),
-                                                          child: Row(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceAround,
-                                                            children: <Widget>[
-                                                              FaIcon(FontAwesomeIcons
-                                                                  .circleCheck),
-                                                              const Text(
-                                                                'Yey! Presensi Kamu sudah lengkap, \nJangan lupa besok absen lagi ya ...',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  height: 1.1,
-                                                                ),
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .start,
+                                                      : (absenData.absen
+                                                                  .isNotEmpty &&
+                                                              absenData.absen
+                                                                      .length <
+                                                                  2)
+                                                          ? ElevatedButton(
+                                                              onPressed: () {
+                                                                (isLoading)
+                                                                    ? ScaffoldMessenger.of(
+                                                                            context)
+                                                                        .showSnackBar(const SnackBar(
+                                                                            content:
+                                                                                Text('Tunggu ya,Sedang Memproses Presensi Kamu')))
+                                                                    : sendDataAndImageToApiKeluar();
+                                                              },
+                                                              style:
+                                                                  ButtonStyle(
+                                                                backgroundColor:
+                                                                    MaterialStateProperty.all<
+                                                                            Color>(
+                                                                        orange),
                                                               ),
-                                                            ],
+                                                              child: Padding(
+                                                                padding: EdgeInsets
+                                                                    .symmetric(
+                                                                        vertical:
+                                                                            11),
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    (isLoading)
+                                                                        ? CircularProgressIndicator(
+                                                                            color:
+                                                                                primaryColor,
+                                                                          )
+                                                                        : Text(
+                                                                            'KELUAR',
+                                                                            style:
+                                                                                TextStyle(
+                                                                              color: Colors.white,
+                                                                              fontWeight: FontWeight.bold,
+                                                                              fontSize: 16,
+                                                                            ),
+                                                                          ),
+                                                                    SizedBox(
+                                                                        width:
+                                                                            8),
+                                                                    FaIcon(
+                                                                      FontAwesomeIcons
+                                                                          .personWalkingArrowRight,
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : Container(
+                                                              width: size.width,
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(10),
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: Colors
+                                                                    .green
+                                                                    .shade400,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                              ),
+                                                              child: Row(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceAround,
+                                                                children: <Widget>[
+                                                                  FaIcon(FontAwesomeIcons
+                                                                      .circleCheck),
+                                                                  const Text(
+                                                                    'Yey! Presensi Kamu sudah lengkap, \nJangan lupa besok absen lagi ya ...',
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      height:
+                                                                          1.1,
+                                                                    ),
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .start,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            )
+                                                ],
+                                              )),
+                                        ),
+                                      ),
+
+                                      //PRESENSI
+                                      SingleChildScrollView(
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 15, horizontal: 5),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              if (absenData.absen.isNotEmpty)
+                                                for (var absen
+                                                    in absenData.absen)
+                                                  Container(
+                                                    alignment: Alignment.center,
+                                                    margin: const EdgeInsets
+                                                        .symmetric(
+                                                      horizontal: 5,
+                                                      vertical: 12,
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: secondaryColor
+                                                              .withOpacity(0.5),
+                                                          spreadRadius: 3,
+                                                          blurRadius: 5,
+                                                          offset: const Offset(
+                                                              0, 3),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    child: ListTile(
+                                                      onTap: () {
+                                                        // MASIH NGEDIT SHOW DIALOG
+                                                        DetailAbsen(
+                                                            context, absen);
+                                                      },
+                                                      contentPadding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 15,
+                                                              vertical: 3),
+                                                      visualDensity:
+                                                          VisualDensity(
+                                                              vertical: 2),
+                                                      horizontalTitleGap: 12,
+                                                      leading: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                        child: Image.network(
+                                                          "http://10.8.0.4:8000/${absen.fotoLink}",
+                                                          width: 70,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                      subtitle: Text(
+                                                        '${absen.status == "0" ? "${formatHari(absen.masuk)} - ${formatDateTime(absen.masuk)}" : "${formatHari(absen.keluar)} - ${formatDateTime(absen.keluar)}"}',
+                                                        style:
+                                                            GoogleFonts.heebo(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 12,
+                                                        ),
+                                                      ),
+                                                      title: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: <Widget>[
+                                                          Text(
+                                                            'PRESENSI ${absen.status == "0" ? "Masuk" : "Keluar"}'
+                                                                .toUpperCase(),
+                                                            style: TextStyle(
+                                                              color: absen.status ==
+                                                                      "0"
+                                                                  ? Colors.green
+                                                                  : Colors.red,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
                                                           ),
-                                                        )
+                                                          Text(
+                                                            '${absen.alamat}',
+                                                            maxLines: 2,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style:
+                                                                const TextStyle(
+                                                                    fontSize:
+                                                                        12,
+                                                                    height:
+                                                                        1.2),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )
+                                              else
+                                                Container(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 15,
+                                                      vertical: 10),
+                                                  alignment: Alignment.center,
+                                                  child: Lottie.asset(
+                                                    'assets/lottie/nodata.json',
+                                                  ),
+                                                ),
                                             ],
                                           ),
                                         ),
                                       ),
-                                    ),
-
-                                    //PRESENSI
-                                    SingleChildScrollView(
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 15, horizontal: 5),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            if (absenData.absen.isNotEmpty)
-                                              for (var absen in absenData.absen)
-                                                Container(
-                                                  alignment: Alignment.center,
-                                                  margin: const EdgeInsets
-                                                      .symmetric(
-                                                    horizontal: 5,
-                                                    vertical: 12,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: secondaryColor
-                                                            .withOpacity(0.5),
-                                                        spreadRadius: 3,
-                                                        blurRadius: 5,
-                                                        offset:
-                                                            const Offset(0, 3),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  child: ListTile(
-                                                    onTap: () {
-                                                      // MASIH NGEDIT SHOW DIALOG
-                                                      DetailAbsen(
-                                                          context, absen);
-                                                    },
-                                                    contentPadding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 15,
-                                                            vertical: 3),
-                                                    visualDensity:
-                                                        VisualDensity(
-                                                            vertical: 2),
-                                                    horizontalTitleGap: 12,
-                                                    leading: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10.0),
-                                                      child: Image.network(
-                                                        "http://10.8.0.4:8000/${absen.fotoLink}",
-                                                        width: 70,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
-                                                    subtitle: Text(
-                                                      '${absen.status == "0" ? "${formatHari(absen.masuk)} - ${formatDateTime(absen.masuk)}" : "${formatHari(absen.keluar)} - ${formatDateTime(absen.keluar)}"}',
-                                                      style: GoogleFonts.heebo(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 12,
-                                                      ),
-                                                    ),
-                                                    title: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: <Widget>[
-                                                        Text(
-                                                          'PRESENSI ${absen.status == "0" ? "Masuk" : "Keluar"}'
-                                                              .toUpperCase(),
-                                                          style: TextStyle(
-                                                            color:
-                                                                absen.status ==
-                                                                        "0"
-                                                                    ? Colors
-                                                                        .green
-                                                                    : Colors
-                                                                        .red,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          '${absen.alamat}',
-                                                          maxLines: 2,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style:
-                                                              const TextStyle(
-                                                                  fontSize: 12,
-                                                                  height: 1.2),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                )
-                                            else
-                                              Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 15,
-                                                    vertical: 10),
-                                                alignment: Alignment.center,
-                                                child: Lottie.asset(
-                                                  'assets/lottie/nodata.json',
-                                                ),
-                                              ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                                    ],
+                                  ),
+                                );
+                              }),
                             ],
                           ),
                         ),

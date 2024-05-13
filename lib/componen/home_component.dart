@@ -19,6 +19,8 @@ class HeaderMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    // print(authProvider.token);
     return Container(
       alignment: Alignment.center,
       margin: EdgeInsets.symmetric(horizontal: 21),
@@ -44,7 +46,7 @@ class HeaderMenu extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => Webtampil(
                     url:
-                        'http://192.168.2.65:3038', // Ganti dengan URL yang diinginkan
+                        'http://10.8.0.4:3000/', // Ganti dengan URL yang diinginkan
                     title: 'IT-SERVICES',
                     authProvider: authProvider,
                     // Ganti dengan URL yang diinginkan
@@ -74,122 +76,122 @@ class HeaderMenu extends StatelessWidget {
               ],
             ),
           ),
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Webtampil(
-                    url:
-                        'https://e-sip.jmtm.co.id', // Ganti dengan URL yang diinginkan
-                    title: 'E-Sip',
-                    authProvider:
-                        authProvider, // Ganti dengan URL yang diinginkan
-                  ),
-                ),
-              );
-            },
-            splashColor: primaryColor,
-            child: Column(
-              children: <Widget>[
-                Icon(
-                  Icons.archive_outlined,
-                  size: 30,
-                  color: secondaryColor,
-                ),
-                SizedBox(height: 4),
-                Text(
-                  "E-Sip",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 9,
-                      color: Colors.black,
-                      height: 1,
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Webtampil(
-                    url:
-                        'https://e-sip.jmtm.co.id', // Ganti dengan URL yang diinginkan
-                    title: 'HC JMTM',
-                    authProvider:
-                        authProvider, // Ganti dengan URL yang diinginkan
-                  ),
-                ),
-              );
-            },
-            splashColor: primaryColor,
-            child: Column(
-              children: <Widget>[
-                Icon(
-                  Icons.verified_user,
-                  size: 30,
-                  color: secondaryColor,
-                ),
-                SizedBox(height: 4),
-                Text(
-                  "HC APPS",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 9,
-                      color: Colors.black,
-                      height: 1,
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Webtampil(
-                    url:
-                        'https://bookroom.jmtm.co.id', // Ganti dengan URL yang diinginkan
-                    title: 'E-Room',
-                    authProvider: authProvider,
-                    // Ganti dengan URL yang diinginkan
-                  ),
-                ),
-              );
-              // String url = 'https://bookroom.jmtm.co.id';
-              // String title = 'uhuyy';
+          // InkWell(
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) => Webtampil(
+          //           url:
+          //               'https://e-sip.jmtm.co.id', // Ganti dengan URL yang diinginkan
+          //           title: 'E-Sip',
+          //           authProvider:
+          //               authProvider, // Ganti dengan URL yang diinginkan
+          //         ),
+          //       ),
+          //     );
+          //   },
+          //   splashColor: primaryColor,
+          //   child: Column(
+          //     children: <Widget>[
+          //       Icon(
+          //         Icons.archive_outlined,
+          //         size: 30,
+          //         color: secondaryColor,
+          //       ),
+          //       SizedBox(height: 4),
+          //       Text(
+          //         "E-Sip",
+          //         textAlign: TextAlign.center,
+          //         style: TextStyle(
+          //             fontSize: 9,
+          //             color: Colors.black,
+          //             height: 1,
+          //             fontWeight: FontWeight.bold),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // InkWell(
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) => Webtampil(
+          //           url:
+          //               'https://e-sip.jmtm.co.id', // Ganti dengan URL yang diinginkan
+          //           title: 'HC JMTM',
+          //           authProvider:
+          //               authProvider, // Ganti dengan URL yang diinginkan
+          //         ),
+          //       ),
+          //     );
+          //   },
+          //   splashColor: primaryColor,
+          //   child: Column(
+          //     children: <Widget>[
+          //       Icon(
+          //         Icons.verified_user,
+          //         size: 30,
+          //         color: secondaryColor,
+          //       ),
+          //       SizedBox(height: 4),
+          //       Text(
+          //         "HC APPS",
+          //         textAlign: TextAlign.center,
+          //         style: TextStyle(
+          //             fontSize: 9,
+          //             color: Colors.black,
+          //             height: 1,
+          //             fontWeight: FontWeight.bold),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // InkWell(
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) => Webtampil(
+          //           url:
+          //               'https://bookroom.jmtm.co.id', // Ganti dengan URL yang diinginkan
+          //           title: 'E-Room',
+          //           authProvider: authProvider,
+          //           // Ganti dengan URL yang diinginkan
+          //         ),
+          //       ),
+          //     );
+          //     // String url = 'https://bookroom.jmtm.co.id';
+          //     // String title = 'uhuyy';
 
-              // Routes.router.navigateTo(
-              //   context,
-              //   '/webview/$url/$title',
-              //   transition: TransitionType.fadeIn,
-              // );
-            },
-            splashColor: primaryColor,
-            child: Column(
-              children: <Widget>[
-                Icon(
-                  Icons.meeting_room,
-                  size: 30,
-                  color: secondaryColor,
-                ),
-                SizedBox(height: 4),
-                Text(
-                  "E-Room",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 9,
-                      color: Colors.black,
-                      height: 1,
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
+          //     // Routes.router.navigateTo(
+          //     //   context,
+          //     //   '/webview/$url/$title',
+          //     //   transition: TransitionType.fadeIn,
+          //     // );
+          //   },
+          //   splashColor: primaryColor,
+          //   child: Column(
+          //     children: <Widget>[
+          //       Icon(
+          //         Icons.meeting_room,
+          //         size: 30,
+          //         color: secondaryColor,
+          //       ),
+          //       SizedBox(height: 4),
+          //       Text(
+          //         "E-Room",
+          //         textAlign: TextAlign.center,
+          //         style: TextStyle(
+          //             fontSize: 9,
+          //             color: Colors.black,
+          //             height: 1,
+          //             fontWeight: FontWeight.bold),
+          //       ),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );
@@ -248,8 +250,8 @@ class HeaderHome extends StatelessWidget {
                       CircleAvatar(
                         radius: 35,
                         backgroundImage: NetworkImage(authProvider
-                                .user.user.dakar.foto_link.isNotEmpty
-                            ? "http://10.8.0.4:8080/fotoUser/${authProvider.user.user.dakar.foto_link}"
+                                .user.user.dakar.fotoLink.isNotEmpty
+                            ? "http://10.8.0.4:8080/fotoUser/${authProvider.user.user.dakar.fotoLink}"
                             : 'https://www.copaster.com/wp-content/uploads/2023/03/pp-kosong-wa-default.jpeg'),
                         // backgroundImage: NetworkImage(
                         //     'https://www.copaster.com/wp-content/uploads/2023/03/pp-kosong-wa-default.jpeg'),

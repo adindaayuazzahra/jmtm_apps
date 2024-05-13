@@ -131,7 +131,7 @@ class _JabatanState extends State<Jabatan> {
                         style: GoogleFonts.heebo(fontSize: 14),
                       ),
                       Text(
-                        user.user.dakar.kd_comp,
+                        user.user.dakar.kdComp,
                         textAlign: TextAlign.start,
                         style: GoogleFonts.heebo(fontSize: 14),
                       ),
