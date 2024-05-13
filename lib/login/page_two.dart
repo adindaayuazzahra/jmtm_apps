@@ -73,7 +73,7 @@ class _Page_twoState extends State<Page_two> {
                     ),
                     TextField(
                       decoration: InputDecoration(
-                        labelText: "Password Baru",
+                        labelText: "Password",
                         prefixIcon: const Icon(Icons.lock),
                         suffixIcon: GestureDetector(
                           onTap: () {

@@ -294,7 +294,7 @@ class _AbsensiState extends State<Absensi> {
     setState(() {
       isLoading = true;
     });
-    final authProvider = Provider.of<AuthProvider>(context, listen: true);
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
     final pickedFile = await ImagePicker().pickImage(
       source: ImageSource.camera,
@@ -868,7 +868,7 @@ class _AbsensiState extends State<Absensi> {
                                                                             context)
                                                                         .showSnackBar(const SnackBar(
                                                                             content:
-                                                                                Text('Tunggu ya,Sedang Memproses Presensi Kamu')))
+                                                                                Text('Tunggu ya, Sedang Memproses Presensi Kamu')))
                                                                     : sendDataAndImageToApiKeluar();
                                                               },
                                                               style:
