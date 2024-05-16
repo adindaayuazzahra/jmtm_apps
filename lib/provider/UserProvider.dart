@@ -226,6 +226,7 @@ class AuthProvider with ChangeNotifier {
   Future<void> logout() async {
     // Hapus data user dari Shared Preferences
     await _removeUserDataFromPrefs();
+    _token = '';
     _user = User(
       user: UserClass(
         dajab: Dajab(

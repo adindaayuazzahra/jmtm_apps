@@ -5,7 +5,6 @@ import 'package:appjmtm/user/absensi/history_absen.dart';
 import 'package:appjmtm/user/berita/berita.dart';
 import 'package:appjmtm/user/berita/detail_berita.dart';
 import 'package:appjmtm/user/navigation.dart';
-import 'package:appjmtm/user/profil/gantipassword.dart';
 import 'package:appjmtm/user/profil/infokaryawan.dart';
 import 'package:appjmtm/user/profil/jabatan.dart';
 import 'package:appjmtm/user/profil/profil.dart';
@@ -58,12 +57,6 @@ class Routes {
     );
 
     router.define(
-      "/ganti_password",
-      handler:
-          Handler(handlerFunc: (context, parameters) => const Gantipassword()),
-    );
-
-    router.define(
       '/jabatan',
       handler: Handler(
         handlerFunc: (context, parameters) {
@@ -72,17 +65,6 @@ class Routes {
       ),
     );
 
-    // router.define(
-    //   '/webview/:url/:title',
-    //   handler: Handler(
-    //     handlerFunc: (context, params) {
-    //       final url = params['url']![0];
-    //       print('URl dari rute: $url');
-    //       final title = params['title']![0];
-    //       return Webview(url: url, title: title);
-    //     },
-    //   ),
-    // );
     router.define(
       '/berita/:id',
       handler: Handler(
@@ -113,6 +95,5 @@ class Routes {
       handler:
           Handler(handlerFunc: (context, parameters) => const Navigation()),
     );
-    // Tambahkan rute-rute lain sesuai kebutuhan Anda
   }
 }

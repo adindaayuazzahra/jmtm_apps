@@ -75,8 +75,17 @@ class _JabatanState extends State<Jabatan> {
                       if (user.user.dajab.lampiran != '')
                         InkWell(
                           onTap: () {
-                            _launchPDFUrl(
-                                "http://10.8.0.4:8080/dokumen_sk/${(user.user.dajab.lampiran)}");
+                            if ('${(user.user.dajab.lampiran)}' == '') {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                      'Maaf saat ini SK Jabatan belum tersedia.'),
+                                ),
+                              );
+                            } else {
+                              _launchPDFUrl(
+                                  "http://10.8.0.4:8080/dokumen_sk/${(user.user.dajab.lampiran)}");
+                            }
                           },
                           child: Text(
                             'Lihat SK Jabatan',
@@ -258,8 +267,18 @@ class _JabatanState extends State<Jabatan> {
                                     Text('${hisjabData.departemen}'),
                                     InkWell(
                                       onTap: () {
-                                        _launchPDFUrl(
-                                            "http://10.8.0.4:8080/dokumen_sk/${(hisjabData.lampiran)}");
+                                        if ('${(hisjabData.lampiran)}' == '') {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                  'Maaf saat ini SK Jabatan belum tersedia.'),
+                                            ),
+                                          );
+                                        } else {
+                                          _launchPDFUrl(
+                                              "http://10.8.0.4:8080/dokumen_sk/${(hisjabData.lampiran)}");
+                                        }
                                       },
                                       child: Text(
                                         'Lihat SK Jabatan',

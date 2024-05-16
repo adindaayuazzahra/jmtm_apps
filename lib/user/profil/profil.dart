@@ -3,6 +3,7 @@
 import 'package:appjmtm/common/routes.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
 import 'package:appjmtm/common/styles.dart';
+import 'package:appjmtm/user/profil/education.dart';
 import 'package:appjmtm/user/profil/gantipassword.dart';
 import 'package:appjmtm/user/profil/infokaryawan.dart';
 import 'package:fluro/fluro.dart';
@@ -285,7 +286,13 @@ class Profil extends StatelessWidget {
                         height: 10,
                       ),
                       ElevatedButton(
-                        onPressed: () async {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Education()),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           elevation: 4,
                           shadowColor: primaryColor,

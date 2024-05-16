@@ -2,6 +2,7 @@
 
 import 'package:appjmtm/provider/AbsenProvider.dart';
 import 'package:appjmtm/provider/BeritaProvider.dart';
+import 'package:appjmtm/provider/EducationProvider.dart';
 import 'package:appjmtm/provider/HistoryAbsenProvider.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
 import 'package:appjmtm/common/routes.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<AbsenProvider>(create: (_) => AbsenProvider()),
         ChangeNotifierProvider<HistoryAbsenProvider>(
             create: (_) => HistoryAbsenProvider()),
+        ChangeNotifierProvider(create: (_) => EducationProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
