@@ -6,11 +6,11 @@ import 'package:appjmtm/Config/config.dart';
 import 'package:appjmtm/common/routes.dart';
 import 'package:appjmtm/common/styles.dart';
 import 'package:appjmtm/model/User.dart';
+import 'package:appjmtm/user/navigation.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider with ChangeNotifier {
@@ -83,31 +83,28 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> login(BuildContext context, TextEditingController nppController,
       TextEditingController passwordController) async {
-    final response = await http.post(
-      Uri.parse('${apiUrl}login'),
-      body: {
-        'username_admin': nppController.text,
-        'password_admin': passwordController.text,
-        'validate': 'ANAKKAMPRETMAULEWAT',
-      },
-    );
-
+    Size size = MediaQuery.of(context).size;
     if (nppController.text == '' || passwordController.text == '') {
       return showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            icon: Lottie.asset('assets/lottie/silang.json', height: 130),
+            icon:
+                Image.asset("assets/images/gagal.gif", width: size.width * 0.2),
             surfaceTintColor: putih,
             backgroundColor: putih,
+            title: Text(
+              'Login Gagal'.toUpperCase(),
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             content: Text(
-              'Login Gagal \nPassword atau Username Tidak Boleh Kosong! ',
+              'Password atau Username Tidak Boleh Kosong!'.toUpperCase(),
               textAlign: TextAlign.center,
               style: const TextStyle(
                   height: 1.2,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.normal,
                   color: Colors.black,
-                  fontSize: 14),
+                  fontSize: 16),
             ),
             actions: [
               TextButton(
@@ -144,6 +141,15 @@ class AuthProvider with ChangeNotifier {
       );
     }
 
+    final response = await http.post(
+      Uri.parse('${apiUrl}login'),
+      body: {
+        'username_admin': nppController.text,
+        'password_admin': passwordController.text,
+        'validate': 'ANAKKAMPRETMAULEWAT',
+      },
+    );
+
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseData = json.decode(response.body);
       // print(responseData['token']);
@@ -158,30 +164,113 @@ class AuthProvider with ChangeNotifier {
         // MENYIMPAN DATA sUSER DI SHARED PREFERENCES
         await _saveUserDataToPrefs();
         notifyListeners();
-        Routes.router.navigateTo(
-          context,
-          '/navigation',
-          transition: TransitionType.inFromRight,
-        );
+        // if (passwordController.text == 'Welcomejmtm!') {
+        //   // Jika password adalah password default, navigasikan ke halaman home dan tampilkan alert
+        //   await Navigator.pushReplacement(
+        //     context,
+        //     MaterialPageRoute(builder: (context) => Home()),
+        //   ).then((_) {
+        //     // Tampilkan alert setelah navigasi selesai
+        //     showDialog(
+        //       context: context,
+        //       builder: (BuildContext context) {
+        //         return AlertDialog(
+        //           title: Text('Ganti Password'),
+        //           content:
+        //               Text('Harap ganti password default Anda untuk keamanan.'),
+        //           actions: [
+        //             TextButton(
+        //               child: Text('OK'),
+        //               onPressed: () {
+        //                 Navigator.of(context).pop();
+        //               },
+        //             ),
+        //           ],
+        //         );
+        //       },
+        //     );
+        //   });
+        // } else {
+        //   Routes.router.navigateTo(
+        //     context,
+        //     '/navigation',
+        //     transition: TransitionType.inFromRight,
+        //   );
+        // }
+
+        if (passwordController.text == 'Welcomejmtm!') {
+          // Navigasi ke halaman home
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => Navigation()),
+          );
+
+          // Tampilkan alert setelah navigasi selesai
+          Future.microtask(() {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  icon: Image.asset("assets/images/gagal.gif",
+                      width: size.width * 0.2),
+                  surfaceTintColor: putih,
+                  backgroundColor: putih,
+                  title: Text(
+                    'Ganti Password'.toUpperCase(),
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  content: Text(
+                    'Harap ganti password default Anda untuk keamanan.'
+                        .toUpperCase(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        height: 1.2,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black,
+                        fontSize: 14),
+                  ),
+                  actions: [
+                    TextButton(
+                      child: Text('OK'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          });
+        } else {
+          // Navigasi ke halaman utama tanpa alert
+          Routes.router.navigateTo(
+            context,
+            '/navigation',
+            transition: TransitionType.inFromRight,
+          );
+        }
       } else if (responseData['status'] == 0) {
         // throw Exception('Token is null in response');
         return showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              icon: Lottie.asset('assets/lottie/silang.json', height: 130),
+              icon: Image.asset("assets/images/gagal.gif",
+                  width: size.width * 0.2),
               surfaceTintColor: putih,
               backgroundColor: putih,
+              title: Text(
+                'Login Gagal'.toUpperCase(),
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               content: Text(
-                'Login Gagal \n' +
-                    responseData['error_message'] +
-                    '! '.toUpperCase(),
+                responseData['error_message'].toUpperCase(),
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                     height: 1.2,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.normal,
                     color: Colors.black,
-                    fontSize: 14),
+                    fontSize: 16),
               ),
               actions: [
                 TextButton(

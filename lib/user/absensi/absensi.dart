@@ -609,6 +609,7 @@ class _AbsensiState extends State<Absensi> {
           ),
         ),
         body: SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
           child: Column(
             children: <Widget>[
               FutureBuilder<LocationData?>(
@@ -717,6 +718,7 @@ class _AbsensiState extends State<Absensi> {
                                     children: <Widget>[
                                       //LOKASI
                                       SingleChildScrollView(
+                                        physics: ClampingScrollPhysics(),
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 5, vertical: 15),
@@ -782,181 +784,168 @@ class _AbsensiState extends State<Absensi> {
                                                   SizedBox(height: 20),
 
                                                   // TOMBOL PRESENSI
-                                                  absenData.absen.isEmpty
-                                                      ? ElevatedButton(
-                                                          onPressed: () {
-                                                            (isLoading)
-                                                                ? ScaffoldMessenger.of(
-                                                                        context)
-                                                                    .showSnackBar(
-                                                                    const SnackBar(
-                                                                      content: Text(
-                                                                          'Tunggu ya,Sedang Memproses Presensi Kamu'),
-                                                                    ),
-                                                                  )
-                                                                : sendDataAndImageToApi();
-                                                            // if (DateTime.now().hour < 10) {
-                                                            //   // Lakukan aksi saat tombol ditekan
-                                                            //   sendDataAndImageToApi();
-                                                            // } else {
-                                                            //   // Jika sudah lewat jam 10:00, tampilkan pesan atau berikan aksi lain
-                                                            //   // Misalnya, tampilkan snackbar dengan pesan
-                                                            //   ScaffoldMessenger.of(context)
-                                                            //       .showSnackBar(
-                                                            //     SnackBar(
-                                                            //       content: Text(
-                                                            //           'Tidak dapat melakukan absen setelah jam 10:00'),
-                                                            //     ),
-                                                            //   );
-                                                            // }
-                                                          },
-                                                          style: ButtonStyle(
-                                                            backgroundColor:
-                                                                MaterialStateProperty.all<
-                                                                        Color>(
-                                                                    Colors.green
-                                                                        .shade700),
-                                                          ),
-                                                          child: Padding(
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                                    vertical:
-                                                                        11),
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                (isLoading)
-                                                                    ? CircularProgressIndicator(
-                                                                        color:
-                                                                            kuning,
-                                                                      )
-                                                                    : Text(
-                                                                        'MASUK',
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color:
-                                                                              Colors.white,
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                          fontSize:
-                                                                              16,
-                                                                        ),
-                                                                      ),
-                                                                SizedBox(
-                                                                    width: 8),
-                                                                FaIcon(
-                                                                  FontAwesomeIcons
-                                                                      .personWalkingArrowRight,
+                                                  if (absenData
+                                                      .absen.isEmpty) ...[
+                                                    ElevatedButton(
+                                                      onPressed: () {
+                                                        if (isLoading) {
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(
+                                                            const SnackBar(
+                                                              content: Text(
+                                                                  'Tunggu ya, Sedang Memproses Presensi Kamu'),
+                                                            ),
+                                                          );
+                                                        } else {
+                                                          sendDataAndImageToApi();
+                                                        }
+                                                      },
+                                                      style: ButtonStyle(
+                                                        backgroundColor:
+                                                            MaterialStateProperty
+                                                                .all<Color>(Colors
+                                                                    .green
+                                                                    .shade700),
+                                                      ),
+                                                      child: Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 11),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            if (isLoading)
+                                                              CircularProgressIndicator(
+                                                                color: kuning,
+                                                              )
+                                                            else
+                                                              Text(
+                                                                'MASUK',
+                                                                style:
+                                                                    TextStyle(
                                                                   color: Colors
                                                                       .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 16,
                                                                 ),
-                                                              ],
+                                                              ),
+                                                            SizedBox(width: 8),
+                                                            FaIcon(
+                                                              FontAwesomeIcons
+                                                                  .personWalkingArrowRight,
+                                                              color:
+                                                                  Colors.white,
                                                             ),
-                                                          ),
-                                                        )
-                                                      : (absenData.absen
-                                                                  .isNotEmpty &&
-                                                              absenData.absen
-                                                                      .length <
-                                                                  2)
-                                                          ? ElevatedButton(
-                                                              onPressed: () {
-                                                                (isLoading)
-                                                                    ? ScaffoldMessenger.of(
-                                                                            context)
-                                                                        .showSnackBar(const SnackBar(
-                                                                            content:
-                                                                                Text('Tunggu ya, Sedang Memproses Presensi Kamu')))
-                                                                    : sendDataAndImageToApiKeluar();
-                                                              },
-                                                              style:
-                                                                  ButtonStyle(
-                                                                backgroundColor:
-                                                                    MaterialStateProperty.all<
-                                                                            Color>(
-                                                                        orange),
-                                                              ),
-                                                              child: Padding(
-                                                                padding: EdgeInsets
-                                                                    .symmetric(
-                                                                        vertical:
-                                                                            11),
-                                                                child: Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
-                                                                  children: [
-                                                                    (isLoading)
-                                                                        ? CircularProgressIndicator(
-                                                                            color:
-                                                                                primaryColor,
-                                                                          )
-                                                                        : Text(
-                                                                            'KELUAR',
-                                                                            style:
-                                                                                TextStyle(
-                                                                              color: Colors.white,
-                                                                              fontWeight: FontWeight.bold,
-                                                                              fontSize: 16,
-                                                                            ),
-                                                                          ),
-                                                                    SizedBox(
-                                                                        width:
-                                                                            8),
-                                                                    FaIcon(
-                                                                      FontAwesomeIcons
-                                                                          .personWalkingArrowRight,
-                                                                      color: Colors
-                                                                          .white,
-                                                                    ),
-                                                                  ],
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ] else if (absenData
+                                                          .absen.isNotEmpty &&
+                                                      absenData.absen.length <
+                                                          2) ...[
+                                                    ElevatedButton(
+                                                      onPressed: () {
+                                                        if (isLoading) {
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(
+                                                            const SnackBar(
+                                                              content: Text(
+                                                                  'Tunggu ya, Sedang Memproses Presensi Kamu'),
+                                                            ),
+                                                          );
+                                                        } else {
+                                                          sendDataAndImageToApiKeluar();
+                                                        }
+                                                      },
+                                                      style: ButtonStyle(
+                                                        backgroundColor:
+                                                            MaterialStateProperty
+                                                                .all<Color>(
+                                                                    orange),
+                                                      ),
+                                                      child: Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 11),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            if (isLoading)
+                                                              CircularProgressIndicator(
+                                                                color:
+                                                                    primaryColor,
+                                                              )
+                                                            else
+                                                              Text(
+                                                                'KELUAR',
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 16,
                                                                 ),
                                                               ),
-                                                            )
-                                                          : Container(
-                                                              width: size.width,
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .all(10),
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: Colors
-                                                                    .green
-                                                                    .shade400,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10),
-                                                              ),
-                                                              child: Row(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .center,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceAround,
-                                                                children: <Widget>[
-                                                                  FaIcon(FontAwesomeIcons
-                                                                      .circleCheck),
-                                                                  const Text(
-                                                                    'Yey! Presensi Kamu sudah lengkap, \nJangan lupa besok absen lagi ya ...',
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      height:
-                                                                          1.1,
-                                                                    ),
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .start,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            )
+                                                            SizedBox(width: 8),
+                                                            FaIcon(
+                                                              FontAwesomeIcons
+                                                                  .personWalkingArrowRight,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ] else ...[
+                                                    Container(
+                                                      width: size.width,
+                                                      padding:
+                                                          EdgeInsets.all(10),
+                                                      decoration: BoxDecoration(
+                                                        color: Colors
+                                                            .green.shade400,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                      ),
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceAround,
+                                                        children: <Widget>[
+                                                          FaIcon(
+                                                              FontAwesomeIcons
+                                                                  .circleCheck),
+                                                          const Text(
+                                                            'Yey! Presensi Kamu sudah lengkap, \nJangan lupa besok absen lagi ya ...',
+                                                            style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              height: 1.1,
+                                                            ),
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    )
+                                                  ],
                                                 ],
                                               )),
                                         ),
@@ -964,6 +953,7 @@ class _AbsensiState extends State<Absensi> {
 
                                       //PRESENSI
                                       SingleChildScrollView(
+                                        physics: ClampingScrollPhysics(),
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
                                               vertical: 15, horizontal: 5),
@@ -1074,9 +1064,11 @@ class _AbsensiState extends State<Absensi> {
                                                       horizontal: 15,
                                                       vertical: 10),
                                                   alignment: Alignment.center,
-                                                  child: Lottie.asset(
-                                                    'assets/lottie/nodata.json',
-                                                  ),
+                                                  // child: Lottie.asset(
+                                                  //   'assets/lottie/nodata.json',
+                                                  // ),
+                                                  child: const Text(
+                                                      'Maaf kamu belum melakukan presensi hari ini'),
                                                 ),
                                             ],
                                           ),
@@ -1128,6 +1120,7 @@ class _AbsensiState extends State<Absensi> {
             ),
           ),
           content: SingleChildScrollView(
+            physics: ClampingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,

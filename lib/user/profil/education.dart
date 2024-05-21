@@ -121,6 +121,12 @@ class _EducationState extends State<Education> {
                     SingleChildScrollView(
                       child: Consumer<EducationProvider>(
                           builder: (context, educationProvider, _) {
+                        if (educationProvider.hasError) {
+                          return Center(
+                            child: Text(educationProvider.errorMessage),
+                          );
+                        }
+
                         // final edudata = educationProvider.pelatihan;
                         List<dynamic> sortedPendidikan =
                             List.from(educationProvider.pendidikan.pendidikan);
@@ -300,6 +306,7 @@ class _EducationState extends State<Education> {
                         // final edudata = educationProvider.pelatihan;
                         List<dynamic> sortedPelatihan =
                             List.from(educationProvider.pelatihan.pelatihan);
+
                         if (sortedPelatihan.isNotEmpty) {
                           return Container(
                             // padding: EdgeInsets.symmetric(horizontal: 14),

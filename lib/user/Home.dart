@@ -101,38 +101,45 @@ class _HomeState extends State<Home> {
           setState(() {}); // Perbarui tampilan
         },
         child: SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               HeaderHome(),
-              SizedBox(
-                height: 40,
-              ),
-              Subtitle(
-                text: 'Aplikasi JMTM',
-              ),
-              SizedBox(
-                height: 15,
-              ),
+              SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Subtitle(
+                      text: 'Aplikasi JMTM',
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
 
-              // CONTAINER OVAL
-              HeaderMenu(),
-              SizedBox(
-                height: 50,
-              ),
-              SubtitleWithMore(
-                text: "Berita Terbaru",
-                press: () {
-                  Routes.router.navigateTo(context, '/berita',
-                      transition: TransitionType.inFromRight);
-                },
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              BeritaHome(),
-              SizedBox(
-                height: 30,
+                    // CONTAINER OVAL
+                    HeaderMenu(),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    SubtitleWithMore(
+                      text: "Berita Terbaru",
+                      press: () {
+                        Routes.router.navigateTo(context, '/berita',
+                            transition: TransitionType.inFromRight);
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    BeritaHome(),
+                    SizedBox(
+                      height: 30,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

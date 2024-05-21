@@ -4,7 +4,6 @@ import 'package:appjmtm/common/styles.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,6 +22,7 @@ class _GantipasswordState extends State<Gantipassword> {
   bool _showPassword = false;
   bool _showkonfirm = false;
   Future<void> gantiPassword(String npp) async {
+    Size size = MediaQuery.of(context).size;
     try {
       final response = await http.post(
         Uri.parse('http://10.8.0.4:8000/ganti_password'),
@@ -43,14 +43,17 @@ class _GantipasswordState extends State<Gantipassword> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              icon: Lottie.asset('assets/lottie/berhasil.json', height: 100),
+              icon: Image.asset("assets/images/berhasil.gif",
+                  width: size.width * 0.2),
+              surfaceTintColor: putih,
+              backgroundColor: putih,
               title: Text(
-                'Success',
+                'Berhasil'.toUpperCase(),
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               content: Text(
-                responseData['text'],
+                responseData['text'].toUpperCase(),
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 18),
               ),
@@ -75,14 +78,17 @@ class _GantipasswordState extends State<Gantipassword> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              icon: Lottie.asset('assets/lottie/silang.json', height: 100),
+              icon: Image.asset("assets/images/gagal.gif",
+                  width: size.width * 0.2),
+              surfaceTintColor: putih,
+              backgroundColor: putih,
               title: Text(
-                responseData['head'],
+                responseData['head'].toUpperCase(),
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               content: Text(
-                responseData['message'],
+                responseData['message'].toUpperCase(),
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 18),
               ),

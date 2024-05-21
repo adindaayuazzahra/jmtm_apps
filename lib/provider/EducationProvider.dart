@@ -56,6 +56,11 @@ class EducationProvider extends ChangeNotifier {
 
   final apiUrl = AppConfig.apiUrl;
 
+  bool _hasError = false;
+  String _errorMessage = '';
+  bool get hasError => _hasError;
+  String get errorMessage => _errorMessage;
+
   Future<void> fetchPendidikan(npp) async {
     try {
       final response = await http.post(
@@ -86,13 +91,20 @@ class EducationProvider extends ChangeNotifier {
         } else {
           throw Exception('Token is null in response');
         }
-      } else {
-        throw Exception(
-            'Failed to login. Status code: ${response.statusCode}, Body: ${response.body}');
       }
+      // else {
+      //   // throw Exception(
+      //   //     'Failed to login. Status code: ${response.statusCode}, Body: ${response.body}');
+      //   _hasError = true;
+      //   _errorMessage = 'Failed to load data';
+      //   print(_hasError);
+      // }
     } catch (e) {
-      throw Exception('Failed to fetch data: $e');
+      _hasError = true;
+      _errorMessage = 'Gagal memuat Data. Kesalahan Server';
+      // print(_hasError);
     }
+    notifyListeners();
   }
 
   Future<void> fetchPelatihan(npp) async {
