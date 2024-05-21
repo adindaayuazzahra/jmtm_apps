@@ -104,7 +104,7 @@ class Profil extends StatelessWidget {
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.heebo(
-                                  height: 1.1,
+                                  height: 1.8,
                                   fontSize: 14,
                                   color: putih,
                                 ),
