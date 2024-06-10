@@ -1,8 +1,7 @@
 import 'package:appjmtm/componen/home_component.dart';
 import 'package:appjmtm/provider/BeritaProvider.dart';
-import 'package:appjmtm/common/routes.dart';
 import 'package:appjmtm/common/styles.dart';
-import 'package:fluro/fluro.dart';
+import 'package:appjmtm/user/berita/detail_berita.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -37,7 +36,7 @@ class _BeritaPageState extends State<BeritaPage> {
       appBar: AppBar(
         backgroundColor: primaryColor,
         elevation: 6,
-        shadowColor: secondaryColor,
+        shadowColor: primaryColor,
         iconTheme: const IconThemeData(color: putih),
         centerTitle: true,
         leading: IconButton(
@@ -83,8 +82,14 @@ class _BeritaPageState extends State<BeritaPage> {
                     return InkWell(
                       onTap: () {
                         String id = news.id;
-                        Routes.router.navigateTo(context, '/berita/$id',
-                            transition: TransitionType.fadeIn);
+                        // Routes.router.navigateTo(context, '/berita/$id',
+                        //     transition: TransitionType.fadeIn);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailBeritaPage(id: id),
+                          ),
+                        );
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -98,7 +103,7 @@ class _BeritaPageState extends State<BeritaPage> {
                           borderRadius: BorderRadius.circular(8),
                           boxShadow: [
                             BoxShadow(
-                              color: secondaryColor.withOpacity(0.5),
+                              color: primaryColor.withOpacity(0.5),
                               spreadRadius: 3,
                               blurRadius: 5,
                               offset: const Offset(0, 3),

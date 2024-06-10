@@ -8,6 +8,7 @@ import 'package:appjmtm/provider/BeritaProvider.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
 import 'package:appjmtm/common/routes.dart';
 import 'package:appjmtm/common/styles.dart';
+import 'package:appjmtm/user/berita/berita.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -64,9 +65,9 @@ class _HomeState extends State<Home> {
               "PT Jasamarga Tollroad Maintenance",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 14,
-                color: kuning,
-                // color: Colors.amber.shade400,
+                fontSize: 15,
+                // color: kuning,
+                color: Colors.amber.shade500,
               ),
             ),
           ],
@@ -127,8 +128,12 @@ class _HomeState extends State<Home> {
                     SubtitleWithMore(
                       text: "Berita Terbaru",
                       press: () {
-                        Routes.router.navigateTo(context, '/berita',
-                            transition: TransitionType.inFromRight);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BeritaPage(),
+                          ),
+                        );
                       },
                     ),
                     SizedBox(

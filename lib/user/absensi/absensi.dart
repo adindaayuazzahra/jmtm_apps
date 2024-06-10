@@ -4,9 +4,8 @@ import 'dart:io';
 import 'package:appjmtm/model/Absen.dart';
 import 'package:appjmtm/provider/AbsenProvider.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
-import 'package:appjmtm/common/routes.dart';
 import 'package:appjmtm/common/styles.dart';
-import 'package:fluro/fluro.dart';
+import 'package:appjmtm/user/absensi/history_absen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,7 +15,6 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
 
@@ -142,7 +140,7 @@ class _AbsensiState extends State<Absensi> {
 
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse('http://10.8.0.4:8000/absensi'),
+      Uri.parse('https://kraken.jmtm.co.id/absensi'),
     );
 
     // Menambahkan data dan gambar ke request
@@ -173,11 +171,13 @@ class _AbsensiState extends State<Absensi> {
       setState(() {
         isLoading = false;
       });
+      Size size = MediaQuery.of(context).size;
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            icon: Lottie.asset('assets/lottie/berhasil.json', height: 100),
+            icon: Image.asset("assets/images/berhasil.gif",
+                width: size.width * 0.2),
             surfaceTintColor: putih,
             backgroundColor: putih,
             content: Text(
@@ -198,7 +198,7 @@ class _AbsensiState extends State<Absensi> {
                   height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: secondaryColor,
+                    color: primaryColor,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -237,11 +237,13 @@ class _AbsensiState extends State<Absensi> {
       setState(() {
         isLoading = false;
       });
+      Size size = MediaQuery.of(context).size;
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            icon: Lottie.asset('assets/lottie/silang.json', height: 100),
+            icon:
+                Image.asset("assets/images/gagal.gif", width: size.width * 0.2),
             surfaceTintColor: putih,
             backgroundColor: putih,
             content: Text(
@@ -262,7 +264,7 @@ class _AbsensiState extends State<Absensi> {
                   height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: secondaryColor,
+                    color: primaryColor,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -340,7 +342,7 @@ class _AbsensiState extends State<Absensi> {
 
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse('http://10.8.0.4:8000/absensi'),
+      Uri.parse('https://kraken.jmtm.co.id/absensi'),
     );
 
     // Menambahkan data dan gambar ke request
@@ -371,11 +373,13 @@ class _AbsensiState extends State<Absensi> {
       setState(() {
         isLoading = false;
       });
+      Size size = MediaQuery.of(context).size;
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            icon: Lottie.asset('assets/lottie/berhasil.json', height: 100),
+            icon: Image.asset("assets/images/berhasil.gif",
+                width: size.width * 0.2),
             surfaceTintColor: putih,
             backgroundColor: putih,
             content: Text(
@@ -396,7 +400,7 @@ class _AbsensiState extends State<Absensi> {
                   height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: secondaryColor,
+                    color: primaryColor,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -443,11 +447,13 @@ class _AbsensiState extends State<Absensi> {
       setState(() {
         isLoading = false;
       });
+      Size size = MediaQuery.of(context).size;
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            icon: Lottie.asset('assets/lottie/silang.json', height: 100),
+            icon:
+                Image.asset("assets/images/gagal.gif", width: size.width * 0.2),
             surfaceTintColor: putih,
             backgroundColor: putih,
             content: Text(
@@ -468,7 +474,7 @@ class _AbsensiState extends State<Absensi> {
                   height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: secondaryColor,
+                    color: primaryColor,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -523,7 +529,7 @@ class _AbsensiState extends State<Absensi> {
     //     backgroundColor: primaryColor,
     //     elevation: 6,
     //     centerTitle: true,
-    //     shadowColor: secondaryColor,
+    //     shadowColor: primaryColor,
     //     iconTheme: const IconThemeData(color: putih),
     //     title: Text(
     //       'Presensi',
@@ -583,7 +589,7 @@ class _AbsensiState extends State<Absensi> {
           automaticallyImplyLeading: false,
           backgroundColor: primaryColor,
           elevation: 6,
-          shadowColor: secondaryColor,
+          shadowColor: primaryColor,
           iconTheme: const IconThemeData(color: putih),
           actions: <Widget>[
             IconButton(
@@ -592,8 +598,14 @@ class _AbsensiState extends State<Absensi> {
                 size: 20,
               ),
               onPressed: () {
-                Routes.router.navigateTo(context, '/history_absen',
-                    transition: TransitionType.inFromRight);
+                // Routes.router.navigateTo(context, '/history_absen',
+                //     transition: TransitionType.inFromRight);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HistoryAbsen(),
+                  ),
+                );
                 // ScaffoldMessenger.of(context).showSnackBar(
                 //     const SnackBar(content: Text('This is a snackbar')));
               },
@@ -728,7 +740,7 @@ class _AbsensiState extends State<Absensi> {
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                                 border: Border.all(
-                                                  color: secondaryColor,
+                                                  color: primaryColor,
                                                 ),
                                               ),
                                               child: Column(
@@ -867,8 +879,9 @@ class _AbsensiState extends State<Absensi> {
                                                       style: ButtonStyle(
                                                         backgroundColor:
                                                             MaterialStateProperty
-                                                                .all<Color>(
-                                                                    orange),
+                                                                .all<Color>(Colors
+                                                                    .red
+                                                                    .shade600),
                                                       ),
                                                       child: Padding(
                                                         padding: EdgeInsets
@@ -978,7 +991,7 @@ class _AbsensiState extends State<Absensi> {
                                                               8),
                                                       boxShadow: [
                                                         BoxShadow(
-                                                          color: secondaryColor
+                                                          color: primaryColor
                                                               .withOpacity(0.5),
                                                           spreadRadius: 3,
                                                           blurRadius: 5,
@@ -1006,7 +1019,7 @@ class _AbsensiState extends State<Absensi> {
                                                             BorderRadius
                                                                 .circular(10.0),
                                                         child: Image.network(
-                                                          "http://10.8.0.4:8000/${absen.fotoLink}",
+                                                          "https://kraken.jmtm.co.id/${absen.fotoLink}",
                                                           width: 70,
                                                           fit: BoxFit.cover,
                                                         ),
@@ -1129,7 +1142,7 @@ class _AbsensiState extends State<Absensi> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
                   child: Image.network(
-                    "http://10.8.0.4:8000/${absen.fotoLink}",
+                    "https://kraken.jmtm.co.id/${absen.fotoLink}",
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -1238,7 +1251,7 @@ class TabBarAbsen extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        color: secondaryColor, // Sesuaikan dengan warna AppBar Anda
+        color: primaryColor, // Sesuaikan dengan warna AppBar Anda
       ),
       child: TabBar(
         padding: EdgeInsets.all(6),

@@ -84,7 +84,7 @@ class _Page_twoState extends State<Page_two> {
                           child: Icon(
                             _showpass ? Icons.visibility : Icons.visibility_off,
                             color: _showpass
-                                ? secondaryColor
+                                ? primaryColor
                                 : Colors
                                     .grey, // Ubah warna ikon sesuai status _showpass
                           ),
@@ -112,7 +112,7 @@ class _Page_twoState extends State<Page_two> {
                           fixedSize: MaterialStateProperty.all<Size>(
                               Size(size.width, 50.0)),
                           backgroundColor:
-                              MaterialStateProperty.all<Color>(secondaryColor)),
+                              MaterialStateProperty.all<Color>(primaryColor)),
                       // onPressed: () {
                       //   login();
                       //   FocusScope.of(context).unfocus();
@@ -149,7 +149,7 @@ class _Page_twoState extends State<Page_two> {
                         //               height: 40,
                         //               decoration: BoxDecoration(
                         //                 borderRadius: BorderRadius.circular(20),
-                        //                 color: secondaryColor,
+                        //                 color: primaryColor,
                         //               ),
                         //               child: Row(
                         //                 mainAxisAlignment:

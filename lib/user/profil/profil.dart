@@ -1,12 +1,11 @@
 // ignore_for_file: use_build_context_synchronously, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-import 'package:appjmtm/common/routes.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
 import 'package:appjmtm/common/styles.dart';
 import 'package:appjmtm/user/profil/education.dart';
 import 'package:appjmtm/user/profil/gantipassword.dart';
 import 'package:appjmtm/user/profil/infokaryawan.dart';
-import 'package:fluro/fluro.dart';
+import 'package:appjmtm/user/profil/jabatan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -64,7 +63,7 @@ class Profil extends StatelessWidget {
                       radius: 50,
                       backgroundImage: NetworkImage(authProvider
                               .user.user.dakar.fotoLink.isNotEmpty
-                          ? "http://10.8.0.4:8080/fotoUser/${authProvider.user.user.dakar.fotoLink}"
+                          ? "https://hc.jmtm.co.id/fotoUser/${authProvider.user.user.dakar.fotoLink}"
                           : 'https://www.copaster.com/wp-content/uploads/2023/03/pp-kosong-wa-default.jpeg'),
                       // backgroundImage: NetworkImage(
                       //     'https://www.copaster.com/wp-content/uploads/2023/03/pp-kosong-wa-default.jpeg'),
@@ -85,7 +84,7 @@ class Profil extends StatelessWidget {
                               Text(
                                 // '${authProvider.user.nama}',
                                 // 'lorem aisjcn aoksjcna askmao caoskcm aoiikxmao cqwc cqokc  cqokmc cqokcm qpwkcm cqpkwcm weckwemc cw ec ecw',
-                                authProvider.user.user.dakar.nama,
+                                authProvider.user.user.dakar.nama.toUpperCase(),
                                 textAlign: TextAlign.center,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
@@ -222,9 +221,13 @@ class Profil extends StatelessWidget {
                         height: 10,
                       ),
                       ElevatedButton(
-                        onPressed: () async {
-                          await Routes.router.navigateTo(context, '/jabatan',
-                              transition: TransitionType.inFromRight);
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Jabatan()),
+                          );
+                          // await Routes.router.navigateTo(context, '/jabatan',
+                          //     transition: TransitionType.inFromRight);
                         },
                         style: ElevatedButton.styleFrom(
                           elevation: 4,

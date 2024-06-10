@@ -17,15 +17,19 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      // statusBarIconBrightness: Brightness.dark,
-      // systemNavigationBarColor: Colors.transparent,
     ),
   );
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('id');
   await AuthProvider().autoLogin();
   Routes.configureRoutes();
-  runApp(MyApp());
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    // DeviceOrientation.portraitDown, // Uncomment if you want to support upside down as well
+  ]).then((_) {
+    runApp(MyApp());
+  });
+  // runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

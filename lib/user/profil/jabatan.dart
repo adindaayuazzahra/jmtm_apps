@@ -43,7 +43,7 @@ class _JabatanState extends State<Jabatan> {
           backgroundColor: primaryColor,
           centerTitle: true,
           elevation: 6,
-          shadowColor: secondaryColor,
+          shadowColor: primaryColor,
           iconTheme: const IconThemeData(color: putih),
           title: Text(
             'Jabatan',
@@ -91,10 +91,10 @@ class _JabatanState extends State<Jabatan> {
                             'Lihat SK Jabatan',
                             style: GoogleFonts.heebo(
                               fontStyle: FontStyle.italic,
-                              color: secondaryColor,
+                              color: primaryColor,
                               decoration: TextDecoration.underline,
                               decorationStyle: TextDecorationStyle.solid,
-                              decorationColor: secondaryColor,
+                              decorationColor: primaryColor,
                             ),
                           ),
                         )
@@ -226,7 +226,7 @@ class _JabatanState extends State<Jabatan> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 6),
                                   decoration: BoxDecoration(
-                                      color: secondaryColor,
+                                      color: primaryColor,
                                       borderRadius: BorderRadius.circular(20)),
                                   child: Text(
                                     '${hisjabData.keterangan}',
@@ -284,11 +284,11 @@ class _JabatanState extends State<Jabatan> {
                                         'Lihat SK Jabatan',
                                         style: GoogleFonts.heebo(
                                           fontStyle: FontStyle.italic,
-                                          color: secondaryColor,
+                                          color: primaryColor,
                                           decoration: TextDecoration.underline,
                                           decorationStyle:
                                               TextDecorationStyle.solid,
-                                          decorationColor: secondaryColor,
+                                          decorationColor: primaryColor,
                                         ),
                                       ),
                                     ),

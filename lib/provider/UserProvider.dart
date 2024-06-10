@@ -115,7 +115,7 @@ class AuthProvider with ChangeNotifier {
                   height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: secondaryColor,
+                    color: primaryColor,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -211,7 +211,7 @@ class AuthProvider with ChangeNotifier {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  icon: Image.asset("assets/images/gagal.gif",
+                  icon: Image.asset("assets/images/gantipassword.gif",
                       width: size.width * 0.2),
                   surfaceTintColor: putih,
                   backgroundColor: putih,
@@ -281,7 +281,7 @@ class AuthProvider with ChangeNotifier {
                     height: 40,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: secondaryColor,
+                      color: primaryColor,
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

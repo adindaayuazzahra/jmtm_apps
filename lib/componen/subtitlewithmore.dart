@@ -6,7 +6,7 @@ class SubtitleWithMore extends StatelessWidget {
       : super(key: key);
 
   final String text;
-  final Function() press;
+  final VoidCallback press;
 
   @override
   Widget build(BuildContext context) {

@@ -25,7 +25,7 @@ class _InfokaryawanState extends State<Infokaryawan> {
           backgroundColor: primaryColor,
           elevation: 6,
           centerTitle: true,
-          shadowColor: secondaryColor,
+          shadowColor: primaryColor,
           iconTheme: const IconThemeData(color: putih),
           title: Text(
             'Info Karyawan',
@@ -42,7 +42,7 @@ class _InfokaryawanState extends State<Infokaryawan> {
               margin: EdgeInsets.only(bottom: 10, right: 20, left: 20, top: 24),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
-                color: secondaryColor,
+                color: primaryColor,
               ),
               child: TabBar(
                 padding: EdgeInsets.all(6),

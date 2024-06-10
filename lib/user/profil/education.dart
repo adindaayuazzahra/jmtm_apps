@@ -54,7 +54,7 @@ class _EducationState extends State<Education> {
           backgroundColor: primaryColor,
           elevation: 6,
           centerTitle: true,
-          shadowColor: secondaryColor,
+          shadowColor: primaryColor,
           iconTheme: const IconThemeData(color: putih),
           title: Text(
             'Pendidikan dan Pelatihan',
@@ -71,7 +71,7 @@ class _EducationState extends State<Education> {
               margin: EdgeInsets.only(bottom: 10, right: 20, left: 20, top: 24),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
-                color: secondaryColor,
+                color: primaryColor,
               ),
               child: TabBar(
                 padding: EdgeInsets.all(6),
@@ -197,7 +197,7 @@ class _EducationState extends State<Education> {
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 10, vertical: 6),
                                             decoration: BoxDecoration(
-                                                color: secondaryColor,
+                                                color: primaryColor,
                                                 borderRadius:
                                                     BorderRadius.circular(20)),
                                             child: Text(
@@ -262,14 +262,14 @@ class _EducationState extends State<Education> {
                                                   'Lihat Ijazah',
                                                   style: GoogleFonts.heebo(
                                                     fontStyle: FontStyle.italic,
-                                                    color: secondaryColor,
+                                                    color: primaryColor,
                                                     decoration: TextDecoration
                                                         .underline,
                                                     decorationStyle:
                                                         TextDecorationStyle
                                                             .solid,
                                                     decorationColor:
-                                                        secondaryColor,
+                                                        primaryColor,
                                                   ),
                                                 ),
                                               ),
@@ -395,7 +395,7 @@ class _EducationState extends State<Education> {
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 10, vertical: 6),
                                             decoration: BoxDecoration(
-                                                color: secondaryColor,
+                                                color: primaryColor,
                                                 borderRadius:
                                                     BorderRadius.circular(20)),
                                             child: Text(
@@ -472,14 +472,14 @@ class _EducationState extends State<Education> {
                                                   'Lihat Sertifikat',
                                                   style: GoogleFonts.heebo(
                                                     fontStyle: FontStyle.italic,
-                                                    color: secondaryColor,
+                                                    color: primaryColor,
                                                     decoration: TextDecoration
                                                         .underline,
                                                     decorationStyle:
                                                         TextDecorationStyle
                                                             .solid,
                                                     decorationColor:
-                                                        secondaryColor,
+                                                        primaryColor,
                                                   ),
                                                 ),
                                               ),

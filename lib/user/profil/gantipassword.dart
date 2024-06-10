@@ -25,7 +25,7 @@ class _GantipasswordState extends State<Gantipassword> {
     Size size = MediaQuery.of(context).size;
     try {
       final response = await http.post(
-        Uri.parse('http://10.8.0.4:8000/ganti_password'),
+        Uri.parse('https://kraken.jmtm.co.id/ganti_password'),
         body: {
           'npp': npp,
           'pass_old': passold.text,
@@ -119,7 +119,7 @@ class _GantipasswordState extends State<Gantipassword> {
         backgroundColor: primaryColor,
         elevation: 6,
         centerTitle: true,
-        shadowColor: secondaryColor,
+        shadowColor: primaryColor,
         iconTheme: const IconThemeData(color: putih),
         title: Text(
           'Ganti Password',
@@ -159,7 +159,7 @@ class _GantipasswordState extends State<Gantipassword> {
                     child: Icon(
                       _showPassold ? Icons.visibility : Icons.visibility_off,
                       color: _showPassold
-                          ? secondaryColor
+                          ? primaryColor
                           : Colors
                               .grey, // Ubah warna ikon sesuai status _showPassold
                     ),
@@ -198,7 +198,7 @@ class _GantipasswordState extends State<Gantipassword> {
                     child: Icon(
                       _showPassword ? Icons.visibility : Icons.visibility_off,
                       color: _showPassword
-                          ? secondaryColor
+                          ? primaryColor
                           : Colors
                               .grey, // Ubah warna ikon sesuai status _showPassword
                     ),
@@ -237,7 +237,7 @@ class _GantipasswordState extends State<Gantipassword> {
                     child: Icon(
                       _showkonfirm ? Icons.visibility : Icons.visibility_off,
                       color: _showkonfirm
-                          ? secondaryColor
+                          ? primaryColor
                           : Colors
                               .grey, // Ubah warna ikon sesuai status _showkonfirm
                     ),
@@ -257,7 +257,7 @@ class _GantipasswordState extends State<Gantipassword> {
                   style: ElevatedButton.styleFrom(
                     elevation: 4,
                     shadowColor: primaryColor,
-                    backgroundColor: secondaryColor,
+                    backgroundColor: primaryColor,
                   ),
                   onPressed: () {
                     String npp = authProvider.user.user.dakar.npp;

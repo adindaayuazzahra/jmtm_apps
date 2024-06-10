@@ -81,7 +81,7 @@ class _NavigationState extends State<Navigation> {
                   });
                 },
                 curve: Curves.easeInToLinear,
-                activeColor: secondaryColor,
+                activeColor: primaryColor,
                 inactiveColor: kuning,
                 enableShadow: true,
                 indicatorHeight: 5,

@@ -30,7 +30,7 @@ class _DetailBeritaPageState extends State<DetailBeritaPage> {
       appBar: AppBar(
         backgroundColor: primaryColor,
         elevation: 6,
-        shadowColor: secondaryColor,
+        shadowColor: primaryColor,
         iconTheme: IconThemeData(color: putih),
         centerTitle: true,
         title: Text(
@@ -42,60 +42,62 @@ class _DetailBeritaPageState extends State<DetailBeritaPage> {
           ),
         ),
       ),
-      body: Consumer<NewsProvider>(
-        builder: (context, newsProvider, child) {
-          final newsList = newsProvider.detailBerita;
-          return ListView.builder(
-            shrinkWrap: true,
-            itemCount: newsList.length,
-            itemBuilder: (context, index) {
-              final news = newsList[index];
-              return SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Image.network(
-                      "https://jmtm.co.id/${news.image}",
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: Column(
-                        children: [
-                          Text(
-                            news.title,
-                            softWrap: true,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              height: 1.2,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            news.date,
-                            style: TextStyle(
-                              fontSize: 12,
-                            ),
-                          ),
-                          Text(
-                            news.desc,
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(
-                              fontSize: 13,
-                            ),
-                          ),
-                        ],
+      body: Scaffold(
+        body: Consumer<NewsProvider>(
+          builder: (context, newsProvider, child) {
+            final newsList = newsProvider.detailBerita;
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: newsList.length,
+              itemBuilder: (context, index) {
+                final news = newsList[index];
+                return SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      Image.network(
+                        "https://jmtm.co.id/${news.image}",
                       ),
-                    ),
-                  ],
-                ),
-              );
-              // );
-            },
-          );
-        },
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: Column(
+                          children: [
+                            Text(
+                              news.title,
+                              softWrap: true,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                height: 1.2,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              news.date,
+                              style: TextStyle(
+                                fontSize: 12,
+                              ),
+                            ),
+                            Text(
+                              news.desc,
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                fontSize: 13,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+                // );
+              },
+            );
+          },
+        ),
       ),
     );
   }

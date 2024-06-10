@@ -2,10 +2,9 @@
 
 import 'package:appjmtm/provider/BeritaProvider.dart';
 import 'package:appjmtm/provider/UserProvider.dart';
-import 'package:appjmtm/common/routes.dart';
 import 'package:appjmtm/common/styles.dart';
+import 'package:appjmtm/user/berita/detail_berita.dart';
 import 'package:appjmtm/user/webview/webview.dart';
-import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -22,58 +21,63 @@ class HeaderMenu extends StatelessWidget {
 
     // print(authProvider.token);
     return Container(
-      alignment: Alignment.center,
-      margin: EdgeInsets.symmetric(horizontal: 21),
-      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 15),
-      decoration: BoxDecoration(
-        color: putih,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0, 6),
-            blurRadius: 14,
-            color: secondaryColor.withOpacity(0.6),
-          ),
-        ],
-      ),
+      // alignment: Alignment.center,
+      // margin: EdgeInsets.symmetric(horizontal: 21),
+      // padding: EdgeInsets.symmetric(horizontal: 6, vertical: 15),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        // mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Webtampil(
-                    url:
-                        'http://10.8.0.4:3000/', // Ganti dengan URL yang diinginkan
-                    title: 'IT-SERVICES',
-                    authProvider: authProvider,
-                    // Ganti dengan URL yang diinginkan
-                  ),
-                ),
-              );
-            },
-            splashColor: primaryColor,
-            child: Column(
-              children: <Widget>[
-                Icon(
-                  Icons.computer,
-                  size: 30,
-                  color: secondaryColor,
-                ),
-                SizedBox(height: 4),
-                Text(
-                  "IT SERVICES",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      // backgroundColor: Colors.amber,
-                      fontSize: 9,
-                      color: Colors.black,
-                      height: 1,
-                      fontWeight: FontWeight.bold),
+          Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.symmetric(horizontal: 21),
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: putih,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(0, 6),
+                  blurRadius: 14,
+                  color: primaryColor.withOpacity(0.6),
                 ),
               ],
+            ),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Webtampil(
+                      url:
+                          'http://it-services.jmtm.co.id/', // Ganti dengan URL yang diinginkan
+                      title: 'IT-SERVICES',
+                      authProvider: authProvider,
+                      // Ganti dengan URL yang diinginkan
+                    ),
+                  ),
+                );
+              },
+              splashColor: primaryColor,
+              child: Column(
+                children: <Widget>[
+                  Icon(
+                    Icons.computer,
+                    size: 30,
+                    color: primaryColor,
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    "IT SERVICES",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        // backgroundColor: Colors.amber,
+                        fontSize: 9,
+                        color: Colors.black,
+                        height: 1,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
           ),
           // InkWell(
@@ -97,7 +101,7 @@ class HeaderMenu extends StatelessWidget {
           //       Icon(
           //         Icons.archive_outlined,
           //         size: 30,
-          //         color: secondaryColor,
+          //         color: primaryColor,
           //       ),
           //       SizedBox(height: 4),
           //       Text(
@@ -133,7 +137,7 @@ class HeaderMenu extends StatelessWidget {
           //       Icon(
           //         Icons.verified_user,
           //         size: 30,
-          //         color: secondaryColor,
+          //         color: primaryColor,
           //       ),
           //       SizedBox(height: 4),
           //       Text(
@@ -177,7 +181,7 @@ class HeaderMenu extends StatelessWidget {
           //       Icon(
           //         Icons.meeting_room,
           //         size: 30,
-          //         color: secondaryColor,
+          //         color: primaryColor,
           //       ),
           //       SizedBox(height: 4),
           //       Text(
@@ -251,7 +255,7 @@ class HeaderHome extends StatelessWidget {
                         radius: 35,
                         backgroundImage: NetworkImage(authProvider
                                 .user.user.dakar.fotoLink.isNotEmpty
-                            ? "http://10.8.0.4:8080/fotoUser/${authProvider.user.user.dakar.fotoLink}"
+                            ? "https://hc.jmtm.co.id/fotoUser/${authProvider.user.user.dakar.fotoLink}"
                             : 'https://www.copaster.com/wp-content/uploads/2023/03/pp-kosong-wa-default.jpeg'),
                         // backgroundImage: NetworkImage(
                         //     'https://www.copaster.com/wp-content/uploads/2023/03/pp-kosong-wa-default.jpeg'),
@@ -399,7 +403,7 @@ class BeritaHome extends StatelessWidget {
     return Consumer<NewsProvider>(
       builder: (context, newsProvider, child) {
         final newsList = newsProvider.newsList;
-        final limitedNewsList = newsList.take(3).toList();
+        final limitedNewsList = newsList.take(5).toList();
         if (newsProvider.isLoading) {
           return ListView.builder(
             physics: NeverScrollableScrollPhysics(),
@@ -419,8 +423,12 @@ class BeritaHome extends StatelessWidget {
               return InkWell(
                 onTap: () {
                   String id = news.id;
-                  Routes.router.navigateTo(context, '/berita/$id',
-                      transition: TransitionType.fadeIn);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailBeritaPage(id: id),
+                    ),
+                  );
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -436,7 +444,7 @@ class BeritaHome extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                     boxShadow: [
                       BoxShadow(
-                        color: secondaryColor.withOpacity(0.5),
+                        color: primaryColor.withOpacity(0.5),
                         spreadRadius: 3,
                         blurRadius: 5,
                         offset: Offset(0, 3),

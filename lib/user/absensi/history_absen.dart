@@ -20,6 +20,49 @@ class HistoryAbsen extends StatefulWidget {
 }
 
 class _HistoryAbsenState extends State<HistoryAbsen> {
+  // DateTime selectedDate = DateTime.now();
+
+  // Future<void> _resetAndFetchHistory() async {
+  //   final absenProvider =
+  //       Provider.of<HistoryAbsenProvider>(context, listen: false);
+  //   absenProvider.resethis();
+  //   await _fetchHistory();
+  // }
+
+  // Future<void> _fetchHistory() async {
+  //   var authProvider = Provider.of<AuthProvider>(context, listen: false);
+  //   final npp = authProvider.user.user.dakar.npp;
+  //   final absenProvider =
+  //       Provider.of<HistoryAbsenProvider>(context, listen: false);
+  //   String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
+  //   await absenProvider.history(npp, formattedDate);
+  //   // print('History Call: ${absenProvider.absenHis.absen.length}');
+  // }
+
+  // Future<void> _selectDate() async {
+  //   final DateTime? picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: selectedDate,
+  //     firstDate: DateTime(2000),
+  //     lastDate: DateTime(2101),
+  //   );
+
+  //   if (picked != null) {
+  //     // setState(() {
+  //     selectedDate = picked;
+  //     // });
+  //     // Future.microtask(() async {
+  //     await _resetAndFetchHistory();
+  //     // });
+  //   }
+  // }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _resetAndFetchHistory();
+  // }
+
   DateTime selectedDate = DateTime.now();
 
   Future<void> _resetAndFetchHistory() async {
@@ -36,7 +79,6 @@ class _HistoryAbsenState extends State<HistoryAbsen> {
         Provider.of<HistoryAbsenProvider>(context, listen: false);
     String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
     await absenProvider.history(npp, formattedDate);
-    // print('History Call: ${absenProvider.absenHis.absen.length}');
   }
 
   Future<void> _selectDate() async {
@@ -47,13 +89,11 @@ class _HistoryAbsenState extends State<HistoryAbsen> {
       lastDate: DateTime(2101),
     );
 
-    if (picked != null) {
-      // setState(() {
-      selectedDate = picked;
-      // });
-      // Future.microtask(() async {
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
       await _resetAndFetchHistory();
-      // });
     }
   }
 
@@ -71,7 +111,7 @@ class _HistoryAbsenState extends State<HistoryAbsen> {
         backgroundColor: primaryColor,
         elevation: 6,
         centerTitle: true,
-        shadowColor: secondaryColor,
+        shadowColor: primaryColor,
         iconTheme: const IconThemeData(color: putih),
         title: Text(
           'Riwayat Presensi',
@@ -98,7 +138,7 @@ class _HistoryAbsenState extends State<HistoryAbsen> {
                       alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: secondaryColor, // Warna border
+                          color: primaryColor, // Warna border
                           width: 2.0, // Lebar border
                         ),
                         borderRadius: BorderRadius.circular(10),
@@ -131,8 +171,8 @@ class _HistoryAbsenState extends State<HistoryAbsen> {
                                 ), // Atur nilai border radius sesuai keinginan
                               ),
                             ),
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                secondaryColor),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(primaryColor),
                           ),
                           onPressed: () {
                             _selectDate();
@@ -163,7 +203,7 @@ class _HistoryAbsenState extends State<HistoryAbsen> {
                         borderRadius: BorderRadius.circular(8),
                         boxShadow: [
                           BoxShadow(
-                            color: secondaryColor.withOpacity(0.5),
+                            color: primaryColor.withOpacity(0.5),
                             spreadRadius: 3,
                             blurRadius: 5,
                             offset: const Offset(0, 3),
@@ -182,7 +222,7 @@ class _HistoryAbsenState extends State<HistoryAbsen> {
                           borderRadius: BorderRadius.circular(
                               10.0), // Ganti nilai sesuai keinginan Anda
                           child: Image.network(
-                            "http://10.8.0.4:8000/${absen.fotoLink}",
+                            "https://kraken.jmtm.co.id/${absen.fotoLink}",
                             height: 500,
                             width: 70,
                             fit: BoxFit.cover,
@@ -277,7 +317,7 @@ class _HistoryAbsenState extends State<HistoryAbsen> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
                   child: Image.network(
-                    "http://10.8.0.4:8000/${absen.fotoLink}",
+                    "https://kraken.jmtm.co.id/${absen.fotoLink}",
                     fit: BoxFit.cover,
                   ),
                 ),
